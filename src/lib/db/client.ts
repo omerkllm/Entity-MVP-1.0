@@ -19,7 +19,7 @@ export const pool =
   });
 
 // Log unexpected pool-level errors instead of crashing the process
-pool.on('error', (err) => {
+pool.on('error', (err: Error) => {
   console.error('[pg pool] Unexpected idle-client error:', err.message);
 });
 
