@@ -14,8 +14,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Entity — Supply Chain Management",
+  title: "Entity SC",
   description: "Supply chain inventory, warehousing, and decision-making platform.",
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({

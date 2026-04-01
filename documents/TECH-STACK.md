@@ -26,7 +26,7 @@
 
 ## 1. Runtime & Framework
 
-### Next.js `16.1.6`
+### Next.js `16.2.2`
 
 | Aspect | Detail |
 |---|---|
@@ -443,7 +443,7 @@ if (!parsed.success) {
 
 ## 10. Linting & Code Quality
 
-### ESLint `9.x` with `eslint-config-next` `16.1.6`
+### ESLint `9.x` with `eslint-config-next` `16.2.2`
 
 | Aspect | Detail |
 |---|---|
@@ -615,14 +615,14 @@ At startup, `env.ts` validates that `DATABASE_URL`, `JWT_SECRET`, and `JWT_REFRE
 | `axios` | ^1.14.0 | **Active** — HTTP client with interceptors |
 | `jose` | ^6.2.2 | **Active** — JWT signing/verification |
 | `maplibre-gl` | ^5.21.1 | **Active** — map rendering |
-| `next` | 16.1.6 | **Active** — framework |
+| `next` | 16.2.2 | **Active** — framework |
 | `next-themes` | ^0.4.6 | **Active** — theme provider |
 | `otplib` | ^12.0.1 | **Active** — MFA TOTP |
 | `react` | 19.2.3 | **Active** — UI library |
 | `react-dom` | 19.2.3 | **Active** — React DOM renderer |
 | `recharts` | ^3.8.1 | **Active** — charts |
 | `zod` | ^3.24.2 | **Active** — validation |
-| `pg` | ^8.13.3 | **Unused in `src/`** — only used by `scripts/seed.ts`. Can be moved to `devDependencies` |
+| `pg` | ^8.13.3 | **Dev-only** — used by `scripts/seed.ts` only, moved to `devDependencies` |
 
 ### Dev dependencies
 
@@ -630,22 +630,27 @@ At startup, `env.ts` validates that `DATABASE_URL`, `JWT_SECRET`, and `JWT_REFRE
 |---|---|---|
 | `@tailwindcss/postcss` | ^4 | **Active** — Tailwind CSS integration |
 | `@types/node` | ^20 | **Active** — Node.js types |
-| `@types/pg` | ^8.11.11 | **Potentially removable** — no longer needed if `pg` is only in scripts |
 | `@types/react` | ^19 | **Active** — React types |
 | `@types/react-dom` | ^19 | **Active** — React DOM types |
 | `dotenv` | ^16.4.7 | **Active** — script-only env loading |
 | `eslint` | ^9 | **Active** — linter |
-| `eslint-config-next` | 16.1.6 | **Active** — Next.js lint rules |
-| `prisma` | ^7.6.0 | **Unused** — can be removed (was installed experimentally) |
+| `eslint-config-next` | 16.2.2 | **Active** — Next.js lint rules |
+| `pg` | ^8.13.3 | **Active** — used by seed script only |
 | `tailwindcss` | ^4 | **Active** — CSS framework |
 | `tsx` | ^4.19.2 | **Active** — script runner |
 | `typescript` | ^5 | **Active** — compiler |
 
 ### Recommended cleanup
 
-1. **Move `pg` to `devDependencies`** — it's only imported by `scripts/seed.ts`, not by any `src/` code. This prevents it from being bundled into serverless functions.
-2. **Remove `prisma`** — installed during an experimental setup, not used by the project. Also delete `prisma/schema.prisma`.
-3. **Remove `@types/pg`** — only needed if `pg` types are used in `src/`. Since the app now uses `@neondatabase/serverless` with its own types, this can go.
+All cleanup items from the initial audit have been completed:
+- ✅ `pg` moved to `devDependencies` (not bundled into serverless functions)
+- ✅ `prisma` removed (was installed experimentally, never used)
+- ✅ `@types/pg` removed (no longer needed in `src/`)
+- ✅ `prisma/schema.prisma` deleted
+- ✅ Next.js upgraded to 16.2.2 (patches 4 CVEs including CSRF bypass)
+- ✅ All auth endpoints use `Cache-Control: no-store` via `apiNoCache()`
+- ✅ Login route uses explicit column list instead of `SELECT *`
+- ✅ Rate limiter purges stale entries to prevent memory growth
 
 ---
 

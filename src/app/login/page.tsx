@@ -45,9 +45,6 @@ function LoginContent() {
   return (
     <main className="min-h-screen bg-[#0a0a0a] flex">
 
-      {/* Left sidebar */}
-      <aside className="hidden sm:flex flex-col items-center justify-end border-r border-[#262626] bg-[#0c0c0c] w-[56px] shrink-0 py-4 px-2.5" />
-
       {/* Login form */}
       <div className="flex-1 flex items-center justify-center px-5 py-10">
         <div className="w-full max-w-[320px] flex flex-col items-center gap-6">
