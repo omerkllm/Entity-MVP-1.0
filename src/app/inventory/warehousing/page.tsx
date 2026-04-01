@@ -84,6 +84,7 @@ function WarehousingContent() {
     setLoading(true)
     api.get('/api/warehousing-data').then(({ data }) => {
       setWarehouses(data.warehouses.data)
+      setObjects(data.objects?.data ?? [])
       if (processId) {
         const found = data.processes.data.find((p: { id: string }) => p.id === processId)
         setProcessName(found?.name ?? 'All')
@@ -176,14 +177,7 @@ function WarehousingContent() {
   // ── Drilled warehouse → objects (key-based join) ────────────────
   const drilledWarehouse = drilledWarehouseIdx !== null ? filteredWarehouses[drilledWarehouseIdx] : null
 
-  // Fetch objects for the drilled warehouse only (avoids pagination truncation on the global fetch)
-  useEffect(() => {
-    if (!drilledWarehouse) { setObjects([]); return }
-    api.get(`/api/objects?warehouseId=${drilledWarehouse.warehouseId}&limit=200`)
-      .then(r => setObjects(r.data.data ?? []))
-      .catch(() => setObjects([]))
-  }, [drilledWarehouse?.warehouseId])
-
+  // Objects are pre-fetched in the initial load — filter client-side by warehouse
   const warehouseObjects = useMemo(() => {
     if (!drilledWarehouse) return []
     return objects.filter(o => o.warehouseId === drilledWarehouse.warehouseId)
