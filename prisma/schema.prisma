@@ -1,0 +1,130 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ── Supply-chain pipeline stages ─────────────────────────────────────────────
+model processes {
+  process_id   String         @id @db.VarChar(10)
+  name         String         @db.VarChar(100)
+  status       String         @default("Active") @db.VarChar(20)
+  quantity     Int            @default(0)
+  unit         String         @default("") @db.VarChar(10)
+  last_updated DateTime?      @db.Date
+  next_process String?        @db.VarChar(10)
+
+  // Self-referencing FK: forms the linear pipeline chain
+  next         processes?     @relation("ProcessChain", fields: [next_process], references: [process_id])
+  prev         processes[]    @relation("ProcessChain")
+
+  categories   category[]
+  activity_log activity_log[]
+
+  @@index([next_process], name: "idx_processes_next")
+}
+
+// ── Prominence tiers (3 per process) ─────────────────────────────────────────
+model category {
+  category_id String      @id @db.VarChar(10)
+  name        String      @db.VarChar(150)
+  process_id  String      @db.VarChar(10)
+
+  process    processes   @relation(fields: [process_id], references: [process_id])
+  warehouses warehouse[]
+
+  @@index([process_id], name: "idx_category_process")
+}
+
+// ── External supplier / buyer partners ───────────────────────────────────────
+model businesses {
+  business_id     String  @id @db.VarChar(10)
+  object_category String  @db.VarChar(150)
+  region          String  @db.VarChar(100)
+  coordinates     String  @db.VarChar(50)
+
+  warehouses warehouse[]
+}
+
+// ── Physical warehouse facilities ────────────────────────────────────────────
+model warehouse {
+  warehouse_id      String  @id @db.VarChar(10)
+  title             String  @db.VarChar(100)
+  region            String  @db.VarChar(100)
+  coordinates       String  @db.VarChar(50)
+  object_category   String? @db.VarChar(150)
+  operational_hours String? @db.VarChar(20)
+  status            String  @db.VarChar(10)
+  total_capacity    Int
+  capacity_used     Int     @default(0)
+  business_link_type String? @db.VarChar(20)
+  category_id       String? @db.VarChar(10)
+  business_id       String? @db.VarChar(10)
+  // timeline_id stored as plain string — circular FK resolved outside Prisma
+  timeline_id       String? @db.VarChar(20)
+
+  category  category?   @relation(fields: [category_id], references: [category_id])
+  business  businesses? @relation(fields: [business_id], references: [business_id])
+  objects   object[]
+
+  @@index([business_id], name: "idx_wh_business")
+  @@index([category_id], name: "idx_wh_category")
+  @@index([status],      name: "idx_wh_status")
+}
+
+// ── Inventory items ───────────────────────────────────────────────────────────
+model object {
+  object_id       String    @id @db.VarChar(15)
+  object_category String    @db.VarChar(200)
+  quantity        Int
+  unit            String    @db.VarChar(30)
+  arrival_time    DateTime
+  transit_status  String    @db.VarChar(20)
+  object_health   String    @db.VarChar(10)
+  warehouse_id    String    @db.VarChar(10)
+
+  warehouse warehouse  @relation(fields: [warehouse_id], references: [warehouse_id])
+  timeline  timeline[]
+
+  @@index([warehouse_id], name: "idx_obj_warehouse")
+  @@index([transit_status], name: "idx_obj_transit")
+}
+
+// ── Arrival tracking entries ──────────────────────────────────────────────────
+model timeline {
+  timeline_id  String   @id @db.VarChar(20)
+  object_id    String   @db.VarChar(15)
+  arrival_time DateTime
+  quantity     Int
+
+  object object @relation(fields: [object_id], references: [object_id])
+
+  @@index([object_id],    name: "idx_tl_object")
+  @@index([arrival_time], name: "idx_tl_arrival")
+}
+
+// ── Supply-chain event log ────────────────────────────────────────────────────
+model activity_log {
+  id         Int    @id @default(autoincrement())
+  node_id    String @db.VarChar(10)
+  event_type String @db.VarChar(200)
+  time       String @db.VarChar(50)
+
+  process processes @relation(fields: [node_id], references: [process_id])
+}
+
+// ── Application users ─────────────────────────────────────────────────────────
+model users {
+  user_id         String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  email           String    @unique @db.VarChar(255)
+  username        String    @unique @db.VarChar(50)
+  password_hash   String    @db.VarChar(255)
+  role            String    @db.VarChar(10)
+  is_active       Boolean   @default(true)
+  failed_attempts Int       @default(0)
+  locked_until    DateTime?
+  mfa_secret      String?   @db.VarChar(100)
+}
