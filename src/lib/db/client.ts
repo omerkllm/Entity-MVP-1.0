@@ -1,10 +1,10 @@
-import { Pool, type QueryResultRow } from 'pg';
+import { Pool, type QueryResultRow } from '@neondatabase/serverless';
 import { env } from '@/lib/env';
 
 /* ── Pool configuration constants ─────────────────────────────────── */
-const MAX_POOL_SIZE = 20;
+const MAX_POOL_SIZE = 5;
 const IDLE_TIMEOUT_MS = 30_000;
-const CONNECTION_TIMEOUT_MS = 5_000;
+const CONNECTION_TIMEOUT_MS = 10_000;
 
 /* ── Singleton pool (survives Next.js HMR in dev) ─────────────────── */
 const globalForPg = globalThis as unknown as { pgPool?: Pool };
@@ -16,10 +16,6 @@ export const pool =
     max: MAX_POOL_SIZE,
     idleTimeoutMillis: IDLE_TIMEOUT_MS,
     connectionTimeoutMillis: CONNECTION_TIMEOUT_MS,
-    ssl:
-      process.env.NODE_ENV === 'production'
-        ? { rejectUnauthorized: true }
-        : false,
   });
 
 // Log unexpected pool-level errors instead of crashing the process
