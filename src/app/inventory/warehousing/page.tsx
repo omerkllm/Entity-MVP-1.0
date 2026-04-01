@@ -82,19 +82,14 @@ function WarehousingContent() {
 
   useEffect(() => {
     setLoading(true)
-    Promise.all([
-      api.get('/api/warehouses'),
-      processId
-        ? api.get('/api/processes')
-        : Promise.resolve(null),
-    ]).then(([wh, processes]) => {
-      setWarehouses(wh.data.data)
-      if (processes && processId) {
-        const found = processes.data.data.find((p: { id: string }) => p.id === processId)
+    api.get('/api/warehousing-data').then(({ data }) => {
+      setWarehouses(data.warehouses.data)
+      if (processId) {
+        const found = data.processes.data.find((p: { id: string }) => p.id === processId)
         setProcessName(found?.name ?? 'All')
       }
       // Pre-select first record so the inspector is visible on load
-      if (wh.data.data.length > 0) setSelectedIdx(0)
+      if (data.warehouses.data.length > 0) setSelectedIdx(0)
     }).catch(err => console.error('[WarehousingPage] data fetch error:', err))
       .finally(() => setLoading(false))
   }, [processId])
