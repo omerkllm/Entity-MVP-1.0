@@ -49,13 +49,10 @@ export default function DecisionMakingPage() {
   useEffect(() => { setMounted(true) }, [])
 
   useEffect(() => {
-    Promise.all([
-      api.get('/api/warehouses'),
-      api.get('/api/businesses'),
-    ]).then(([whRes, bizRes]) => {
-      setWarehouses(whRes.data.data)
-      setRawBusinesses(bizRes.data.data)
-      const pins: BusinessPin[] = bizRes.data.data.map((b: DBBusiness) => ({
+    api.get('/api/dmp-data').then(({ data }) => {
+      setWarehouses(data.warehouses.data)
+      setRawBusinesses(data.businesses.data)
+      const pins: BusinessPin[] = data.businesses.data.map((b: DBBusiness) => ({
         id: b.businessId,
         name: `${b.objectCategory} (${b.region})`,
         coordinates: b.coordinates,
