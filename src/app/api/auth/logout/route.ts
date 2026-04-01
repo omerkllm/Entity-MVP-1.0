@@ -1,7 +1,7 @@
-import { NextResponse } from 'next/server'
 import { clearAuthCookies } from '@/lib/auth/cookies'
+import { apiNoCache } from '@/lib/api-response'
 
 export async function POST() {
   await clearAuthCookies()
-  return NextResponse.json({ success: true })
+  return apiNoCache({ success: true })
 }
