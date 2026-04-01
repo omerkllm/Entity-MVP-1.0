@@ -4,7 +4,7 @@ import { authenticator } from 'otplib'
 import { pool } from '@/lib/db/client'
 import { signAccessToken, signRefreshToken, verifyMfaToken } from '@/lib/auth/jwt'
 import { setAuthCookies } from '@/lib/auth/cookies'
-import { apiError } from '@/lib/api-response'
+import { apiError, apiNoCache } from '@/lib/api-response'
 import type { MfaUserRow } from '@/lib/data/types'
 
 const MfaSchema = z.object({
@@ -61,5 +61,5 @@ export async function POST(request: Request) {
   ])
   await setAuthCookies(accessToken, refreshToken)
 
-  return NextResponse.json({ role: user.role })
+  return apiNoCache({ role: user.role })
 }

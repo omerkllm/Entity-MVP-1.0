@@ -1,8 +1,7 @@
-import { NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
 import { verifyRefreshToken, signAccessToken } from '@/lib/auth/jwt'
 import { COOKIE_REFRESH, refreshAccessCookie } from '@/lib/auth/cookies'
-import { apiError } from '@/lib/api-response'
+import { apiError, apiNoCache } from '@/lib/api-response'
 import { pool } from '@/lib/db/client'
 
 export async function POST() {
@@ -29,7 +28,7 @@ export async function POST() {
     const newAccess = await signAccessToken(tokenPayload)
     await refreshAccessCookie(newAccess, payload.role)
 
-    return NextResponse.json({ success: true })
+    return apiNoCache({ success: true })
   } catch {
     return apiError('Invalid or expired refresh token', 401)
   }

@@ -32,3 +32,17 @@ export function apiSuccess<T>(data: T, status = 200): NextResponse {
     },
   });
 }
+
+/**
+ * Returns a standardised JSON success response that must never be cached.
+ * Use for all auth endpoints (login, logout, refresh, session, mfa) where
+ * stale responses would be a security issue.
+ */
+export function apiNoCache<T>(data: T, status = 200): NextResponse {
+  return NextResponse.json(data, {
+    status,
+    headers: {
+      'Cache-Control': 'no-store',
+    },
+  });
+}

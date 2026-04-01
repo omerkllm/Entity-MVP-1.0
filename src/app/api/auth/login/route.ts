@@ -5,7 +5,7 @@ import { pool } from '@/lib/db/client'
 import { verifyPassword } from '@/lib/auth/hash'
 import { signAccessToken, signRefreshToken, signMfaToken } from '@/lib/auth/jwt'
 import { setAuthCookies } from '@/lib/auth/cookies'
-import { apiError } from '@/lib/api-response'
+import { apiError, apiNoCache } from '@/lib/api-response'
 import type { UserRow } from '@/lib/data/types'
 
 // Well-formed dummy hash used to normalise bcrypt timing when no real user is found.
@@ -14,9 +14,20 @@ const DUMMY_HASH = '$2b$12$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW
 
 // Simple in-memory rate limiter: max 10 login attempts per IP per 60 seconds.
 const rateLimitMap = new Map<string, { count: number; resetAt: number }>()
+let _purgeCounter = 0
 
 function isRateLimited(ip: string): boolean {
   const now = Date.now()
+
+  // Purge expired entries every 500 calls to prevent unbounded map growth
+  // in long-running Node.js instances (e.g. local dev, non-serverless deploys).
+  if (++_purgeCounter >= 500) {
+    _purgeCounter = 0
+    for (const [k, v] of rateLimitMap) {
+      if (v.resetAt <= now) rateLimitMap.delete(k)
+    }
+  }
+
   const entry = rateLimitMap.get(ip)
   if (!entry || entry.resetAt <= now) {
     rateLimitMap.set(ip, { count: 1, resetAt: now + 60_000 })
@@ -62,7 +73,9 @@ export async function POST(request: NextRequest) {
   const { username, password } = parsed.data
 
   const { rows } = await pool.query<UserRow>(
-    'SELECT * FROM users WHERE username = $1 LIMIT 1',
+    `SELECT user_id, username, email, role, password_hash, mfa_secret,
+            is_active, failed_attempts, locked_until
+     FROM users WHERE username = $1 LIMIT 1`,
     [username.toLowerCase()]
   )
   const user = rows[0]
@@ -103,7 +116,7 @@ export async function POST(request: NextRequest) {
   // of full access + refresh tokens. The client must then POST to /api/auth/mfa.
   if (user.mfa_secret) {
     const mfaToken = await signMfaToken(user.user_id)
-    return NextResponse.json({ mfa_required: true, mfa_token: mfaToken })
+    return apiNoCache({ mfa_required: true, mfa_token: mfaToken })
   }
 
   const [accessToken, refreshToken] = await Promise.all([
@@ -113,5 +126,5 @@ export async function POST(request: NextRequest) {
 
   await setAuthCookies(accessToken, refreshToken, user.role)
 
-  return NextResponse.json({ role: user.role, username: user.username })
+  return apiNoCache({ role: user.role, username: user.username })
 }
