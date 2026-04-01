@@ -2,14 +2,18 @@
 
 ## Tech Stack
 
-- **Framework**: Next.js 16 (App Router) with React 19
-- **Styling**: Tailwind CSS 4
-- **Theme**: `next-themes` (light / dark mode)
-- **Fonts**: Geist Sans + Geist Mono (bundled via `next/font`)
-- **Language**: TypeScript (strict mode)
-- **Database**: PostgreSQL (via `pg` driver, singleton pool)
-- **Auth**: JWT (HS256 via `jose`) + bcrypt password hashing
-- **Middleware**: `proxy.ts` (Next.js 16 route protection)
+- **Framework**: Next.js 16.2.2 (App Router) with React 19
+- **Styling**: Tailwind CSS 4 (Oxide engine, CSS-first config)
+- **Theme**: `next-themes` (dark mode)
+- **Language**: TypeScript 5 (strict mode, ES2020, ESM)
+- **Database**: Neon PostgreSQL via `@neondatabase/serverless` HTTP driver
+- **Auth**: JWT (HS256 via `jose`) + bcrypt (`@node-rs/bcrypt`) + TOTP MFA (`otplib`)
+- **Middleware**: `proxy.ts` (Edge Runtime route protection + role-based access)
+- **HTTP Client**: `axios` with auto-refresh interceptor
+- **Maps**: `maplibre-gl` with MapTiler Dark tiles
+- **Charts**: `recharts` (SVG-based)
+- **Validation**: `zod` (runtime schema validation)
+- **Deployment**: Vercel (serverless functions + Edge network)
 
 ## Project Structure
 
@@ -30,39 +34,69 @@ src/
 │       ├── auth/
 │       │   ├── login/route.ts    # POST — verify credentials, issue JWT
 │       │   ├── logout/route.ts   # POST — clear auth cookies
+│       │   ├── mfa/route.ts      # POST — verify TOTP code, issue tokens
 │       │   ├── refresh/route.ts  # POST — refresh access token
 │       │   └── session/route.ts  # GET — return current user role
-│       ├── objects/route.ts      # GET — all objects (optional ?warehouseId=)
-│       └── warehouses/route.ts   # GET — all warehouses joined with category
+│       ├── activity/route.ts     # GET — activity log entries
+│       ├── businesses/route.ts   # GET — business partners (SC, SCA, SA)
+│       ├── categories/route.ts   # GET — item categories
+│       ├── dashboard/route.ts    # GET — dashboard stats (SCA, SA)
+│       ├── dmp-data/route.ts     # GET — combined: warehouses + businesses (DMP page)
+│       ├── objects/route.ts      # GET — inventory objects (?warehouseId= filter)
+│       ├── processes/route.ts    # GET — supply chain processes
+│       ├── scd-data/route.ts     # GET — combined: processes + activity + warehouses + dashboard (SCD page)
+│       ├── warehouses/route.ts   # GET — all warehouses
+│       └── warehousing-data/route.ts  # GET — combined: warehouses + processes (warehousing page)
 │
 ├── components/
 │   ├── Sidebar.tsx               # Global sidebar navigation (role-aware)
 │   ├── SupplyChainFlow.tsx       # SVG sankey-style graph (clickable nodes)
-│   ├── WarehouseInspector.tsx     # Right-panel inspector for a warehouse row
-│   ├── ObjectInspector.tsx        # Right-panel inspector for an object row
+│   ├── BusinessInspector.tsx     # Right-panel inspector for a business row
+│   ├── WarehouseInspector.tsx    # Right-panel inspector for a warehouse row
+│   ├── ObjectInspector.tsx       # Right-panel inspector for an object row
+│   ├── DmpMap.tsx                # MapLibre GL map (Decision Making Portal)
+│   ├── ai/
+│   │   ├── AIChatPanel.tsx       # AI agent chat panel
+│   │   └── index.ts             # Barrel re-exports
+│   ├── map/
+│   │   ├── geo.ts               # Coordinate parsing utilities
+│   │   ├── layers.ts            # Map layer rendering (pins, arrows, labels)
+│   │   ├── MapKeyMissing.tsx    # Missing API key fallback UI
+│   │   └── types.ts             # Map-related TypeScript types
+│   ├── supply-chain/
+│   │   ├── constants.ts         # Supply chain flow constants
+│   │   ├── flow-pieces.ts       # Flow piece definitions
+│   │   └── FlowPiece.tsx        # Individual flow piece component
 │   └── ui/                       # Shared generic UI primitives
-│       ├── ErrorBoundary.tsx      # React error boundary wrapper
-│       ├── FilterPanel.tsx        # CheckboxFilterSections, RangeFilter, DeleteFiltersButton
-│       └── index.ts              # Barrel re-exports
+│       ├── ErrorBoundary.tsx     # React error boundary wrapper
+│       ├── FilterPanel.tsx       # CheckboxFilterSections, RangeFilter, DeleteFiltersButton
+│       ├── ResizablePanel.tsx    # Resizable side panel
+│       └── index.ts             # Barrel re-exports
 │
 ├── lib/
+│   ├── api-response.ts           # apiSuccess (cached), apiNoCache, apiError helpers
+│   ├── api.ts                    # axios instance with refresh-token interceptor
+│   ├── env.ts                    # Environment variable validation at startup
 │   ├── auth/                     # Authentication utilities
 │   │   ├── cookies.ts            # Set/clear HttpOnly auth cookies
 │   │   ├── hash.ts               # bcrypt hash/verify helpers
-│   │   ├── jwt.ts                # JWT sign/verify (access + refresh tokens)
+│   │   ├── jwt.ts                # JWT sign/verify (access + refresh + MFA tokens)
 │   │   └── session.ts            # Read session from cookie
 │   ├── data/                     # Data layer — types, JSON helpers, utilities
 │   │   ├── types.ts              # All TypeScript type definitions
 │   │   ├── helpers.ts            # Pure utility functions (capacity, health math)
-│   │   ├── objects.ts            # Object records from JSON (legacy — used by JSON-dependent code)
-│   │   ├── warehouses.ts         # Warehouse records from JSON (legacy — used by JSON-dependent code)
-│   │   ├── supply-chain.ts       # Supply chain nodes + activity log from JSON
 │   │   └── index.ts              # Barrel re-exports
 │   └── db/                       # Database layer
-│       ├── client.ts             # PostgreSQL Pool singleton (HMR-safe)
+│       ├── client.ts             # Neon HTTP driver (`neon()`) — zero-connection-overhead queries
+│       ├── pagination.ts         # Pagination params parsing + result extraction
 │       └── queries/
+│           ├── activity.ts       # SQL queries for activity_log table
+│           ├── businesses.ts     # SQL queries for businesses table
+│           ├── categories.ts     # SQL queries for category table
+│           ├── dashboard.ts      # SQL queries for dashboard aggregate stats
 │           ├── objects.ts        # SQL queries for object table
-│           └── warehouses.ts     # SQL queries for warehouse table (joined with category)
+│           ├── processes.ts      # SQL queries for processes table
+│           └── warehouses.ts     # SQL queries for warehouse table
 │
 ├── utils/
 │   ├── filters.ts                # Generic filter helpers (derive, toggle, count, clear)
@@ -82,68 +116,82 @@ src/
 
 ## Data Architecture
 
-### Dual data sources (transitional state)
+### All data from PostgreSQL
 
-The project is migrating from JSON flat files to PostgreSQL. Currently:
+All business data is served from Neon PostgreSQL via API routes. No JSON files are used as primary data sources for pages.
 
-| Data | Source | API Route | Pages Using |
-|------|--------|-----------|-------------|
-| Warehouses | **PostgreSQL** | `GET /api/warehouses` | SCD, Warehousing |
-| Objects | **PostgreSQL** | `GET /api/objects` | SCD, Warehousing |
-| Users/Auth | **PostgreSQL** | `POST /api/auth/*` | Login |
-| Supply Chain Nodes | JSON (`supply-chain-nodes.json`) | *none yet* | Inventory, SCD, SupplyChainFlow |
-| Activity Log | JSON (`activity-log.json`) | *none yet* | SCD |
-| DMP Filters | JSON (`dmp-filters.json`) | — (UI-only) | DMP |
-| AI Conversations | JSON (`ai-agent-simulations.json`) | — (mockup) | DMP |
-| Category Colors | JSON (`category-colors.json`) | — (UI-only) | WarehouseInspector |
+| Data | API Route | Pages Using |
+|------|-----------|-------------|
+| User Auth | `POST /api/auth/login`, `/mfa`, `/refresh`, `/logout` | Login |
+| Session | `GET /api/auth/session` | All (via middleware) |
+| Warehouses | `GET /api/warehouses` | SCD, Warehousing, DMP |
+| Objects | `GET /api/objects` | Warehousing |
+| Processes | `GET /api/processes` | Inventory, Warehousing |
+| Businesses | `GET /api/businesses` | DMP |
+| Activity Log | `GET /api/activity` | SCD |
+| Dashboard Stats | `GET /api/dashboard` | SCD |
+| Combined SCD | `GET /api/scd-data` | Supply Chain Dashboard |
+| Combined DMP | `GET /api/dmp-data` | Decision Making Portal |
+| Combined Warehousing | `GET /api/warehousing-data` | Inventory/Warehousing |
 
-### Import strategy
+### Static JSON (UI-only, not business data)
 
-Pages import utilities from specific sub-modules to avoid bundling unused JSON data:
-- `@/lib/data/helpers` — pure math utilities (no JSON)
-- `@/lib/data/supply-chain` — process nodes + activity (small JSON)
-- `@/lib/data/types` — type definitions only (zero runtime)
+| File | Purpose |
+|------|---------|
+| `dmp-filters.json` | Filter panel configuration for DMP page |
+| `ai-agent-simulations.json` | Mock AI agent conversations |
+| `category-colors.json` | Colour mapping for UI styling |
 
-Do NOT import from the barrel `@/lib/data` in page components — it pulls in all JSON files via `objects.ts` → `warehouses.ts` cascade.
+### Combined endpoints (performance)
 
-### Key relationships
+To reduce serverless cold starts, pages use combined endpoints that run multiple queries in `Promise.all()` within a single function invocation:
+
+| Endpoint | Queries | Page |
+|----------|---------|------|
+| `/api/scd-data` | processes + activity + warehouses + dashboard | Supply Chain Dashboard |
+| `/api/dmp-data` | warehouses + businesses | Decision Making Portal |
+| `/api/warehousing-data` | warehouses + processes | Inventory/Warehousing |
+
+### Database schema (9 tables)
 
 ```
-processes (PostgreSQL) ← seeded from supply-chain-nodes.json
-  └─ category (PostgreSQL)
-       └─ warehouse (PostgreSQL)
-            └─ object (PostgreSQL)
-
-supply-chain-nodes.json ← still read directly for UI nodes
-  └─ used by SupplyChainFlow, inventory/page, SCD
+processes (self-referencing next_process FK)
+  └─ category (prominence tiers per process)
+       └─ warehouse (with generated capacity_pct column)
+            └─ object (inventory items)
+                 └─ object_relationships (many-to-many linkages)
+            └─ timeline (arrival/departure tracking)
+       └─ businesses (external partners)
+  └─ activity_log (audit trail)
+users (role-based accounts: SA, SCA, SC, WO)
 ```
 
 ## Data Sources
 
 ### Per-page data origin
 
-| Page | PostgreSQL (via API) | Static JSON |
-|------|----------------------|-------------|
+| Page | API Endpoint | Static JSON |
+|------|-------------|-------------|
 | `/login` | `POST /api/auth/login` | — |
-| `/inventory` | — | `supply-chain-nodes.json` (process list) |
-| `/inventory/warehousing` | `GET /api/warehouses`, `GET /api/objects` | — |
-| `/supply-chain-dashboard` | `GET /api/warehouses`, `GET /api/objects`, `GET /api/activity`, `GET /api/businesses`, `GET /api/processes` | `supply-chain-nodes.json` (sankey nodes) |
-| `/decision-making` | — | `dmp-filters.json` (filter panels), `ai-agent-simulations.json` (chat mock) |
-
-### Migration timeline
-
-- **`supply-chain-nodes.json`** — Currently read directly by `SupplyChainFlow`, `inventory/page`, and the supply-chain-dashboard. The data is already seeded into the `processes` table (canonical IDs: `PRC-01…PRC-08`). Migration target: add `GET /api/processes` client-side fetch to replace the JSON import once UI state management is updated (tracked in BACKLOG.md).
-- **`dmp-filters.json`** — UI-only configuration; no migration planned.
-- **`ai-agent-simulations.json`** — Placeholder for future AI agent integration; no migration planned.
+| `/inventory` | `GET /api/warehousing-data` (combined) | — |
+| `/inventory/warehousing` | `GET /api/warehousing-data` (combined) | — |
+| `/supply-chain-dashboard` | `GET /api/scd-data` (combined) | — |
+| `/decision-making` | `GET /api/dmp-data` (combined) | `dmp-filters.json`, `ai-agent-simulations.json` |
 
 ---
 
 ## Authentication
 
 - 4 seeded users: `admin/123` (SA), `analyst/123` (SCA), `commander/123` (SC), `operator/123` (WO)
-- JWT access token (15m) + refresh token (7d) in HttpOnly cookies
-- `proxy.ts` enforces route-level role restrictions
+- JWT access token (15m) + refresh token (7d) + MFA token (5m) in HttpOnly cookies
+- `jose` (HS256) — Edge Runtime compatible, zero dependencies
+- `@node-rs/bcrypt` — Rust-native, 12 rounds, non-blocking
+- `otplib` — TOTP MFA (RFC 6238) with authenticator apps
+- `proxy.ts` (Edge Runtime) enforces route-level role restrictions
 - Account lockout after 5 failed attempts (15m cooldown)
+- Rate limiter: max 10 login attempts per IP per 60 seconds
+- All auth responses use `Cache-Control: no-store` (never cached)
+- `entity-role` cookie is non-HttpOnly so Sidebar reads role client-side
 
 ## Page Flows
 
@@ -161,10 +209,11 @@ supply-chain-nodes.json ← still read directly for UI nodes
 
 ### Supply Chain Dashboard
 Stat cards, recent activity, sankey flow, transit distribution, and capacity charts.
-Warehouses and objects from DB; supply chain nodes and activity from JSON.
+All data from a single `GET /api/scd-data` call (processes, activity, warehouses, dashboard stats).
 
 ### Decision Making Portal
-Three-column layout: quick-action filters (from `dmp-filters.json`), map placeholder, AI agent chat panel (from `ai-agent-simulations.json`).
+Three-column layout: quick-action filters (from `dmp-filters.json`), MapLibre GL map with warehouse/business pins, AI agent chat panel (from `ai-agent-simulations.json`).
+Map + business data from a single `GET /api/dmp-data` call.
 
 ## Conventions
 
@@ -179,16 +228,24 @@ Three-column layout: quick-action filters (from `dmp-filters.json`), map placeho
 ## Running
 
 ```bash
-cd entity
 npm install
 npm run dev      # http://localhost:3000
 npm run build    # production build
-npm run seed     # seed DB from JSON files
+npm run seed     # seed DB from JSON seed files
 ```
 
 Requires `.env.local` with:
 ```
-DATABASE_URL=postgresql://...
+DATABASE_URL=postgresql://...    # Neon connection string
 JWT_SECRET=<random 64-char string>
 JWT_REFRESH_SECRET=<different random 64-char string>
+ENCRYPTION_SECRET=<random string>
+NEXT_PUBLIC_MAPTILER_KEY=<maptiler api key>
 ```
+
+### Scripts
+
+| Command | File | Purpose |
+|---------|------|---------|
+| `npm run seed` | `scripts/seed.ts` | Seed all tables from JSON files in `scripts/seed-data/` |
+| — | `scripts/create-schema.ts` | Idempotent DDL to create all 9 tables (run manually via `npx tsx scripts/create-schema.ts`) |
