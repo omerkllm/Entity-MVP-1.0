@@ -1,0 +1,13 @@
+{
+  "entityFilters": [
+    { "key": "show-all", "label": "Show All", "group": "entity" },
+    { "key": "warehouses-only", "label": "Warehouses Only", "group": "entity" },
+    { "key": "businesses-only", "label": "Businesses Only", "group": "entity" }
+  ],
+  "linkFilters": [
+    { "key": "linked-only", "label": "Linked to Warehouses", "group": "link" },
+    { "key": "not-linked", "label": "Not Linked to Warehouses", "group": "link" },
+    { "key": "supplier-only", "label": "Suppliers Only", "group": "link" },
+    { "key": "customer-only", "label": "Customers Only", "group": "link" }
+  ]
+}

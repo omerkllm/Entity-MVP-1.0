@@ -1,0 +1,342 @@
+[
+    {
+        "warehouseId": "WH-01",
+        "title": "Boxwlow",
+        "totalCapacity": 8519,
+        "region": "Multan",
+        "status": "Open",
+        "coordinates": "30.1575 N, 71.5249 E",
+        "hours": "06:00 → 16:00",
+        "warehouseName": "Boxwlow { WH-01 }"
+    },
+    {
+        "warehouseId": "WH-02",
+        "title": "Grainfold",
+        "totalCapacity": 9909,
+        "region": "Multan",
+        "status": "Open",
+        "coordinates": "30.1879 N, 71.4917 E",
+        "hours": "07:00 → 17:00",
+        "warehouseName": "Grainfold { WH-02 }"
+    },
+    {
+        "warehouseId": "WH-03",
+        "title": "Ironpeak",
+        "totalCapacity": 9038,
+        "region": "Multan",
+        "status": "Open",
+        "coordinates": "30.0977 N, 71.5301 E",
+        "hours": "08:00 → 18:30",
+        "warehouseName": "Ironpeak { WH-03 }"
+    },
+    {
+        "warehouseId": "WH-04",
+        "title": "Stackwell",
+        "totalCapacity": 9648,
+        "region": "Multan",
+        "status": "Closed",
+        "coordinates": "30.2170 N, 71.5706 E",
+        "hours": "09:00 → 19:00",
+        "warehouseName": "Stackwell { WH-04 }"
+    },
+    {
+        "warehouseId": "WH-05",
+        "title": "Duskyard",
+        "totalCapacity": 10486,
+        "region": "Peshawar",
+        "status": "Open",
+        "coordinates": "34.0151 N, 71.5249 E",
+        "hours": "06:00 → 16:00",
+        "warehouseName": "Duskyard { WH-05 }"
+    },
+    {
+        "warehouseId": "WH-06",
+        "title": "Crestline",
+        "totalCapacity": 8137,
+        "region": "Peshawar",
+        "status": "Open",
+        "coordinates": "34.0455 N, 71.4917 E",
+        "hours": "07:00 → 17:00",
+        "warehouseName": "Crestline { WH-06 }"
+    },
+    {
+        "warehouseId": "WH-07",
+        "title": "Ashport",
+        "totalCapacity": 9292,
+        "region": "Peshawar",
+        "status": "Open",
+        "coordinates": "33.9553 N, 71.5301 E",
+        "hours": "08:00 → 18:30",
+        "warehouseName": "Ashport { WH-07 }"
+    },
+    {
+        "warehouseId": "WH-08",
+        "title": "Stillmark",
+        "totalCapacity": 11877,
+        "region": "Peshawar",
+        "status": "Closed",
+        "coordinates": "34.0746 N, 71.5706 E",
+        "hours": "09:00 → 19:00",
+        "warehouseName": "Stillmark { WH-08 }"
+    },
+    {
+        "warehouseId": "WH-09",
+        "title": "Ridgehaven",
+        "totalCapacity": 10989,
+        "region": "Peshawar",
+        "status": "Open",
+        "coordinates": "33.9995 N, 71.4363 E",
+        "hours": "06:00 → 16:00",
+        "warehouseName": "Ridgehaven { WH-09 }"
+    },
+    {
+        "warehouseId": "WH-10",
+        "title": "Coalburn",
+        "totalCapacity": 10228,
+        "region": "Quetta",
+        "status": "Open",
+        "coordinates": "30.1798 N, 66.9750 E",
+        "hours": "07:00 → 17:00",
+        "warehouseName": "Coalburn { WH-10 }"
+    },
+    {
+        "warehouseId": "WH-11",
+        "title": "Millgate",
+        "totalCapacity": 9591,
+        "region": "Quetta",
+        "status": "Open",
+        "coordinates": "30.2102 N, 66.9418 E",
+        "hours": "08:00 → 18:30",
+        "warehouseName": "Millgate { WH-11 }"
+    },
+    {
+        "warehouseId": "WH-12",
+        "title": "Frostyard",
+        "totalCapacity": 11626,
+        "region": "Quetta",
+        "status": "Closed",
+        "coordinates": "30.1200 N, 66.9802 E",
+        "hours": "09:00 → 19:00",
+        "warehouseName": "Frostyard { WH-12 }"
+    },
+    {
+        "warehouseId": "WH-13",
+        "title": "Dawnfield",
+        "totalCapacity": 10021,
+        "region": "Quetta",
+        "status": "Open",
+        "coordinates": "30.2393 N, 67.0207 E",
+        "hours": "06:00 → 16:00",
+        "warehouseName": "Dawnfield { WH-13 }"
+    },
+    {
+        "warehouseId": "WH-14",
+        "title": "Emberloft",
+        "totalCapacity": 10601,
+        "region": "Quetta",
+        "status": "Open",
+        "coordinates": "30.1642 N, 66.8864 E",
+        "hours": "07:00 → 17:00",
+        "warehouseName": "Emberloft { WH-14 }"
+    },
+    {
+        "warehouseId": "WH-15",
+        "title": "Stonewall",
+        "totalCapacity": 10615,
+        "region": "Karachi",
+        "status": "Open",
+        "coordinates": "24.8607 N, 67.0011 E",
+        "hours": "08:00 → 18:30",
+        "warehouseName": "Stonewall { WH-15 }"
+    },
+    {
+        "warehouseId": "WH-16",
+        "title": "Timberline",
+        "totalCapacity": 8613,
+        "region": "Karachi",
+        "status": "Closed",
+        "coordinates": "24.8911 N, 66.9679 E",
+        "hours": "09:00 → 19:00",
+        "warehouseName": "Timberline { WH-16 }"
+    },
+    {
+        "warehouseId": "WH-17",
+        "title": "Hazelwick",
+        "totalCapacity": 9013,
+        "region": "Karachi",
+        "status": "Open",
+        "coordinates": "24.8009 N, 67.0063 E",
+        "hours": "06:00 → 16:00",
+        "warehouseName": "Hazelwick { WH-17 }"
+    },
+    {
+        "warehouseId": "WH-18",
+        "title": "Quarrystone",
+        "totalCapacity": 11493,
+        "region": "Karachi",
+        "status": "Open",
+        "coordinates": "24.9202 N, 67.0468 E",
+        "hours": "07:00 → 17:00",
+        "warehouseName": "Quarrystone { WH-18 }"
+    },
+    {
+        "warehouseId": "WH-19",
+        "title": "Brickholm",
+        "totalCapacity": 8897,
+        "region": "Karachi",
+        "status": "Open",
+        "coordinates": "24.8451 N, 66.9125 E",
+        "hours": "08:00 → 18:30",
+        "warehouseName": "Brickholm { WH-19 }"
+    },
+    {
+        "warehouseId": "WH-20",
+        "title": "Marshvale",
+        "totalCapacity": 10167,
+        "region": "Faisalabad",
+        "status": "Closed",
+        "coordinates": "31.4504 N, 73.1350 E",
+        "hours": "09:00 → 19:00",
+        "warehouseName": "Marshvale { WH-20 }"
+    },
+    {
+        "warehouseId": "WH-21",
+        "title": "Pinegrove",
+        "totalCapacity": 8530,
+        "region": "Faisalabad",
+        "status": "Open",
+        "coordinates": "31.4808 N, 73.1018 E",
+        "hours": "06:00 → 16:00",
+        "warehouseName": "Pinegrove { WH-21 }"
+    },
+    {
+        "warehouseId": "WH-22",
+        "title": "Steelwick",
+        "totalCapacity": 10320,
+        "region": "Islamabad",
+        "status": "Open",
+        "coordinates": "33.6844 N, 73.0479 E",
+        "hours": "07:00 → 17:00",
+        "warehouseName": "Steelwick { WH-22 }"
+    },
+    {
+        "warehouseId": "WH-23",
+        "title": "Northbay",
+        "totalCapacity": 9634,
+        "region": "Islamabad",
+        "status": "Open",
+        "coordinates": "33.7148 N, 73.0147 E",
+        "hours": "08:00 → 18:30",
+        "warehouseName": "Northbay { WH-23 }"
+    },
+    {
+        "warehouseId": "WH-24",
+        "title": "Dustmere",
+        "totalCapacity": 9540,
+        "region": "Islamabad",
+        "status": "Closed",
+        "coordinates": "33.6246 N, 73.0531 E",
+        "hours": "09:00 → 19:00",
+        "warehouseName": "Dustmere { WH-24 }"
+    },
+    {
+        "warehouseId": "WH-25",
+        "title": "Coppergate",
+        "totalCapacity": 10900,
+        "region": "Islamabad",
+        "status": "Open",
+        "coordinates": "33.7439 N, 73.0936 E",
+        "hours": "06:00 → 16:00",
+        "warehouseName": "Coppergate { WH-25 }"
+    },
+    {
+        "warehouseId": "WH-26",
+        "title": "Ivorydale",
+        "totalCapacity": 11859,
+        "region": "Islamabad",
+        "status": "Open",
+        "coordinates": "33.6688 N, 72.9593 E",
+        "hours": "07:00 → 17:00",
+        "warehouseName": "Ivorydale { WH-26 }"
+    },
+    {
+        "warehouseId": "WH-27",
+        "title": "Windrow",
+        "totalCapacity": 9734,
+        "region": "Islamabad",
+        "status": "Open",
+        "coordinates": "33.6280 N, 73.1365 E",
+        "hours": "08:00 → 18:30",
+        "warehouseName": "Windrow { WH-27 }"
+    },
+    {
+        "warehouseId": "WH-28",
+        "title": "Thorndale",
+        "totalCapacity": 9470,
+        "region": "Islamabad",
+        "status": "Closed",
+        "coordinates": "33.8003 N, 73.0168 E",
+        "hours": "09:00 → 19:00",
+        "warehouseName": "Thorndale { WH-28 }"
+    },
+    {
+        "warehouseId": "WH-29",
+        "title": "Sparkfield",
+        "totalCapacity": 11618,
+        "region": "Sialkot",
+        "status": "Open",
+        "coordinates": "32.4945 N, 74.5229 E",
+        "hours": "06:00 → 16:00",
+        "warehouseName": "Sparkfield { WH-29 }"
+    },
+    {
+        "warehouseId": "WH-30",
+        "title": "Goldcrest",
+        "totalCapacity": 11065,
+        "region": "Sialkot",
+        "status": "Open",
+        "coordinates": "32.5249 N, 74.4897 E",
+        "hours": "07:00 → 17:00",
+        "warehouseName": "Goldcrest { WH-30 }"
+    },
+    {
+        "warehouseId": "WH-31",
+        "title": "Dewpoint",
+        "totalCapacity": 8262,
+        "region": "Sialkot",
+        "status": "Open",
+        "coordinates": "32.4347 N, 74.5281 E",
+        "hours": "08:00 → 18:30",
+        "warehouseName": "Dewpoint { WH-31 }"
+    },
+    {
+        "warehouseId": "WH-32",
+        "title": "Farmbend",
+        "totalCapacity": 9766,
+        "region": "Lahore",
+        "status": "Closed",
+        "coordinates": "31.5204 N, 74.3587 E",
+        "hours": "09:00 → 19:00",
+        "warehouseName": "Farmbend { WH-32 }"
+    },
+    {
+        "warehouseId": "WH-33",
+        "title": "Creekside",
+        "totalCapacity": 10235,
+        "region": "Lahore",
+        "status": "Open",
+        "coordinates": "31.5508 N, 74.3255 E",
+        "hours": "06:00 → 16:00",
+        "warehouseName": "Creekside { WH-33 }"
+    },
+    {
+        "warehouseId": "WH-34",
+        "title": "Shalepoint",
+        "totalCapacity": 10864,
+        "region": "Lahore",
+        "status": "Open",
+        "coordinates": "31.4606 N, 74.3639 E",
+        "hours": "07:00 → 17:00",
+        "warehouseName": "Shalepoint { WH-34 }"
+    }
+]

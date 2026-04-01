@@ -1,0 +1,206 @@
+[
+    {
+        "warehouseId": "WH-01",
+        "objectCategory": "Acetone",
+        "businessLinkType": "Supplier",
+        "processId": "PRC-01"
+    },
+    {
+        "warehouseId": "WH-02",
+        "objectCategory": "Rotor Spun",
+        "businessLinkType": null,
+        "processId": "PRC-03"
+    },
+    {
+        "warehouseId": "WH-03",
+        "objectCategory": "Vat Dye",
+        "businessLinkType": null,
+        "processId": "PRC-06"
+    },
+    {
+        "warehouseId": "WH-04",
+        "objectCategory": "T-Shirt",
+        "businessLinkType": null,
+        "processId": "PRC-07"
+    },
+    {
+        "warehouseId": "WH-05",
+        "objectCategory": "Ammonia",
+        "businessLinkType": "Supplier",
+        "processId": "PRC-01"
+    },
+    {
+        "warehouseId": "WH-06",
+        "objectCategory": "Desi Cotton",
+        "businessLinkType": "Supplier",
+        "processId": "PRC-02"
+    },
+    {
+        "warehouseId": "WH-07",
+        "objectCategory": "Twill",
+        "businessLinkType": null,
+        "processId": "PRC-05"
+    },
+    {
+        "warehouseId": "WH-08",
+        "objectCategory": "Vat Dye",
+        "businessLinkType": null,
+        "processId": "PRC-06"
+    },
+    {
+        "warehouseId": "WH-09",
+        "objectCategory": "Container 40ft",
+        "businessLinkType": "Customer",
+        "processId": "PRC-08"
+    },
+    {
+        "warehouseId": "WH-10",
+        "objectCategory": "Ammonia",
+        "businessLinkType": "Supplier",
+        "processId": "PRC-01"
+    },
+    {
+        "warehouseId": "WH-11",
+        "objectCategory": "Interlock",
+        "businessLinkType": null,
+        "processId": "PRC-04"
+    },
+    {
+        "warehouseId": "WH-12",
+        "objectCategory": "Vat Dye",
+        "businessLinkType": "Supplier",
+        "processId": "PRC-06"
+    },
+    {
+        "warehouseId": "WH-13",
+        "objectCategory": "Polo Shirt",
+        "businessLinkType": null,
+        "processId": "PRC-07"
+    },
+    {
+        "warehouseId": "WH-14",
+        "objectCategory": "Container 20ft",
+        "businessLinkType": "Customer",
+        "processId": "PRC-08"
+    },
+    {
+        "warehouseId": "WH-15",
+        "objectCategory": "Ethanol",
+        "businessLinkType": "Supplier",
+        "processId": "PRC-01"
+    },
+    {
+        "warehouseId": "WH-16",
+        "objectCategory": "Compact Yarn",
+        "businessLinkType": null,
+        "processId": "PRC-03"
+    },
+    {
+        "warehouseId": "WH-17",
+        "objectCategory": "Dobby",
+        "businessLinkType": null,
+        "processId": "PRC-05"
+    },
+    {
+        "warehouseId": "WH-18",
+        "objectCategory": "Acid Dye",
+        "businessLinkType": "Supplier",
+        "processId": "PRC-06"
+    },
+    {
+        "warehouseId": "WH-19",
+        "objectCategory": "T-Shirt",
+        "businessLinkType": "Customer",
+        "processId": "PRC-07"
+    },
+    {
+        "warehouseId": "WH-20",
+        "objectCategory": "Sulfuric Acid",
+        "businessLinkType": "Supplier",
+        "processId": "PRC-01"
+    },
+    {
+        "warehouseId": "WH-21",
+        "objectCategory": "Circular Knit",
+        "businessLinkType": null,
+        "processId": "PRC-04"
+    },
+    {
+        "warehouseId": "WH-22",
+        "objectCategory": "Desi Cotton",
+        "businessLinkType": "Supplier",
+        "processId": "PRC-02"
+    },
+    {
+        "warehouseId": "WH-23",
+        "objectCategory": "Air-Jet Yarn",
+        "businessLinkType": null,
+        "processId": "PRC-03"
+    },
+    {
+        "warehouseId": "WH-24",
+        "objectCategory": "Rib Fabric",
+        "businessLinkType": null,
+        "processId": "PRC-04"
+    },
+    {
+        "warehouseId": "WH-25",
+        "objectCategory": "Satin",
+        "businessLinkType": null,
+        "processId": "PRC-05"
+    },
+    {
+        "warehouseId": "WH-26",
+        "objectCategory": "Jacquard",
+        "businessLinkType": null,
+        "processId": "PRC-05"
+    },
+    {
+        "warehouseId": "WH-27",
+        "objectCategory": "Pallet Wrap",
+        "businessLinkType": "Customer",
+        "processId": "PRC-08"
+    },
+    {
+        "warehouseId": "WH-28",
+        "objectCategory": "Container 20ft",
+        "businessLinkType": "Customer",
+        "processId": "PRC-08"
+    },
+    {
+        "warehouseId": "WH-29",
+        "objectCategory": "Desi Cotton",
+        "businessLinkType": "Supplier",
+        "processId": "PRC-02"
+    },
+    {
+        "warehouseId": "WH-30",
+        "objectCategory": "Ring Yarn",
+        "businessLinkType": null,
+        "processId": "PRC-03"
+    },
+    {
+        "warehouseId": "WH-31",
+        "objectCategory": "Trouser",
+        "businessLinkType": null,
+        "processId": "PRC-07"
+    },
+    {
+        "warehouseId": "WH-32",
+        "objectCategory": "Air-Jet Yarn",
+        "businessLinkType": null,
+        "processId": "PRC-03"
+    },
+    {
+        "warehouseId": "WH-33",
+        "objectCategory": "Warp Knit",
+        "businessLinkType": null,
+        "processId": "PRC-04"
+    },
+    {
+        "warehouseId": "WH-34",
+        "objectCategory": "Polo Shirt",
+        "businessLinkType": "Customer",
+        "processId": "PRC-07"
+    }
+]

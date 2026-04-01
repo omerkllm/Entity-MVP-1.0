@@ -1,0 +1,2447 @@
+[
+    {
+        "objectId": "OBJ-0001",
+        "warehouseId": "WH-01",
+        "objectCategory": "Sulfuric Acid"
+    },
+    {
+        "objectId": "OBJ-0002",
+        "warehouseId": "WH-02",
+        "objectCategory": "Acetone"
+    },
+    {
+        "objectId": "OBJ-0003",
+        "warehouseId": "WH-03",
+        "objectCategory": "Sulfuric Acid"
+    },
+    {
+        "objectId": "OBJ-0004",
+        "warehouseId": "WH-04",
+        "objectCategory": "Ethanol"
+    },
+    {
+        "objectId": "OBJ-0005",
+        "warehouseId": "WH-01",
+        "objectCategory": "Ammonia"
+    },
+    {
+        "objectId": "OBJ-0006",
+        "warehouseId": "WH-02",
+        "objectCategory": "Sulfuric Acid"
+    },
+    {
+        "objectId": "OBJ-0007",
+        "warehouseId": "WH-03",
+        "objectCategory": "Sulfuric Acid"
+    },
+    {
+        "objectId": "OBJ-0008",
+        "warehouseId": "WH-04",
+        "objectCategory": "Ethanol"
+    },
+    {
+        "objectId": "OBJ-0009",
+        "warehouseId": "WH-01",
+        "objectCategory": "Sulfuric Acid"
+    },
+    {
+        "objectId": "OBJ-0010",
+        "warehouseId": "WH-02",
+        "objectCategory": "Sodium Hydroxide"
+    },
+    {
+        "objectId": "OBJ-0110",
+        "warehouseId": "WH-03",
+        "objectCategory": "Rotor Spun"
+    },
+    {
+        "objectId": "OBJ-0111",
+        "warehouseId": "WH-04",
+        "objectCategory": "Rotor Spun"
+    },
+    {
+        "objectId": "OBJ-0112",
+        "warehouseId": "WH-01",
+        "objectCategory": "Compact Yarn"
+    },
+    {
+        "objectId": "OBJ-0113",
+        "warehouseId": "WH-02",
+        "objectCategory": "Air-Jet Yarn"
+    },
+    {
+        "objectId": "OBJ-0114",
+        "warehouseId": "WH-03",
+        "objectCategory": "Rotor Spun"
+    },
+    {
+        "objectId": "OBJ-0115",
+        "warehouseId": "WH-04",
+        "objectCategory": "Air-Jet Yarn"
+    },
+    {
+        "objectId": "OBJ-0116",
+        "warehouseId": "WH-01",
+        "objectCategory": "Open-End Yarn"
+    },
+    {
+        "objectId": "OBJ-0117",
+        "warehouseId": "WH-02",
+        "objectCategory": "Rotor Spun"
+    },
+    {
+        "objectId": "OBJ-0118",
+        "warehouseId": "WH-03",
+        "objectCategory": "Compact Yarn"
+    },
+    {
+        "objectId": "OBJ-0119",
+        "warehouseId": "WH-04",
+        "objectCategory": "Open-End Yarn"
+    },
+    {
+        "objectId": "OBJ-0120",
+        "warehouseId": "WH-01",
+        "objectCategory": "Rotor Spun"
+    },
+    {
+        "objectId": "OBJ-0121",
+        "warehouseId": "WH-02",
+        "objectCategory": "Open-End Yarn"
+    },
+    {
+        "objectId": "OBJ-0122",
+        "warehouseId": "WH-03",
+        "objectCategory": "Ring Yarn"
+    },
+    {
+        "objectId": "OBJ-0123",
+        "warehouseId": "WH-04",
+        "objectCategory": "Air-Jet Yarn"
+    },
+    {
+        "objectId": "OBJ-0124",
+        "warehouseId": "WH-01",
+        "objectCategory": "Ring Yarn"
+    },
+    {
+        "objectId": "OBJ-0125",
+        "warehouseId": "WH-02",
+        "objectCategory": "Ring Yarn"
+    },
+    {
+        "objectId": "OBJ-0126",
+        "warehouseId": "WH-03",
+        "objectCategory": "Compact Yarn"
+    },
+    {
+        "objectId": "OBJ-0127",
+        "warehouseId": "WH-04",
+        "objectCategory": "Rotor Spun"
+    },
+    {
+        "objectId": "OBJ-0128",
+        "warehouseId": "WH-01",
+        "objectCategory": "Air-Jet Yarn"
+    },
+    {
+        "objectId": "OBJ-0335",
+        "warehouseId": "WH-02",
+        "objectCategory": "Reactive Dye"
+    },
+    {
+        "objectId": "OBJ-0336",
+        "warehouseId": "WH-03",
+        "objectCategory": "Reactive Dye"
+    },
+    {
+        "objectId": "OBJ-0337",
+        "warehouseId": "WH-04",
+        "objectCategory": "Acid Dye"
+    },
+    {
+        "objectId": "OBJ-0338",
+        "warehouseId": "WH-01",
+        "objectCategory": "Vat Dye"
+    },
+    {
+        "objectId": "OBJ-0339",
+        "warehouseId": "WH-02",
+        "objectCategory": "Reactive Dye"
+    },
+    {
+        "objectId": "OBJ-0340",
+        "warehouseId": "WH-03",
+        "objectCategory": "Disperse Dye"
+    },
+    {
+        "objectId": "OBJ-0341",
+        "warehouseId": "WH-04",
+        "objectCategory": "Pigment"
+    },
+    {
+        "objectId": "OBJ-0342",
+        "warehouseId": "WH-01",
+        "objectCategory": "Pigment"
+    },
+    {
+        "objectId": "OBJ-0343",
+        "warehouseId": "WH-02",
+        "objectCategory": "Pigment"
+    },
+    {
+        "objectId": "OBJ-0344",
+        "warehouseId": "WH-03",
+        "objectCategory": "Acid Dye"
+    },
+    {
+        "objectId": "OBJ-0345",
+        "warehouseId": "WH-04",
+        "objectCategory": "Disperse Dye"
+    },
+    {
+        "objectId": "OBJ-0346",
+        "warehouseId": "WH-01",
+        "objectCategory": "Reactive Dye"
+    },
+    {
+        "objectId": "OBJ-0347",
+        "warehouseId": "WH-02",
+        "objectCategory": "Reactive Dye"
+    },
+    {
+        "objectId": "OBJ-0409",
+        "warehouseId": "WH-03",
+        "objectCategory": "T-Shirt"
+    },
+    {
+        "objectId": "OBJ-0410",
+        "warehouseId": "WH-04",
+        "objectCategory": "Jacket"
+    },
+    {
+        "objectId": "OBJ-0411",
+        "warehouseId": "WH-01",
+        "objectCategory": "T-Shirt"
+    },
+    {
+        "objectId": "OBJ-0412",
+        "warehouseId": "WH-02",
+        "objectCategory": "T-Shirt"
+    },
+    {
+        "objectId": "OBJ-0413",
+        "warehouseId": "WH-03",
+        "objectCategory": "Polo Shirt"
+    },
+    {
+        "objectId": "OBJ-0414",
+        "warehouseId": "WH-04",
+        "objectCategory": "Polo Shirt"
+    },
+    {
+        "objectId": "OBJ-0415",
+        "warehouseId": "WH-01",
+        "objectCategory": "T-Shirt"
+    },
+    {
+        "objectId": "OBJ-0416",
+        "warehouseId": "WH-02",
+        "objectCategory": "Hoodie"
+    },
+    {
+        "objectId": "OBJ-0417",
+        "warehouseId": "WH-03",
+        "objectCategory": "Hoodie"
+    },
+    {
+        "objectId": "OBJ-0418",
+        "warehouseId": "WH-04",
+        "objectCategory": "Jacket"
+    },
+    {
+        "objectId": "OBJ-0419",
+        "warehouseId": "WH-01",
+        "objectCategory": "Polo Shirt"
+    },
+    {
+        "objectId": "OBJ-0420",
+        "warehouseId": "WH-02",
+        "objectCategory": "Hoodie"
+    },
+    {
+        "objectId": "OBJ-0421",
+        "warehouseId": "WH-03",
+        "objectCategory": "Trouser"
+    },
+    {
+        "objectId": "OBJ-0422",
+        "warehouseId": "WH-04",
+        "objectCategory": "T-Shirt"
+    },
+    {
+        "objectId": "OBJ-0423",
+        "warehouseId": "WH-01",
+        "objectCategory": "T-Shirt"
+    },
+    {
+        "objectId": "OBJ-0424",
+        "warehouseId": "WH-02",
+        "objectCategory": "Polo Shirt"
+    },
+    {
+        "objectId": "OBJ-0425",
+        "warehouseId": "WH-03",
+        "objectCategory": "Trouser"
+    },
+    {
+        "objectId": "OBJ-0426",
+        "warehouseId": "WH-04",
+        "objectCategory": "Trouser"
+    },
+    {
+        "objectId": "OBJ-0011",
+        "warehouseId": "WH-05",
+        "objectCategory": "Ethanol"
+    },
+    {
+        "objectId": "OBJ-0012",
+        "warehouseId": "WH-06",
+        "objectCategory": "Acetone"
+    },
+    {
+        "objectId": "OBJ-0013",
+        "warehouseId": "WH-07",
+        "objectCategory": "Ethanol"
+    },
+    {
+        "objectId": "OBJ-0014",
+        "warehouseId": "WH-08",
+        "objectCategory": "Acetone"
+    },
+    {
+        "objectId": "OBJ-0015",
+        "warehouseId": "WH-09",
+        "objectCategory": "Ethanol"
+    },
+    {
+        "objectId": "OBJ-0016",
+        "warehouseId": "WH-05",
+        "objectCategory": "Ammonia"
+    },
+    {
+        "objectId": "OBJ-0017",
+        "warehouseId": "WH-06",
+        "objectCategory": "Ethanol"
+    },
+    {
+        "objectId": "OBJ-0018",
+        "warehouseId": "WH-07",
+        "objectCategory": "Ethanol"
+    },
+    {
+        "objectId": "OBJ-0019",
+        "warehouseId": "WH-08",
+        "objectCategory": "Ethanol"
+    },
+    {
+        "objectId": "OBJ-0020",
+        "warehouseId": "WH-09",
+        "objectCategory": "Ammonia"
+    },
+    {
+        "objectId": "OBJ-0021",
+        "warehouseId": "WH-05",
+        "objectCategory": "Ethanol"
+    },
+    {
+        "objectId": "OBJ-0022",
+        "warehouseId": "WH-06",
+        "objectCategory": "Sodium Hydroxide"
+    },
+    {
+        "objectId": "OBJ-0023",
+        "warehouseId": "WH-07",
+        "objectCategory": "Sulfuric Acid"
+    },
+    {
+        "objectId": "OBJ-0079",
+        "warehouseId": "WH-08",
+        "objectCategory": "BT Cotton"
+    },
+    {
+        "objectId": "OBJ-0080",
+        "warehouseId": "WH-09",
+        "objectCategory": "Desi Cotton"
+    },
+    {
+        "objectId": "OBJ-0081",
+        "warehouseId": "WH-05",
+        "objectCategory": "BT Cotton"
+    },
+    {
+        "objectId": "OBJ-0082",
+        "warehouseId": "WH-06",
+        "objectCategory": "Long Staple"
+    },
+    {
+        "objectId": "OBJ-0083",
+        "warehouseId": "WH-07",
+        "objectCategory": "Desi Cotton"
+    },
+    {
+        "objectId": "OBJ-0084",
+        "warehouseId": "WH-08",
+        "objectCategory": "Desi Cotton"
+    },
+    {
+        "objectId": "OBJ-0085",
+        "warehouseId": "WH-09",
+        "objectCategory": "BT Cotton"
+    },
+    {
+        "objectId": "OBJ-0086",
+        "warehouseId": "WH-05",
+        "objectCategory": "BT Cotton"
+    },
+    {
+        "objectId": "OBJ-0087",
+        "warehouseId": "WH-06",
+        "objectCategory": "Short Staple"
+    },
+    {
+        "objectId": "OBJ-0088",
+        "warehouseId": "WH-07",
+        "objectCategory": "Short Staple"
+    },
+    {
+        "objectId": "OBJ-0089",
+        "warehouseId": "WH-08",
+        "objectCategory": "Long Staple"
+    },
+    {
+        "objectId": "OBJ-0246",
+        "warehouseId": "WH-09",
+        "objectCategory": "Dobby"
+    },
+    {
+        "objectId": "OBJ-0247",
+        "warehouseId": "WH-05",
+        "objectCategory": "Jacquard"
+    },
+    {
+        "objectId": "OBJ-0248",
+        "warehouseId": "WH-06",
+        "objectCategory": "Twill"
+    },
+    {
+        "objectId": "OBJ-0249",
+        "warehouseId": "WH-07",
+        "objectCategory": "Plain Weave"
+    },
+    {
+        "objectId": "OBJ-0250",
+        "warehouseId": "WH-08",
+        "objectCategory": "Jacquard"
+    },
+    {
+        "objectId": "OBJ-0251",
+        "warehouseId": "WH-09",
+        "objectCategory": "Jacquard"
+    },
+    {
+        "objectId": "OBJ-0252",
+        "warehouseId": "WH-05",
+        "objectCategory": "Dobby"
+    },
+    {
+        "objectId": "OBJ-0253",
+        "warehouseId": "WH-06",
+        "objectCategory": "Plain Weave"
+    },
+    {
+        "objectId": "OBJ-0254",
+        "warehouseId": "WH-07",
+        "objectCategory": "Jacquard"
+    },
+    {
+        "objectId": "OBJ-0255",
+        "warehouseId": "WH-08",
+        "objectCategory": "Plain Weave"
+    },
+    {
+        "objectId": "OBJ-0256",
+        "warehouseId": "WH-09",
+        "objectCategory": "Plain Weave"
+    },
+    {
+        "objectId": "OBJ-0257",
+        "warehouseId": "WH-05",
+        "objectCategory": "Satin"
+    },
+    {
+        "objectId": "OBJ-0258",
+        "warehouseId": "WH-06",
+        "objectCategory": "Dobby"
+    },
+    {
+        "objectId": "OBJ-0348",
+        "warehouseId": "WH-07",
+        "objectCategory": "Disperse Dye"
+    },
+    {
+        "objectId": "OBJ-0349",
+        "warehouseId": "WH-08",
+        "objectCategory": "Acid Dye"
+    },
+    {
+        "objectId": "OBJ-0350",
+        "warehouseId": "WH-09",
+        "objectCategory": "Disperse Dye"
+    },
+    {
+        "objectId": "OBJ-0351",
+        "warehouseId": "WH-05",
+        "objectCategory": "Pigment"
+    },
+    {
+        "objectId": "OBJ-0352",
+        "warehouseId": "WH-06",
+        "objectCategory": "Vat Dye"
+    },
+    {
+        "objectId": "OBJ-0353",
+        "warehouseId": "WH-07",
+        "objectCategory": "Reactive Dye"
+    },
+    {
+        "objectId": "OBJ-0354",
+        "warehouseId": "WH-08",
+        "objectCategory": "Pigment"
+    },
+    {
+        "objectId": "OBJ-0355",
+        "warehouseId": "WH-09",
+        "objectCategory": "Pigment"
+    },
+    {
+        "objectId": "OBJ-0356",
+        "warehouseId": "WH-05",
+        "objectCategory": "Vat Dye"
+    },
+    {
+        "objectId": "OBJ-0357",
+        "warehouseId": "WH-06",
+        "objectCategory": "Pigment"
+    },
+    {
+        "objectId": "OBJ-0358",
+        "warehouseId": "WH-07",
+        "objectCategory": "Pigment"
+    },
+    {
+        "objectId": "OBJ-0359",
+        "warehouseId": "WH-08",
+        "objectCategory": "Reactive Dye"
+    },
+    {
+        "objectId": "OBJ-0453",
+        "warehouseId": "WH-09",
+        "objectCategory": "Pallet Wrap"
+    },
+    {
+        "objectId": "OBJ-0454",
+        "warehouseId": "WH-05",
+        "objectCategory": "Pallet Wrap"
+    },
+    {
+        "objectId": "OBJ-0455",
+        "warehouseId": "WH-06",
+        "objectCategory": "Container 20ft"
+    },
+    {
+        "objectId": "OBJ-0456",
+        "warehouseId": "WH-07",
+        "objectCategory": "Container 40ft"
+    },
+    {
+        "objectId": "OBJ-0457",
+        "warehouseId": "WH-08",
+        "objectCategory": "Container 40ft"
+    },
+    {
+        "objectId": "OBJ-0458",
+        "warehouseId": "WH-09",
+        "objectCategory": "Shrink Bundle"
+    },
+    {
+        "objectId": "OBJ-0459",
+        "warehouseId": "WH-05",
+        "objectCategory": "Pallet Wrap"
+    },
+    {
+        "objectId": "OBJ-0460",
+        "warehouseId": "WH-06",
+        "objectCategory": "Carton Box"
+    },
+    {
+        "objectId": "OBJ-0461",
+        "warehouseId": "WH-07",
+        "objectCategory": "Container 40ft"
+    },
+    {
+        "objectId": "OBJ-0462",
+        "warehouseId": "WH-08",
+        "objectCategory": "Container 20ft"
+    },
+    {
+        "objectId": "OBJ-0024",
+        "warehouseId": "WH-10",
+        "objectCategory": "Sulfuric Acid"
+    },
+    {
+        "objectId": "OBJ-0025",
+        "warehouseId": "WH-11",
+        "objectCategory": "Acetone"
+    },
+    {
+        "objectId": "OBJ-0026",
+        "warehouseId": "WH-12",
+        "objectCategory": "Sulfuric Acid"
+    },
+    {
+        "objectId": "OBJ-0027",
+        "warehouseId": "WH-13",
+        "objectCategory": "Acetone"
+    },
+    {
+        "objectId": "OBJ-0028",
+        "warehouseId": "WH-14",
+        "objectCategory": "Sulfuric Acid"
+    },
+    {
+        "objectId": "OBJ-0029",
+        "warehouseId": "WH-10",
+        "objectCategory": "Ethanol"
+    },
+    {
+        "objectId": "OBJ-0030",
+        "warehouseId": "WH-11",
+        "objectCategory": "Acetone"
+    },
+    {
+        "objectId": "OBJ-0031",
+        "warehouseId": "WH-12",
+        "objectCategory": "Sulfuric Acid"
+    },
+    {
+        "objectId": "OBJ-0032",
+        "warehouseId": "WH-13",
+        "objectCategory": "Sodium Hydroxide"
+    },
+    {
+        "objectId": "OBJ-0033",
+        "warehouseId": "WH-14",
+        "objectCategory": "Ammonia"
+    },
+    {
+        "objectId": "OBJ-0034",
+        "warehouseId": "WH-10",
+        "objectCategory": "Sodium Hydroxide"
+    },
+    {
+        "objectId": "OBJ-0197",
+        "warehouseId": "WH-11",
+        "objectCategory": "Flat Knit"
+    },
+    {
+        "objectId": "OBJ-0198",
+        "warehouseId": "WH-12",
+        "objectCategory": "Rib Fabric"
+    },
+    {
+        "objectId": "OBJ-0199",
+        "warehouseId": "WH-13",
+        "objectCategory": "Interlock"
+    },
+    {
+        "objectId": "OBJ-0200",
+        "warehouseId": "WH-14",
+        "objectCategory": "Circular Knit"
+    },
+    {
+        "objectId": "OBJ-0201",
+        "warehouseId": "WH-10",
+        "objectCategory": "Interlock"
+    },
+    {
+        "objectId": "OBJ-0202",
+        "warehouseId": "WH-11",
+        "objectCategory": "Interlock"
+    },
+    {
+        "objectId": "OBJ-0203",
+        "warehouseId": "WH-12",
+        "objectCategory": "Warp Knit"
+    },
+    {
+        "objectId": "OBJ-0204",
+        "warehouseId": "WH-13",
+        "objectCategory": "Warp Knit"
+    },
+    {
+        "objectId": "OBJ-0205",
+        "warehouseId": "WH-14",
+        "objectCategory": "Interlock"
+    },
+    {
+        "objectId": "OBJ-0206",
+        "warehouseId": "WH-10",
+        "objectCategory": "Flat Knit"
+    },
+    {
+        "objectId": "OBJ-0207",
+        "warehouseId": "WH-11",
+        "objectCategory": "Flat Knit"
+    },
+    {
+        "objectId": "OBJ-0208",
+        "warehouseId": "WH-12",
+        "objectCategory": "Interlock"
+    },
+    {
+        "objectId": "OBJ-0209",
+        "warehouseId": "WH-13",
+        "objectCategory": "Warp Knit"
+    },
+    {
+        "objectId": "OBJ-0210",
+        "warehouseId": "WH-14",
+        "objectCategory": "Rib Fabric"
+    },
+    {
+        "objectId": "OBJ-0211",
+        "warehouseId": "WH-10",
+        "objectCategory": "Interlock"
+    },
+    {
+        "objectId": "OBJ-0212",
+        "warehouseId": "WH-11",
+        "objectCategory": "Warp Knit"
+    },
+    {
+        "objectId": "OBJ-0213",
+        "warehouseId": "WH-12",
+        "objectCategory": "Flat Knit"
+    },
+    {
+        "objectId": "OBJ-0214",
+        "warehouseId": "WH-13",
+        "objectCategory": "Interlock"
+    },
+    {
+        "objectId": "OBJ-0215",
+        "warehouseId": "WH-14",
+        "objectCategory": "Flat Knit"
+    },
+    {
+        "objectId": "OBJ-0300",
+        "warehouseId": "WH-10",
+        "objectCategory": "Reactive Dye"
+    },
+    {
+        "objectId": "OBJ-0301",
+        "warehouseId": "WH-11",
+        "objectCategory": "Vat Dye"
+    },
+    {
+        "objectId": "OBJ-0302",
+        "warehouseId": "WH-12",
+        "objectCategory": "Reactive Dye"
+    },
+    {
+        "objectId": "OBJ-0303",
+        "warehouseId": "WH-13",
+        "objectCategory": "Vat Dye"
+    },
+    {
+        "objectId": "OBJ-0304",
+        "warehouseId": "WH-14",
+        "objectCategory": "Pigment"
+    },
+    {
+        "objectId": "OBJ-0305",
+        "warehouseId": "WH-10",
+        "objectCategory": "Vat Dye"
+    },
+    {
+        "objectId": "OBJ-0306",
+        "warehouseId": "WH-11",
+        "objectCategory": "Acid Dye"
+    },
+    {
+        "objectId": "OBJ-0307",
+        "warehouseId": "WH-12",
+        "objectCategory": "Pigment"
+    },
+    {
+        "objectId": "OBJ-0308",
+        "warehouseId": "WH-13",
+        "objectCategory": "Vat Dye"
+    },
+    {
+        "objectId": "OBJ-0309",
+        "warehouseId": "WH-14",
+        "objectCategory": "Acid Dye"
+    },
+    {
+        "objectId": "OBJ-0310",
+        "warehouseId": "WH-10",
+        "objectCategory": "Disperse Dye"
+    },
+    {
+        "objectId": "OBJ-0311",
+        "warehouseId": "WH-11",
+        "objectCategory": "Acid Dye"
+    },
+    {
+        "objectId": "OBJ-0312",
+        "warehouseId": "WH-12",
+        "objectCategory": "Reactive Dye"
+    },
+    {
+        "objectId": "OBJ-0313",
+        "warehouseId": "WH-13",
+        "objectCategory": "Vat Dye"
+    },
+    {
+        "objectId": "OBJ-0314",
+        "warehouseId": "WH-14",
+        "objectCategory": "Reactive Dye"
+    },
+    {
+        "objectId": "OBJ-0393",
+        "warehouseId": "WH-10",
+        "objectCategory": "Polo Shirt"
+    },
+    {
+        "objectId": "OBJ-0394",
+        "warehouseId": "WH-11",
+        "objectCategory": "Jacket"
+    },
+    {
+        "objectId": "OBJ-0395",
+        "warehouseId": "WH-12",
+        "objectCategory": "Trouser"
+    },
+    {
+        "objectId": "OBJ-0396",
+        "warehouseId": "WH-13",
+        "objectCategory": "Hoodie"
+    },
+    {
+        "objectId": "OBJ-0397",
+        "warehouseId": "WH-14",
+        "objectCategory": "Trouser"
+    },
+    {
+        "objectId": "OBJ-0398",
+        "warehouseId": "WH-10",
+        "objectCategory": "Jacket"
+    },
+    {
+        "objectId": "OBJ-0399",
+        "warehouseId": "WH-11",
+        "objectCategory": "Polo Shirt"
+    },
+    {
+        "objectId": "OBJ-0400",
+        "warehouseId": "WH-12",
+        "objectCategory": "Trouser"
+    },
+    {
+        "objectId": "OBJ-0401",
+        "warehouseId": "WH-13",
+        "objectCategory": "Trouser"
+    },
+    {
+        "objectId": "OBJ-0402",
+        "warehouseId": "WH-14",
+        "objectCategory": "Jacket"
+    },
+    {
+        "objectId": "OBJ-0403",
+        "warehouseId": "WH-10",
+        "objectCategory": "Trouser"
+    },
+    {
+        "objectId": "OBJ-0404",
+        "warehouseId": "WH-11",
+        "objectCategory": "Jacket"
+    },
+    {
+        "objectId": "OBJ-0405",
+        "warehouseId": "WH-12",
+        "objectCategory": "Hoodie"
+    },
+    {
+        "objectId": "OBJ-0406",
+        "warehouseId": "WH-13",
+        "objectCategory": "Polo Shirt"
+    },
+    {
+        "objectId": "OBJ-0407",
+        "warehouseId": "WH-14",
+        "objectCategory": "Trouser"
+    },
+    {
+        "objectId": "OBJ-0408",
+        "warehouseId": "WH-10",
+        "objectCategory": "Jacket"
+    },
+    {
+        "objectId": "OBJ-0443",
+        "warehouseId": "WH-11",
+        "objectCategory": "Shrink Bundle"
+    },
+    {
+        "objectId": "OBJ-0444",
+        "warehouseId": "WH-12",
+        "objectCategory": "Container 40ft"
+    },
+    {
+        "objectId": "OBJ-0445",
+        "warehouseId": "WH-13",
+        "objectCategory": "Container 20ft"
+    },
+    {
+        "objectId": "OBJ-0446",
+        "warehouseId": "WH-14",
+        "objectCategory": "Container 20ft"
+    },
+    {
+        "objectId": "OBJ-0447",
+        "warehouseId": "WH-10",
+        "objectCategory": "Shrink Bundle"
+    },
+    {
+        "objectId": "OBJ-0448",
+        "warehouseId": "WH-11",
+        "objectCategory": "Container 40ft"
+    },
+    {
+        "objectId": "OBJ-0449",
+        "warehouseId": "WH-12",
+        "objectCategory": "Container 40ft"
+    },
+    {
+        "objectId": "OBJ-0450",
+        "warehouseId": "WH-13",
+        "objectCategory": "Container 40ft"
+    },
+    {
+        "objectId": "OBJ-0451",
+        "warehouseId": "WH-14",
+        "objectCategory": "Container 40ft"
+    },
+    {
+        "objectId": "OBJ-0452",
+        "warehouseId": "WH-10",
+        "objectCategory": "Container 20ft"
+    },
+    {
+        "objectId": "OBJ-0035",
+        "warehouseId": "WH-15",
+        "objectCategory": "Sodium Hydroxide"
+    },
+    {
+        "objectId": "OBJ-0036",
+        "warehouseId": "WH-16",
+        "objectCategory": "Acetone"
+    },
+    {
+        "objectId": "OBJ-0037",
+        "warehouseId": "WH-17",
+        "objectCategory": "Acetone"
+    },
+    {
+        "objectId": "OBJ-0038",
+        "warehouseId": "WH-18",
+        "objectCategory": "Ammonia"
+    },
+    {
+        "objectId": "OBJ-0039",
+        "warehouseId": "WH-19",
+        "objectCategory": "Ethanol"
+    },
+    {
+        "objectId": "OBJ-0040",
+        "warehouseId": "WH-15",
+        "objectCategory": "Sodium Hydroxide"
+    },
+    {
+        "objectId": "OBJ-0041",
+        "warehouseId": "WH-16",
+        "objectCategory": "Sodium Hydroxide"
+    },
+    {
+        "objectId": "OBJ-0042",
+        "warehouseId": "WH-17",
+        "objectCategory": "Sodium Hydroxide"
+    },
+    {
+        "objectId": "OBJ-0043",
+        "warehouseId": "WH-18",
+        "objectCategory": "Ammonia"
+    },
+    {
+        "objectId": "OBJ-0044",
+        "warehouseId": "WH-19",
+        "objectCategory": "Ethanol"
+    },
+    {
+        "objectId": "OBJ-0045",
+        "warehouseId": "WH-15",
+        "objectCategory": "Ammonia"
+    },
+    {
+        "objectId": "OBJ-0046",
+        "warehouseId": "WH-16",
+        "objectCategory": "Acetone"
+    },
+    {
+        "objectId": "OBJ-0047",
+        "warehouseId": "WH-17",
+        "objectCategory": "Sodium Hydroxide"
+    },
+    {
+        "objectId": "OBJ-0048",
+        "warehouseId": "WH-18",
+        "objectCategory": "Acetone"
+    },
+    {
+        "objectId": "OBJ-0049",
+        "warehouseId": "WH-19",
+        "objectCategory": "Sulfuric Acid"
+    },
+    {
+        "objectId": "OBJ-0170",
+        "warehouseId": "WH-15",
+        "objectCategory": "Compact Yarn"
+    },
+    {
+        "objectId": "OBJ-0171",
+        "warehouseId": "WH-16",
+        "objectCategory": "Open-End Yarn"
+    },
+    {
+        "objectId": "OBJ-0172",
+        "warehouseId": "WH-17",
+        "objectCategory": "Air-Jet Yarn"
+    },
+    {
+        "objectId": "OBJ-0173",
+        "warehouseId": "WH-18",
+        "objectCategory": "Ring Yarn"
+    },
+    {
+        "objectId": "OBJ-0174",
+        "warehouseId": "WH-19",
+        "objectCategory": "Ring Yarn"
+    },
+    {
+        "objectId": "OBJ-0175",
+        "warehouseId": "WH-15",
+        "objectCategory": "Open-End Yarn"
+    },
+    {
+        "objectId": "OBJ-0176",
+        "warehouseId": "WH-16",
+        "objectCategory": "Air-Jet Yarn"
+    },
+    {
+        "objectId": "OBJ-0177",
+        "warehouseId": "WH-17",
+        "objectCategory": "Open-End Yarn"
+    },
+    {
+        "objectId": "OBJ-0178",
+        "warehouseId": "WH-18",
+        "objectCategory": "Rotor Spun"
+    },
+    {
+        "objectId": "OBJ-0179",
+        "warehouseId": "WH-19",
+        "objectCategory": "Air-Jet Yarn"
+    },
+    {
+        "objectId": "OBJ-0271",
+        "warehouseId": "WH-15",
+        "objectCategory": "Jacquard"
+    },
+    {
+        "objectId": "OBJ-0272",
+        "warehouseId": "WH-16",
+        "objectCategory": "Satin"
+    },
+    {
+        "objectId": "OBJ-0273",
+        "warehouseId": "WH-17",
+        "objectCategory": "Plain Weave"
+    },
+    {
+        "objectId": "OBJ-0274",
+        "warehouseId": "WH-18",
+        "objectCategory": "Satin"
+    },
+    {
+        "objectId": "OBJ-0275",
+        "warehouseId": "WH-19",
+        "objectCategory": "Satin"
+    },
+    {
+        "objectId": "OBJ-0276",
+        "warehouseId": "WH-15",
+        "objectCategory": "Twill"
+    },
+    {
+        "objectId": "OBJ-0277",
+        "warehouseId": "WH-16",
+        "objectCategory": "Twill"
+    },
+    {
+        "objectId": "OBJ-0278",
+        "warehouseId": "WH-17",
+        "objectCategory": "Jacquard"
+    },
+    {
+        "objectId": "OBJ-0279",
+        "warehouseId": "WH-18",
+        "objectCategory": "Twill"
+    },
+    {
+        "objectId": "OBJ-0280",
+        "warehouseId": "WH-19",
+        "objectCategory": "Jacquard"
+    },
+    {
+        "objectId": "OBJ-0281",
+        "warehouseId": "WH-15",
+        "objectCategory": "Dobby"
+    },
+    {
+        "objectId": "OBJ-0282",
+        "warehouseId": "WH-16",
+        "objectCategory": "Twill"
+    },
+    {
+        "objectId": "OBJ-0283",
+        "warehouseId": "WH-17",
+        "objectCategory": "Plain Weave"
+    },
+    {
+        "objectId": "OBJ-0284",
+        "warehouseId": "WH-18",
+        "objectCategory": "Satin"
+    },
+    {
+        "objectId": "OBJ-0285",
+        "warehouseId": "WH-19",
+        "objectCategory": "Plain Weave"
+    },
+    {
+        "objectId": "OBJ-0286",
+        "warehouseId": "WH-15",
+        "objectCategory": "Dobby"
+    },
+    {
+        "objectId": "OBJ-0287",
+        "warehouseId": "WH-16",
+        "objectCategory": "Dobby"
+    },
+    {
+        "objectId": "OBJ-0315",
+        "warehouseId": "WH-17",
+        "objectCategory": "Acid Dye"
+    },
+    {
+        "objectId": "OBJ-0316",
+        "warehouseId": "WH-18",
+        "objectCategory": "Reactive Dye"
+    },
+    {
+        "objectId": "OBJ-0317",
+        "warehouseId": "WH-19",
+        "objectCategory": "Reactive Dye"
+    },
+    {
+        "objectId": "OBJ-0318",
+        "warehouseId": "WH-15",
+        "objectCategory": "Vat Dye"
+    },
+    {
+        "objectId": "OBJ-0319",
+        "warehouseId": "WH-16",
+        "objectCategory": "Pigment"
+    },
+    {
+        "objectId": "OBJ-0320",
+        "warehouseId": "WH-17",
+        "objectCategory": "Disperse Dye"
+    },
+    {
+        "objectId": "OBJ-0321",
+        "warehouseId": "WH-18",
+        "objectCategory": "Disperse Dye"
+    },
+    {
+        "objectId": "OBJ-0322",
+        "warehouseId": "WH-19",
+        "objectCategory": "Vat Dye"
+    },
+    {
+        "objectId": "OBJ-0323",
+        "warehouseId": "WH-15",
+        "objectCategory": "Pigment"
+    },
+    {
+        "objectId": "OBJ-0324",
+        "warehouseId": "WH-16",
+        "objectCategory": "Reactive Dye"
+    },
+    {
+        "objectId": "OBJ-0325",
+        "warehouseId": "WH-17",
+        "objectCategory": "Acid Dye"
+    },
+    {
+        "objectId": "OBJ-0326",
+        "warehouseId": "WH-18",
+        "objectCategory": "Vat Dye"
+    },
+    {
+        "objectId": "OBJ-0327",
+        "warehouseId": "WH-19",
+        "objectCategory": "Pigment"
+    },
+    {
+        "objectId": "OBJ-0328",
+        "warehouseId": "WH-15",
+        "objectCategory": "Reactive Dye"
+    },
+    {
+        "objectId": "OBJ-0329",
+        "warehouseId": "WH-16",
+        "objectCategory": "Disperse Dye"
+    },
+    {
+        "objectId": "OBJ-0330",
+        "warehouseId": "WH-17",
+        "objectCategory": "Pigment"
+    },
+    {
+        "objectId": "OBJ-0331",
+        "warehouseId": "WH-18",
+        "objectCategory": "Vat Dye"
+    },
+    {
+        "objectId": "OBJ-0332",
+        "warehouseId": "WH-19",
+        "objectCategory": "Pigment"
+    },
+    {
+        "objectId": "OBJ-0333",
+        "warehouseId": "WH-15",
+        "objectCategory": "Reactive Dye"
+    },
+    {
+        "objectId": "OBJ-0334",
+        "warehouseId": "WH-16",
+        "objectCategory": "Disperse Dye"
+    },
+    {
+        "objectId": "OBJ-0360",
+        "warehouseId": "WH-17",
+        "objectCategory": "T-Shirt"
+    },
+    {
+        "objectId": "OBJ-0361",
+        "warehouseId": "WH-18",
+        "objectCategory": "T-Shirt"
+    },
+    {
+        "objectId": "OBJ-0362",
+        "warehouseId": "WH-19",
+        "objectCategory": "Hoodie"
+    },
+    {
+        "objectId": "OBJ-0363",
+        "warehouseId": "WH-15",
+        "objectCategory": "Polo Shirt"
+    },
+    {
+        "objectId": "OBJ-0364",
+        "warehouseId": "WH-16",
+        "objectCategory": "Polo Shirt"
+    },
+    {
+        "objectId": "OBJ-0365",
+        "warehouseId": "WH-17",
+        "objectCategory": "Hoodie"
+    },
+    {
+        "objectId": "OBJ-0366",
+        "warehouseId": "WH-18",
+        "objectCategory": "Trouser"
+    },
+    {
+        "objectId": "OBJ-0367",
+        "warehouseId": "WH-19",
+        "objectCategory": "T-Shirt"
+    },
+    {
+        "objectId": "OBJ-0368",
+        "warehouseId": "WH-15",
+        "objectCategory": "Hoodie"
+    },
+    {
+        "objectId": "OBJ-0369",
+        "warehouseId": "WH-16",
+        "objectCategory": "T-Shirt"
+    },
+    {
+        "objectId": "OBJ-0370",
+        "warehouseId": "WH-17",
+        "objectCategory": "T-Shirt"
+    },
+    {
+        "objectId": "OBJ-0371",
+        "warehouseId": "WH-18",
+        "objectCategory": "Jacket"
+    },
+    {
+        "objectId": "OBJ-0372",
+        "warehouseId": "WH-19",
+        "objectCategory": "Polo Shirt"
+    },
+    {
+        "objectId": "OBJ-0373",
+        "warehouseId": "WH-15",
+        "objectCategory": "Trouser"
+    },
+    {
+        "objectId": "OBJ-0050",
+        "warehouseId": "WH-20",
+        "objectCategory": "Acetone"
+    },
+    {
+        "objectId": "OBJ-0051",
+        "warehouseId": "WH-21",
+        "objectCategory": "Ethanol"
+    },
+    {
+        "objectId": "OBJ-0052",
+        "warehouseId": "WH-20",
+        "objectCategory": "Acetone"
+    },
+    {
+        "objectId": "OBJ-0053",
+        "warehouseId": "WH-21",
+        "objectCategory": "Sulfuric Acid"
+    },
+    {
+        "objectId": "OBJ-0054",
+        "warehouseId": "WH-20",
+        "objectCategory": "Ethanol"
+    },
+    {
+        "objectId": "OBJ-0055",
+        "warehouseId": "WH-21",
+        "objectCategory": "Ammonia"
+    },
+    {
+        "objectId": "OBJ-0056",
+        "warehouseId": "WH-20",
+        "objectCategory": "Sulfuric Acid"
+    },
+    {
+        "objectId": "OBJ-0057",
+        "warehouseId": "WH-21",
+        "objectCategory": "Ethanol"
+    },
+    {
+        "objectId": "OBJ-0058",
+        "warehouseId": "WH-20",
+        "objectCategory": "Acetone"
+    },
+    {
+        "objectId": "OBJ-0059",
+        "warehouseId": "WH-21",
+        "objectCategory": "Ethanol"
+    },
+    {
+        "objectId": "OBJ-0060",
+        "warehouseId": "WH-20",
+        "objectCategory": "Ethanol"
+    },
+    {
+        "objectId": "OBJ-0061",
+        "warehouseId": "WH-21",
+        "objectCategory": "Sodium Hydroxide"
+    },
+    {
+        "objectId": "OBJ-0062",
+        "warehouseId": "WH-20",
+        "objectCategory": "Sodium Hydroxide"
+    },
+    {
+        "objectId": "OBJ-0063",
+        "warehouseId": "WH-21",
+        "objectCategory": "Ethanol"
+    },
+    {
+        "objectId": "OBJ-0064",
+        "warehouseId": "WH-20",
+        "objectCategory": "Acetone"
+    },
+    {
+        "objectId": "OBJ-0065",
+        "warehouseId": "WH-21",
+        "objectCategory": "Ammonia"
+    },
+    {
+        "objectId": "OBJ-0234",
+        "warehouseId": "WH-20",
+        "objectCategory": "Interlock"
+    },
+    {
+        "objectId": "OBJ-0235",
+        "warehouseId": "WH-21",
+        "objectCategory": "Interlock"
+    },
+    {
+        "objectId": "OBJ-0236",
+        "warehouseId": "WH-20",
+        "objectCategory": "Interlock"
+    },
+    {
+        "objectId": "OBJ-0237",
+        "warehouseId": "WH-21",
+        "objectCategory": "Interlock"
+    },
+    {
+        "objectId": "OBJ-0238",
+        "warehouseId": "WH-20",
+        "objectCategory": "Flat Knit"
+    },
+    {
+        "objectId": "OBJ-0239",
+        "warehouseId": "WH-21",
+        "objectCategory": "Interlock"
+    },
+    {
+        "objectId": "OBJ-0240",
+        "warehouseId": "WH-20",
+        "objectCategory": "Interlock"
+    },
+    {
+        "objectId": "OBJ-0241",
+        "warehouseId": "WH-21",
+        "objectCategory": "Flat Knit"
+    },
+    {
+        "objectId": "OBJ-0242",
+        "warehouseId": "WH-20",
+        "objectCategory": "Circular Knit"
+    },
+    {
+        "objectId": "OBJ-0243",
+        "warehouseId": "WH-21",
+        "objectCategory": "Warp Knit"
+    },
+    {
+        "objectId": "OBJ-0244",
+        "warehouseId": "WH-20",
+        "objectCategory": "Flat Knit"
+    },
+    {
+        "objectId": "OBJ-0245",
+        "warehouseId": "WH-21",
+        "objectCategory": "Warp Knit"
+    },
+    {
+        "objectId": "OBJ-0066",
+        "warehouseId": "WH-22",
+        "objectCategory": "Organic Cotton"
+    },
+    {
+        "objectId": "OBJ-0067",
+        "warehouseId": "WH-23",
+        "objectCategory": "Long Staple"
+    },
+    {
+        "objectId": "OBJ-0068",
+        "warehouseId": "WH-24",
+        "objectCategory": "Organic Cotton"
+    },
+    {
+        "objectId": "OBJ-0069",
+        "warehouseId": "WH-25",
+        "objectCategory": "Short Staple"
+    },
+    {
+        "objectId": "OBJ-0070",
+        "warehouseId": "WH-26",
+        "objectCategory": "Short Staple"
+    },
+    {
+        "objectId": "OBJ-0071",
+        "warehouseId": "WH-27",
+        "objectCategory": "Desi Cotton"
+    },
+    {
+        "objectId": "OBJ-0072",
+        "warehouseId": "WH-28",
+        "objectCategory": "Desi Cotton"
+    },
+    {
+        "objectId": "OBJ-0073",
+        "warehouseId": "WH-22",
+        "objectCategory": "Long Staple"
+    },
+    {
+        "objectId": "OBJ-0074",
+        "warehouseId": "WH-23",
+        "objectCategory": "Desi Cotton"
+    },
+    {
+        "objectId": "OBJ-0075",
+        "warehouseId": "WH-24",
+        "objectCategory": "BT Cotton"
+    },
+    {
+        "objectId": "OBJ-0076",
+        "warehouseId": "WH-25",
+        "objectCategory": "Short Staple"
+    },
+    {
+        "objectId": "OBJ-0077",
+        "warehouseId": "WH-26",
+        "objectCategory": "Long Staple"
+    },
+    {
+        "objectId": "OBJ-0078",
+        "warehouseId": "WH-27",
+        "objectCategory": "Organic Cotton"
+    },
+    {
+        "objectId": "OBJ-0157",
+        "warehouseId": "WH-28",
+        "objectCategory": "Air-Jet Yarn"
+    },
+    {
+        "objectId": "OBJ-0158",
+        "warehouseId": "WH-22",
+        "objectCategory": "Open-End Yarn"
+    },
+    {
+        "objectId": "OBJ-0159",
+        "warehouseId": "WH-23",
+        "objectCategory": "Rotor Spun"
+    },
+    {
+        "objectId": "OBJ-0160",
+        "warehouseId": "WH-24",
+        "objectCategory": "Rotor Spun"
+    },
+    {
+        "objectId": "OBJ-0161",
+        "warehouseId": "WH-25",
+        "objectCategory": "Air-Jet Yarn"
+    },
+    {
+        "objectId": "OBJ-0162",
+        "warehouseId": "WH-26",
+        "objectCategory": "Compact Yarn"
+    },
+    {
+        "objectId": "OBJ-0163",
+        "warehouseId": "WH-27",
+        "objectCategory": "Air-Jet Yarn"
+    },
+    {
+        "objectId": "OBJ-0164",
+        "warehouseId": "WH-28",
+        "objectCategory": "Open-End Yarn"
+    },
+    {
+        "objectId": "OBJ-0165",
+        "warehouseId": "WH-22",
+        "objectCategory": "Air-Jet Yarn"
+    },
+    {
+        "objectId": "OBJ-0166",
+        "warehouseId": "WH-23",
+        "objectCategory": "Air-Jet Yarn"
+    },
+    {
+        "objectId": "OBJ-0167",
+        "warehouseId": "WH-24",
+        "objectCategory": "Compact Yarn"
+    },
+    {
+        "objectId": "OBJ-0168",
+        "warehouseId": "WH-25",
+        "objectCategory": "Compact Yarn"
+    },
+    {
+        "objectId": "OBJ-0169",
+        "warehouseId": "WH-26",
+        "objectCategory": "Compact Yarn"
+    },
+    {
+        "objectId": "OBJ-0216",
+        "warehouseId": "WH-27",
+        "objectCategory": "Circular Knit"
+    },
+    {
+        "objectId": "OBJ-0217",
+        "warehouseId": "WH-28",
+        "objectCategory": "Warp Knit"
+    },
+    {
+        "objectId": "OBJ-0218",
+        "warehouseId": "WH-22",
+        "objectCategory": "Rib Fabric"
+    },
+    {
+        "objectId": "OBJ-0219",
+        "warehouseId": "WH-23",
+        "objectCategory": "Rib Fabric"
+    },
+    {
+        "objectId": "OBJ-0220",
+        "warehouseId": "WH-24",
+        "objectCategory": "Rib Fabric"
+    },
+    {
+        "objectId": "OBJ-0221",
+        "warehouseId": "WH-25",
+        "objectCategory": "Interlock"
+    },
+    {
+        "objectId": "OBJ-0222",
+        "warehouseId": "WH-26",
+        "objectCategory": "Circular Knit"
+    },
+    {
+        "objectId": "OBJ-0223",
+        "warehouseId": "WH-27",
+        "objectCategory": "Warp Knit"
+    },
+    {
+        "objectId": "OBJ-0224",
+        "warehouseId": "WH-28",
+        "objectCategory": "Circular Knit"
+    },
+    {
+        "objectId": "OBJ-0225",
+        "warehouseId": "WH-22",
+        "objectCategory": "Warp Knit"
+    },
+    {
+        "objectId": "OBJ-0226",
+        "warehouseId": "WH-23",
+        "objectCategory": "Warp Knit"
+    },
+    {
+        "objectId": "OBJ-0227",
+        "warehouseId": "WH-24",
+        "objectCategory": "Circular Knit"
+    },
+    {
+        "objectId": "OBJ-0228",
+        "warehouseId": "WH-25",
+        "objectCategory": "Flat Knit"
+    },
+    {
+        "objectId": "OBJ-0229",
+        "warehouseId": "WH-26",
+        "objectCategory": "Flat Knit"
+    },
+    {
+        "objectId": "OBJ-0230",
+        "warehouseId": "WH-27",
+        "objectCategory": "Rib Fabric"
+    },
+    {
+        "objectId": "OBJ-0231",
+        "warehouseId": "WH-28",
+        "objectCategory": "Warp Knit"
+    },
+    {
+        "objectId": "OBJ-0232",
+        "warehouseId": "WH-22",
+        "objectCategory": "Circular Knit"
+    },
+    {
+        "objectId": "OBJ-0233",
+        "warehouseId": "WH-23",
+        "objectCategory": "Warp Knit"
+    },
+    {
+        "objectId": "OBJ-0259",
+        "warehouseId": "WH-24",
+        "objectCategory": "Twill"
+    },
+    {
+        "objectId": "OBJ-0260",
+        "warehouseId": "WH-25",
+        "objectCategory": "Dobby"
+    },
+    {
+        "objectId": "OBJ-0261",
+        "warehouseId": "WH-26",
+        "objectCategory": "Plain Weave"
+    },
+    {
+        "objectId": "OBJ-0262",
+        "warehouseId": "WH-27",
+        "objectCategory": "Twill"
+    },
+    {
+        "objectId": "OBJ-0263",
+        "warehouseId": "WH-28",
+        "objectCategory": "Satin"
+    },
+    {
+        "objectId": "OBJ-0264",
+        "warehouseId": "WH-22",
+        "objectCategory": "Dobby"
+    },
+    {
+        "objectId": "OBJ-0265",
+        "warehouseId": "WH-23",
+        "objectCategory": "Jacquard"
+    },
+    {
+        "objectId": "OBJ-0266",
+        "warehouseId": "WH-24",
+        "objectCategory": "Jacquard"
+    },
+    {
+        "objectId": "OBJ-0267",
+        "warehouseId": "WH-25",
+        "objectCategory": "Satin"
+    },
+    {
+        "objectId": "OBJ-0268",
+        "warehouseId": "WH-26",
+        "objectCategory": "Satin"
+    },
+    {
+        "objectId": "OBJ-0269",
+        "warehouseId": "WH-27",
+        "objectCategory": "Satin"
+    },
+    {
+        "objectId": "OBJ-0270",
+        "warehouseId": "WH-28",
+        "objectCategory": "Satin"
+    },
+    {
+        "objectId": "OBJ-0288",
+        "warehouseId": "WH-22",
+        "objectCategory": "Jacquard"
+    },
+    {
+        "objectId": "OBJ-0289",
+        "warehouseId": "WH-23",
+        "objectCategory": "Dobby"
+    },
+    {
+        "objectId": "OBJ-0290",
+        "warehouseId": "WH-24",
+        "objectCategory": "Satin"
+    },
+    {
+        "objectId": "OBJ-0291",
+        "warehouseId": "WH-25",
+        "objectCategory": "Twill"
+    },
+    {
+        "objectId": "OBJ-0292",
+        "warehouseId": "WH-26",
+        "objectCategory": "Twill"
+    },
+    {
+        "objectId": "OBJ-0293",
+        "warehouseId": "WH-27",
+        "objectCategory": "Satin"
+    },
+    {
+        "objectId": "OBJ-0294",
+        "warehouseId": "WH-28",
+        "objectCategory": "Dobby"
+    },
+    {
+        "objectId": "OBJ-0295",
+        "warehouseId": "WH-22",
+        "objectCategory": "Jacquard"
+    },
+    {
+        "objectId": "OBJ-0296",
+        "warehouseId": "WH-23",
+        "objectCategory": "Satin"
+    },
+    {
+        "objectId": "OBJ-0297",
+        "warehouseId": "WH-24",
+        "objectCategory": "Plain Weave"
+    },
+    {
+        "objectId": "OBJ-0298",
+        "warehouseId": "WH-25",
+        "objectCategory": "Satin"
+    },
+    {
+        "objectId": "OBJ-0299",
+        "warehouseId": "WH-26",
+        "objectCategory": "Plain Weave"
+    },
+    {
+        "objectId": "OBJ-0463",
+        "warehouseId": "WH-27",
+        "objectCategory": "Carton Box"
+    },
+    {
+        "objectId": "OBJ-0464",
+        "warehouseId": "WH-28",
+        "objectCategory": "Pallet Wrap"
+    },
+    {
+        "objectId": "OBJ-0465",
+        "warehouseId": "WH-22",
+        "objectCategory": "Pallet Wrap"
+    },
+    {
+        "objectId": "OBJ-0466",
+        "warehouseId": "WH-23",
+        "objectCategory": "Carton Box"
+    },
+    {
+        "objectId": "OBJ-0467",
+        "warehouseId": "WH-24",
+        "objectCategory": "Pallet Wrap"
+    },
+    {
+        "objectId": "OBJ-0468",
+        "warehouseId": "WH-25",
+        "objectCategory": "Container 20ft"
+    },
+    {
+        "objectId": "OBJ-0469",
+        "warehouseId": "WH-26",
+        "objectCategory": "Shrink Bundle"
+    },
+    {
+        "objectId": "OBJ-0470",
+        "warehouseId": "WH-27",
+        "objectCategory": "Container 20ft"
+    },
+    {
+        "objectId": "OBJ-0471",
+        "warehouseId": "WH-28",
+        "objectCategory": "Container 20ft"
+    },
+    {
+        "objectId": "OBJ-0472",
+        "warehouseId": "WH-22",
+        "objectCategory": "Container 20ft"
+    },
+    {
+        "objectId": "OBJ-0473",
+        "warehouseId": "WH-23",
+        "objectCategory": "Pallet Wrap"
+    },
+    {
+        "objectId": "OBJ-0474",
+        "warehouseId": "WH-24",
+        "objectCategory": "Container 40ft"
+    },
+    {
+        "objectId": "OBJ-0475",
+        "warehouseId": "WH-25",
+        "objectCategory": "Shrink Bundle"
+    },
+    {
+        "objectId": "OBJ-0476",
+        "warehouseId": "WH-26",
+        "objectCategory": "Container 20ft"
+    },
+    {
+        "objectId": "OBJ-0477",
+        "warehouseId": "WH-27",
+        "objectCategory": "Shrink Bundle"
+    },
+    {
+        "objectId": "OBJ-0478",
+        "warehouseId": "WH-28",
+        "objectCategory": "Carton Box"
+    },
+    {
+        "objectId": "OBJ-0479",
+        "warehouseId": "WH-22",
+        "objectCategory": "Container 20ft"
+    },
+    {
+        "objectId": "OBJ-0480",
+        "warehouseId": "WH-23",
+        "objectCategory": "Carton Box"
+    },
+    {
+        "objectId": "OBJ-0481",
+        "warehouseId": "WH-24",
+        "objectCategory": "Shrink Bundle"
+    },
+    {
+        "objectId": "OBJ-0482",
+        "warehouseId": "WH-25",
+        "objectCategory": "Container 20ft"
+    },
+    {
+        "objectId": "OBJ-0483",
+        "warehouseId": "WH-26",
+        "objectCategory": "Carton Box"
+    },
+    {
+        "objectId": "OBJ-0484",
+        "warehouseId": "WH-27",
+        "objectCategory": "Pallet Wrap"
+    },
+    {
+        "objectId": "OBJ-0485",
+        "warehouseId": "WH-28",
+        "objectCategory": "Carton Box"
+    },
+    {
+        "objectId": "OBJ-0486",
+        "warehouseId": "WH-22",
+        "objectCategory": "Container 40ft"
+    },
+    {
+        "objectId": "OBJ-0487",
+        "warehouseId": "WH-23",
+        "objectCategory": "Container 40ft"
+    },
+    {
+        "objectId": "OBJ-0488",
+        "warehouseId": "WH-24",
+        "objectCategory": "Carton Box"
+    },
+    {
+        "objectId": "OBJ-0489",
+        "warehouseId": "WH-25",
+        "objectCategory": "Shrink Bundle"
+    },
+    {
+        "objectId": "OBJ-0090",
+        "warehouseId": "WH-29",
+        "objectCategory": "BT Cotton"
+    },
+    {
+        "objectId": "OBJ-0091",
+        "warehouseId": "WH-30",
+        "objectCategory": "Short Staple"
+    },
+    {
+        "objectId": "OBJ-0092",
+        "warehouseId": "WH-31",
+        "objectCategory": "BT Cotton"
+    },
+    {
+        "objectId": "OBJ-0093",
+        "warehouseId": "WH-29",
+        "objectCategory": "Organic Cotton"
+    },
+    {
+        "objectId": "OBJ-0094",
+        "warehouseId": "WH-30",
+        "objectCategory": "Desi Cotton"
+    },
+    {
+        "objectId": "OBJ-0095",
+        "warehouseId": "WH-31",
+        "objectCategory": "Organic Cotton"
+    },
+    {
+        "objectId": "OBJ-0096",
+        "warehouseId": "WH-29",
+        "objectCategory": "BT Cotton"
+    },
+    {
+        "objectId": "OBJ-0097",
+        "warehouseId": "WH-30",
+        "objectCategory": "Organic Cotton"
+    },
+    {
+        "objectId": "OBJ-0098",
+        "warehouseId": "WH-31",
+        "objectCategory": "Organic Cotton"
+    },
+    {
+        "objectId": "OBJ-0099",
+        "warehouseId": "WH-29",
+        "objectCategory": "Desi Cotton"
+    },
+    {
+        "objectId": "OBJ-0100",
+        "warehouseId": "WH-30",
+        "objectCategory": "Organic Cotton"
+    },
+    {
+        "objectId": "OBJ-0101",
+        "warehouseId": "WH-31",
+        "objectCategory": "BT Cotton"
+    },
+    {
+        "objectId": "OBJ-0102",
+        "warehouseId": "WH-29",
+        "objectCategory": "Desi Cotton"
+    },
+    {
+        "objectId": "OBJ-0103",
+        "warehouseId": "WH-30",
+        "objectCategory": "Organic Cotton"
+    },
+    {
+        "objectId": "OBJ-0104",
+        "warehouseId": "WH-31",
+        "objectCategory": "Organic Cotton"
+    },
+    {
+        "objectId": "OBJ-0105",
+        "warehouseId": "WH-29",
+        "objectCategory": "Desi Cotton"
+    },
+    {
+        "objectId": "OBJ-0106",
+        "warehouseId": "WH-30",
+        "objectCategory": "Desi Cotton"
+    },
+    {
+        "objectId": "OBJ-0107",
+        "warehouseId": "WH-31",
+        "objectCategory": "Long Staple"
+    },
+    {
+        "objectId": "OBJ-0108",
+        "warehouseId": "WH-29",
+        "objectCategory": "Organic Cotton"
+    },
+    {
+        "objectId": "OBJ-0109",
+        "warehouseId": "WH-30",
+        "objectCategory": "BT Cotton"
+    },
+    {
+        "objectId": "OBJ-0129",
+        "warehouseId": "WH-31",
+        "objectCategory": "Ring Yarn"
+    },
+    {
+        "objectId": "OBJ-0130",
+        "warehouseId": "WH-29",
+        "objectCategory": "Ring Yarn"
+    },
+    {
+        "objectId": "OBJ-0131",
+        "warehouseId": "WH-30",
+        "objectCategory": "Rotor Spun"
+    },
+    {
+        "objectId": "OBJ-0132",
+        "warehouseId": "WH-31",
+        "objectCategory": "Open-End Yarn"
+    },
+    {
+        "objectId": "OBJ-0133",
+        "warehouseId": "WH-29",
+        "objectCategory": "Ring Yarn"
+    },
+    {
+        "objectId": "OBJ-0134",
+        "warehouseId": "WH-30",
+        "objectCategory": "Open-End Yarn"
+    },
+    {
+        "objectId": "OBJ-0135",
+        "warehouseId": "WH-31",
+        "objectCategory": "Open-End Yarn"
+    },
+    {
+        "objectId": "OBJ-0136",
+        "warehouseId": "WH-29",
+        "objectCategory": "Compact Yarn"
+    },
+    {
+        "objectId": "OBJ-0137",
+        "warehouseId": "WH-30",
+        "objectCategory": "Rotor Spun"
+    },
+    {
+        "objectId": "OBJ-0138",
+        "warehouseId": "WH-31",
+        "objectCategory": "Rotor Spun"
+    },
+    {
+        "objectId": "OBJ-0139",
+        "warehouseId": "WH-29",
+        "objectCategory": "Open-End Yarn"
+    },
+    {
+        "objectId": "OBJ-0140",
+        "warehouseId": "WH-30",
+        "objectCategory": "Rotor Spun"
+    },
+    {
+        "objectId": "OBJ-0427",
+        "warehouseId": "WH-31",
+        "objectCategory": "Trouser"
+    },
+    {
+        "objectId": "OBJ-0428",
+        "warehouseId": "WH-29",
+        "objectCategory": "Polo Shirt"
+    },
+    {
+        "objectId": "OBJ-0429",
+        "warehouseId": "WH-30",
+        "objectCategory": "Trouser"
+    },
+    {
+        "objectId": "OBJ-0430",
+        "warehouseId": "WH-31",
+        "objectCategory": "Jacket"
+    },
+    {
+        "objectId": "OBJ-0431",
+        "warehouseId": "WH-29",
+        "objectCategory": "Jacket"
+    },
+    {
+        "objectId": "OBJ-0432",
+        "warehouseId": "WH-30",
+        "objectCategory": "Trouser"
+    },
+    {
+        "objectId": "OBJ-0433",
+        "warehouseId": "WH-31",
+        "objectCategory": "Hoodie"
+    },
+    {
+        "objectId": "OBJ-0434",
+        "warehouseId": "WH-29",
+        "objectCategory": "Polo Shirt"
+    },
+    {
+        "objectId": "OBJ-0435",
+        "warehouseId": "WH-30",
+        "objectCategory": "Trouser"
+    },
+    {
+        "objectId": "OBJ-0436",
+        "warehouseId": "WH-31",
+        "objectCategory": "Jacket"
+    },
+    {
+        "objectId": "OBJ-0437",
+        "warehouseId": "WH-29",
+        "objectCategory": "Polo Shirt"
+    },
+    {
+        "objectId": "OBJ-0438",
+        "warehouseId": "WH-30",
+        "objectCategory": "Polo Shirt"
+    },
+    {
+        "objectId": "OBJ-0439",
+        "warehouseId": "WH-31",
+        "objectCategory": "Polo Shirt"
+    },
+    {
+        "objectId": "OBJ-0440",
+        "warehouseId": "WH-29",
+        "objectCategory": "T-Shirt"
+    },
+    {
+        "objectId": "OBJ-0441",
+        "warehouseId": "WH-30",
+        "objectCategory": "T-Shirt"
+    },
+    {
+        "objectId": "OBJ-0442",
+        "warehouseId": "WH-31",
+        "objectCategory": "Hoodie"
+    },
+    {
+        "objectId": "OBJ-0141",
+        "warehouseId": "WH-32",
+        "objectCategory": "Rotor Spun"
+    },
+    {
+        "objectId": "OBJ-0142",
+        "warehouseId": "WH-33",
+        "objectCategory": "Ring Yarn"
+    },
+    {
+        "objectId": "OBJ-0143",
+        "warehouseId": "WH-34",
+        "objectCategory": "Rotor Spun"
+    },
+    {
+        "objectId": "OBJ-0144",
+        "warehouseId": "WH-32",
+        "objectCategory": "Open-End Yarn"
+    },
+    {
+        "objectId": "OBJ-0145",
+        "warehouseId": "WH-33",
+        "objectCategory": "Air-Jet Yarn"
+    },
+    {
+        "objectId": "OBJ-0146",
+        "warehouseId": "WH-34",
+        "objectCategory": "Rotor Spun"
+    },
+    {
+        "objectId": "OBJ-0147",
+        "warehouseId": "WH-32",
+        "objectCategory": "Open-End Yarn"
+    },
+    {
+        "objectId": "OBJ-0148",
+        "warehouseId": "WH-33",
+        "objectCategory": "Rotor Spun"
+    },
+    {
+        "objectId": "OBJ-0149",
+        "warehouseId": "WH-34",
+        "objectCategory": "Open-End Yarn"
+    },
+    {
+        "objectId": "OBJ-0150",
+        "warehouseId": "WH-32",
+        "objectCategory": "Rotor Spun"
+    },
+    {
+        "objectId": "OBJ-0151",
+        "warehouseId": "WH-33",
+        "objectCategory": "Compact Yarn"
+    },
+    {
+        "objectId": "OBJ-0152",
+        "warehouseId": "WH-34",
+        "objectCategory": "Compact Yarn"
+    },
+    {
+        "objectId": "OBJ-0153",
+        "warehouseId": "WH-32",
+        "objectCategory": "Ring Yarn"
+    },
+    {
+        "objectId": "OBJ-0154",
+        "warehouseId": "WH-33",
+        "objectCategory": "Rotor Spun"
+    },
+    {
+        "objectId": "OBJ-0155",
+        "warehouseId": "WH-34",
+        "objectCategory": "Open-End Yarn"
+    },
+    {
+        "objectId": "OBJ-0156",
+        "warehouseId": "WH-32",
+        "objectCategory": "Open-End Yarn"
+    },
+    {
+        "objectId": "OBJ-0180",
+        "warehouseId": "WH-33",
+        "objectCategory": "Warp Knit"
+    },
+    {
+        "objectId": "OBJ-0181",
+        "warehouseId": "WH-34",
+        "objectCategory": "Warp Knit"
+    },
+    {
+        "objectId": "OBJ-0182",
+        "warehouseId": "WH-32",
+        "objectCategory": "Circular Knit"
+    },
+    {
+        "objectId": "OBJ-0183",
+        "warehouseId": "WH-33",
+        "objectCategory": "Flat Knit"
+    },
+    {
+        "objectId": "OBJ-0184",
+        "warehouseId": "WH-34",
+        "objectCategory": "Circular Knit"
+    },
+    {
+        "objectId": "OBJ-0185",
+        "warehouseId": "WH-32",
+        "objectCategory": "Warp Knit"
+    },
+    {
+        "objectId": "OBJ-0186",
+        "warehouseId": "WH-33",
+        "objectCategory": "Warp Knit"
+    },
+    {
+        "objectId": "OBJ-0187",
+        "warehouseId": "WH-34",
+        "objectCategory": "Rib Fabric"
+    },
+    {
+        "objectId": "OBJ-0188",
+        "warehouseId": "WH-32",
+        "objectCategory": "Flat Knit"
+    },
+    {
+        "objectId": "OBJ-0189",
+        "warehouseId": "WH-33",
+        "objectCategory": "Warp Knit"
+    },
+    {
+        "objectId": "OBJ-0190",
+        "warehouseId": "WH-34",
+        "objectCategory": "Warp Knit"
+    },
+    {
+        "objectId": "OBJ-0191",
+        "warehouseId": "WH-32",
+        "objectCategory": "Flat Knit"
+    },
+    {
+        "objectId": "OBJ-0192",
+        "warehouseId": "WH-33",
+        "objectCategory": "Flat Knit"
+    },
+    {
+        "objectId": "OBJ-0193",
+        "warehouseId": "WH-34",
+        "objectCategory": "Warp Knit"
+    },
+    {
+        "objectId": "OBJ-0194",
+        "warehouseId": "WH-32",
+        "objectCategory": "Warp Knit"
+    },
+    {
+        "objectId": "OBJ-0195",
+        "warehouseId": "WH-33",
+        "objectCategory": "Circular Knit"
+    },
+    {
+        "objectId": "OBJ-0196",
+        "warehouseId": "WH-34",
+        "objectCategory": "Rib Fabric"
+    },
+    {
+        "objectId": "OBJ-0374",
+        "warehouseId": "WH-32",
+        "objectCategory": "T-Shirt"
+    },
+    {
+        "objectId": "OBJ-0375",
+        "warehouseId": "WH-33",
+        "objectCategory": "Polo Shirt"
+    },
+    {
+        "objectId": "OBJ-0376",
+        "warehouseId": "WH-34",
+        "objectCategory": "Trouser"
+    },
+    {
+        "objectId": "OBJ-0377",
+        "warehouseId": "WH-32",
+        "objectCategory": "Trouser"
+    },
+    {
+        "objectId": "OBJ-0378",
+        "warehouseId": "WH-33",
+        "objectCategory": "Polo Shirt"
+    },
+    {
+        "objectId": "OBJ-0379",
+        "warehouseId": "WH-34",
+        "objectCategory": "Polo Shirt"
+    },
+    {
+        "objectId": "OBJ-0380",
+        "warehouseId": "WH-32",
+        "objectCategory": "Jacket"
+    },
+    {
+        "objectId": "OBJ-0381",
+        "warehouseId": "WH-33",
+        "objectCategory": "T-Shirt"
+    },
+    {
+        "objectId": "OBJ-0382",
+        "warehouseId": "WH-34",
+        "objectCategory": "Polo Shirt"
+    },
+    {
+        "objectId": "OBJ-0383",
+        "warehouseId": "WH-32",
+        "objectCategory": "Jacket"
+    },
+    {
+        "objectId": "OBJ-0384",
+        "warehouseId": "WH-33",
+        "objectCategory": "T-Shirt"
+    },
+    {
+        "objectId": "OBJ-0385",
+        "warehouseId": "WH-34",
+        "objectCategory": "Hoodie"
+    },
+    {
+        "objectId": "OBJ-0386",
+        "warehouseId": "WH-32",
+        "objectCategory": "T-Shirt"
+    },
+    {
+        "objectId": "OBJ-0387",
+        "warehouseId": "WH-33",
+        "objectCategory": "Polo Shirt"
+    },
+    {
+        "objectId": "OBJ-0388",
+        "warehouseId": "WH-34",
+        "objectCategory": "Polo Shirt"
+    },
+    {
+        "objectId": "OBJ-0389",
+        "warehouseId": "WH-32",
+        "objectCategory": "Jacket"
+    },
+    {
+        "objectId": "OBJ-0390",
+        "warehouseId": "WH-33",
+        "objectCategory": "Trouser"
+    },
+    {
+        "objectId": "OBJ-0391",
+        "warehouseId": "WH-34",
+        "objectCategory": "Jacket"
+    },
+    {
+        "objectId": "OBJ-0392",
+        "warehouseId": "WH-32",
+        "objectCategory": "Jacket"
+    }
+]

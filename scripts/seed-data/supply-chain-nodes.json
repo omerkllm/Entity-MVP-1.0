@@ -1,0 +1,10 @@
+[
+  { "id": "PRC-01", "name": "Chemicals",       "status": "Active",  "quantity": 3200, "unit": "kg",  "lastUpdated": "2026-03-14" },
+  { "id": "PRC-02", "name": "Raw Cotton",       "status": "Active",  "quantity": 8500, "unit": "kg",  "lastUpdated": "2026-03-13" },
+  { "id": "PRC-03", "name": "Spinning",         "status": "Active",  "quantity": 6100, "unit": "spl", "lastUpdated": "2026-03-12" },
+  { "id": "PRC-04", "name": "Knitting",         "status": "Pending", "quantity": 4750, "unit": "rol", "lastUpdated": "2026-03-11" },
+  { "id": "PRC-05", "name": "Weaving",          "status": "Active",  "quantity": 5320, "unit": "mtr", "lastUpdated": "2026-03-11" },
+  { "id": "PRC-06", "name": "Dyeing",           "status": "Active",  "quantity": 2980, "unit": "ltr", "lastUpdated": "2026-03-10" },
+  { "id": "PRC-07", "name": "Garment Assembly", "status": "Active",  "quantity": 1240, "unit": "pcs", "lastUpdated": "2026-03-09" },
+  { "id": "PRC-08", "name": "Export",           "status": "Pending", "quantity": 890,  "unit": "cnt", "lastUpdated": "2026-03-08" }
+]

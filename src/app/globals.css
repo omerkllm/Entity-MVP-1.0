@@ -1,0 +1,67 @@
+@import "tailwindcss";
+@import "maplibre-gl/dist/maplibre-gl.css";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: #0a0a0a;
+  color: #ededed;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+html {
+  background: #0a0a0a;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* ── DMP Map markers ───────────────────────────────────────────── */
+.dmp-pin {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  cursor: pointer;
+  border: 1.5px solid;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.3);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.dmp-pin:hover {
+  transform: scale(1.15);
+  box-shadow: 0 3px 10px rgba(0,0,0,0.45);
+}
+.dmp-pin-warehouse { background: #1a7f37; border-color: #2ea043; }
+.dmp-pin-supplier  { background: #1d4ed8; border-color: #3b82f6; }
+.dmp-pin-external  { background: #b91c1c; border-color: #ef4444; }
+.dmp-pin img { filter: invert(1); width: 12px; height: 12px; pointer-events: none; }
+
+/* hide default maplibre marker */
+.maplibregl-marker { will-change: transform; }
+.maplibregl-ctrl-attrib { display: none !important; }
+.maplibregl-popup-content {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  padding: 8px 10px;
+  border-radius: 3px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}

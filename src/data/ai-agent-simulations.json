@@ -1,0 +1,54 @@
+{
+  "agentName": "Parse Agent",
+  "agentTarget": "Simulations",
+  "greeting": "Noticing any Supply Chain Disruptions? Hop In,",
+  "conversations": [
+    {
+      "id": "sim-001",
+      "messages": [
+        {
+          "role": "user",
+          "label": "Actions",
+          "branch": {
+            "name": "Raw Cotton",
+            "type": "Branch"
+          },
+          "content": "My entire cotton warehouse stock is lost. I must deliver 30 units of clothing in 7 days. Production takes 3 days for the whole batch, leaving me exactly 4 days to procure 30 units of cotton.\n\nBased on this 4-day sourcing window, what specific businesses, factory types, or emergency distributors do I need to reach out to right now?"
+        },
+        {
+          "role": "agent",
+          "label": "Simulation Ran",
+          "summary": "Simulation Complete:\nEvaluated emergency procurement routes for 30 units of cotton within a strict 96-hour window.",
+          "options": [
+            {
+              "id": "opt-1",
+              "title": "Option 1 : Optimal (Balanced)",
+              "type": "optimal",
+              "color": "#357d1b",
+              "bgColor": "#e8f5e3",
+              "darkBgColor": "#1a2e14",
+              "points": [
+                "Action: Dispatch micro-orders to established Northern nodes (Blue Routes). Delivery in 48 hours.",
+                "Risk Type: [Logistical] Minor local transit variables, but leaves a comfortable 2-day buffer for production."
+              ]
+            },
+            {
+              "id": "opt-2",
+              "title": "Option 2 : Fast & High Risk",
+              "type": "risk",
+              "color": "#ba0202",
+              "bgColor": "#fde8e8",
+              "darkBgColor": "#2e1414",
+              "points": [
+                "Action: Immediate spot-market buyout from all unvetted local brokers. Delivery in <24 hours.",
+                "Risk Type: [Financial & Quality] Severe price markups and untested material standards."
+              ]
+            }
+          ],
+          "progress": 0.75
+        }
+      ]
+    }
+  ],
+  "inputPlaceholder": "Noticing any Supply Chain Disruptions? Hop In,"
+}
