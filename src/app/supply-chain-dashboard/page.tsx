@@ -26,27 +26,27 @@ export default function SupplyChainDashboardPage() {
   const [capacityProcessId, setCapacityProcessId] = useState('')
 
   useEffect(() => {
-    Promise.all([
-      api.get('/api/processes?limit=200'),
-      api.get('/api/activity?limit=200'),
-      api.get('/api/warehouses?limit=200'),
-      api.get('/api/dashboard'),
-    ]).then(([proc, activity, wh, dash]) => {
-      setNodes(proc.data.data)
-      setNodeTotal(proc.data.total)
+    api.get('/api/scd-data').then(({ data }) => {
+      const proc = data.processes
+      const activity = data.activity
+      const wh = data.warehouses
+      const dash = data.dashboard
+
+      setNodes(proc.data)
+      setNodeTotal(proc.total)
       // Map activity entries: resolve node name from processes
-      const nodeMap = new Map(proc.data.data.map((n: SupplyChainNode) => [n.id, n.name]))
-      setRecentActivity(activity.data.data.map((a: { nodeId: string; eventType: string; time: string }) => ({
+      const nodeMap = new Map(proc.data.map((n: SupplyChainNode) => [n.id, n.name]))
+      setRecentActivity(activity.data.map((a: { nodeId: string; eventType: string; time: string }) => ({
         text: nodeMap.has(a.nodeId) ? `${nodeMap.get(a.nodeId)} ${a.eventType}` : a.eventType,
         time: a.time,
       })))
-      setWarehouses(wh.data.data)
-      setWarehouseTotal(wh.data.total)
+      setWarehouses(wh.data)
+      setWarehouseTotal(wh.total)
       // avgHealth from dashboard — computed from ALL objects in DB via SQL
-      setAvgHealth(Math.round(dash.data.avg_health ?? 0))
+      setAvgHealth(Math.round(dash.avg_health ?? 0))
       // Set default dropdown selections on first load (functional updater preserves any user selection)
-      if (proc.data.data.length > 0) {
-        const defaultId = proc.data.data[6]?.id ?? proc.data.data[0]?.id ?? ''
+      if (proc.data.length > 0) {
+        const defaultId = proc.data[6]?.id ?? proc.data[0]?.id ?? ''
         setTransitProcessId(prev => prev || defaultId)
         setCapacityProcessId(prev => prev || defaultId)
       }
