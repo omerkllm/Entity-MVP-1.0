@@ -17,9 +17,9 @@ const ROLE_PAGE_ACCESS: Record<string, string[]> = {
 }
 
 const ROLE_API_ACCESS: Record<string, string[]> = {
-  WO:  ['/api/warehouses', '/api/objects', '/api/activity', '/api/processes', '/api/categories'],
-  SC:  ['/api/warehouses', '/api/objects', '/api/activity', '/api/businesses', '/api/processes', '/api/categories', '/api/dmp-data'],
-  SCA: ['/api/warehouses', '/api/objects', '/api/activity', '/api/businesses', '/api/processes', '/api/categories', '/api/dashboard', '/api/scd-data'],
+  WO:  ['/api/warehouses', '/api/objects', '/api/activity', '/api/processes', '/api/categories', '/api/warehousing-data'],
+  SC:  ['/api/warehouses', '/api/objects', '/api/activity', '/api/businesses', '/api/processes', '/api/categories', '/api/dmp-data', '/api/warehousing-data'],
+  SCA: ['/api/warehouses', '/api/objects', '/api/activity', '/api/businesses', '/api/processes', '/api/categories', '/api/dashboard', '/api/scd-data', '/api/warehousing-data'],
   SA:  ['/api/'],  // full access
 }
 

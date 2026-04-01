@@ -1,39 +1,38 @@
-import { Pool, type QueryResultRow } from '@neondatabase/serverless';
+import { neon } from '@neondatabase/serverless';
 import { env } from '@/lib/env';
 
-/* ── Pool configuration constants ─────────────────────────────────── */
-const MAX_POOL_SIZE = 5;
-const IDLE_TIMEOUT_MS = 30_000;
-const CONNECTION_TIMEOUT_MS = 10_000;
-
-/* ── Singleton pool (survives Next.js HMR in dev) ─────────────────── */
-const globalForPg = globalThis as unknown as { pgPool?: Pool };
-
-export const pool =
-  globalForPg.pgPool ??
-  new Pool({
-    connectionString: env.DATABASE_URL,
-    max: MAX_POOL_SIZE,
-    idleTimeoutMillis: IDLE_TIMEOUT_MS,
-    connectionTimeoutMillis: CONNECTION_TIMEOUT_MS,
-  });
-
-// Log unexpected pool-level errors instead of crashing the process
-pool.on('error', (err: Error) => {
-  console.error('[pg pool] Unexpected idle-client error:', err.message);
-});
-
-if (process.env.NODE_ENV !== 'production') {
-  globalForPg.pgPool = pool;
-}
+/** Minimal type matching pg.QueryResultRow — avoids importing 'pg'. */
+type QueryResultRow = Record<string, unknown>;
 
 /**
- * Typed query helper — wraps pool.query with a consistent error surface.
- * All query modules should call this instead of pool.query directly.
+ * Neon HTTP query function — stateless, zero connection overhead.
+ * Each call is a single HTTP request to Neon's SQL proxy.
+ * No pool, no WebSocket, no cold-start handshake.
+ */
+const sql = neon(env.DATABASE_URL);
+
+/**
+ * Typed query helper — drop-in replacement for the old pool.query().
+ * Uses sql.query() which accepts (string, params[]) unlike the tagged
+ * template form.
+ * Returns { rows } to match the pg.QueryResult shape that all query
+ * modules already depend on.
  */
 export async function query<T extends QueryResultRow>(
   text: string,
   params?: unknown[],
 ) {
-  return pool.query<T>(text, params);
+  const rows = await sql.query(text, params as unknown[]) as T[];
+  return { rows };
 }
+
+/**
+ * Backward-compat export — login route and a few others use pool.query
+ * directly.  Wrap it so it Just Works™ without changing every call site.
+ */
+export const pool = {
+  query: async <T extends QueryResultRow>(text: string, params?: unknown[]) => {
+    const rows = await sql.query(text, params as unknown[]) as T[];
+    return { rows };
+  },
+};

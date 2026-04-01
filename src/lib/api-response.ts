@@ -21,7 +21,14 @@ export function apiError(
 /**
  * Returns a standardised JSON success response.
  * Wraps payload in NextResponse.json with a 200 status (or custom).
+ * Adds Cache-Control: stale-while-revalidate so Vercel edge caches
+ * responses and serves them instantly on subsequent requests.
  */
 export function apiSuccess<T>(data: T, status = 200): NextResponse {
-  return NextResponse.json(data, { status });
+  return NextResponse.json(data, {
+    status,
+    headers: {
+      'Cache-Control': 's-maxage=10, stale-while-revalidate=59',
+    },
+  });
 }
