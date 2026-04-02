@@ -3,22 +3,11 @@ import api from '@/lib/api'
 import type { ObjectRecord } from '@/lib/data/types'
 import maplibregl from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
-import { PieChart, Pie, BarChart, Bar, XAxis, YAxis, CartesianGrid, Cell, Tooltip, ResponsiveContainer } from 'recharts'
+import { PieChart, Pie, BarChart, Bar, XAxis, CartesianGrid, Label, Rectangle } from 'recharts'
+import type { BarShapeProps } from 'recharts/types/cartesian/Bar'
+import { ChartContainer, ChartTooltip, ChartTooltipContent, type ChartConfig } from '@/components/ui/chart'
 
 const TRANSIT_COLORS = ['#a855f7', '#c084fc', '#d8b4fe', '#7e22ce', '#9333ea'] as const
-const EMPTY_DONUT_DATA = [{ name: 'Empty', value: 1, color: '#222' }] as const
-const TOOLTIP_STYLE_LIGHT = { background: '#fff', border: '1px solid #e0e0e0', borderRadius: 6, fontSize: 11, color: '#222', boxShadow: '0 2px 8px rgba(0,0,0,0.15)' } as const
-const TOOLTIP_STYLE_DARK = { background: '#1a1a1a', border: '1px solid #333', borderRadius: 6, fontSize: 11, color: '#fff' } as const
-const WORLD_POLY: GeoJSON.FeatureCollection = {
-  type: 'FeatureCollection',
-  features: [{
-    type: 'Feature', properties: {},
-    geometry: {
-      type: 'Polygon',
-      coordinates: [[[-180, -90], [180, -90], [180, 90], [-180, 90], [-180, -90]]],
-    },
-  }],
-}
 
 export type WarehouseForInspector = {
   warehouseId: string
@@ -83,9 +72,9 @@ function WarehouseInspector({ warehouse: w, onClose, showMap = true }: Props) {
     }
 
     const allocatedData = [
-      { name: majorName, value: majorQty, color: '#3b82f6' },
-      { name: 'Other', value: otherQty, color: '#60a5fa' },
-      { name: 'In Transit', value: transitTotalQty, color: '#a855f7' },
+      { name: majorName, value: majorQty, color: '#60a5fa' },
+      { name: 'Other', value: otherQty, color: '#3b82f6' },
+      { name: 'In Transit', value: transitTotalQty, color: '#1d4ed8' },
       { name: exceeded ? 'Exceeded' : 'Free', value: Math.abs(freeQty), color: freeColor },
     ]
     const transitData = Array.from(transitCatTotals.entries())
@@ -99,6 +88,52 @@ function WarehouseInspector({ warehouse: w, onClose, showMap = true }: Props) {
     allocatedData.filter(d => d.name !== 'Free' && d.name !== 'Exceeded' && d.value > 0),
     [allocatedData]
   )
+
+  // Shadcn chart config + transformed data for the bar chart
+  const { barChartConfig, barChartData, barActiveIndex } = useMemo(() => {
+    const config: ChartConfig = { value: { label: 'Quantity' } }
+    const data: { category: string; value: number; fill: string }[] = []
+    let activeIdx = 0
+    let maxVal = 0
+    allocatedData.forEach((d, i) => {
+      const key = d.name.toLowerCase().replace(/\s+/g, '-')
+      config[key] = { label: d.name, color: d.color }
+      data.push({ category: key, value: d.value, fill: `var(--color-${key})` })
+      if (d.value > maxVal) { maxVal = d.value; activeIdx = i }
+    })
+    return { barChartConfig: config, barChartData: data, barActiveIndex: activeIdx }
+  }, [allocatedData])
+
+  const { allocDonutConfig, allocDonutChartData, allocDonutTotal } = useMemo(() => {
+    const config: ChartConfig = { value: { label: 'Quantity' } }
+    const data: { category: string; value: number; fill: string }[] = []
+    let total = 0
+    if (allocatedDonutData.length === 0) {
+      config['empty'] = { label: 'Empty', color: '#222' }
+      data.push({ category: 'empty', value: 1, fill: 'var(--color-empty)' })
+    } else {
+      for (const d of allocatedDonutData) {
+        const key = d.name.toLowerCase().replace(/\s+/g, '-')
+        config[key] = { label: d.name, color: d.color }
+        data.push({ category: key, value: d.value, fill: `var(--color-${key})` })
+        total += d.value
+      }
+    }
+    return { allocDonutConfig: config, allocDonutChartData: data, allocDonutTotal: total }
+  }, [allocatedDonutData])
+
+  const { transitDonutConfig, transitDonutChartData, transitDonutTotal } = useMemo(() => {
+    const config: ChartConfig = { value: { label: 'Quantity' } }
+    const data: { category: string; value: number; fill: string }[] = []
+    let total = 0
+    for (const d of transitData) {
+      const key = d.name.toLowerCase().replace(/\s+/g, '-')
+      config[key] = { label: d.name, color: d.color }
+      data.push({ category: key, value: d.value, fill: `var(--color-${key})` })
+      total += d.value
+    }
+    return { transitDonutConfig: config, transitDonutChartData: data, transitDonutTotal: total }
+  }, [transitData])
 
   const warehouseDetails = useMemo(() => [
     { label: 'Warehouse ID',      value: w.warehouseId,      colorClass: '' },
@@ -142,13 +177,13 @@ function WarehouseInspector({ warehouse: w, onClose, showMap = true }: Props) {
     el.style.cssText = 'width:100%;height:100%'
     mapContainerRef.current.appendChild(el)
 
-    const styleUrl = `https://api.maptiler.com/maps/basic-v2-dark/style.json?key=${MAPTILER_KEY}`
+    const styleUrl = `https://api.maptiler.com/maps/dataviz-dark/style.json?key=${MAPTILER_KEY}`
 
     const map = new maplibregl.Map({
       container: el,
       style: styleUrl,
       center: lngLat,
-      zoom: 14,
+      zoom: 15,
       interactive: false,
       attributionControl: false,
     })
@@ -161,16 +196,22 @@ function WarehouseInspector({ warehouse: w, onClose, showMap = true }: Props) {
         }
       })
 
+      // Darken the map further to match the app's black/dark-grey theme
+      const DARK_POLY: GeoJSON.FeatureCollection = {
+        type: 'FeatureCollection',
+        features: [{
+          type: 'Feature', properties: {},
+          geometry: { type: 'Polygon', coordinates: [[[-180, -90], [180, -90], [180, 90], [-180, 90], [-180, -90]]] },
+        }],
+      }
       const firstSymbol = map.getStyle().layers?.find(l => l.type === 'symbol')?.id
-
-      // Same dark overlay as DmpMap
-      map.addSource('darken', { type: 'geojson', data: WORLD_POLY })
+      map.addSource('darken', { type: 'geojson', data: DARK_POLY })
       map.addLayer({
         id: 'darken-overlay', type: 'fill', source: 'darken',
-        paint: { 'fill-color': '#000000', 'fill-opacity': 0.45 },
+        paint: { 'fill-color': '#000000', 'fill-opacity': 0.35 },
       }, firstSymbol)
 
-      // Same dmp-pin-warehouse marker
+      // Warehouse marker
       const pinEl = document.createElement('div')
       pinEl.className = 'dmp-pin dmp-pin-warehouse'
       pinEl.innerHTML = '<img src="/icons/warehouse.svg" alt="" />'
@@ -289,70 +330,70 @@ function WarehouseInspector({ warehouse: w, onClose, showMap = true }: Props) {
 
         {/* Warehouse Capacity */}
         <div className="flex flex-col shrink-0">
-          <div className="flex h-8 items-center justify-between bg-[#111111] pl-4 pr-2 shrink-0">
+          <div className="flex h-8 items-center bg-[#111111] pl-4 shrink-0">
             <span className="text-[13px] tracking-[-0.03em] text-white">Warehouse Capacity</span>
-            <div className="flex items-center gap-[3px]">
-              {(['allocated', 'in depth'] as const).map(view => (
-                <button
-                  key={view}
-                  onClick={() => setChartView(view === 'in depth' ? 'in-depth' : 'allocated')}
-                  className={`h-5 px-2 rounded-[3px] text-[10px] tracking-[-0.02em] capitalize transition-colors cursor-pointer ${
-                    (view === 'in depth' ? chartView === 'in-depth' : chartView === 'allocated')
-                      ? 'bg-white text-black'
-                      : 'bg-[#1e1e1e] text-[#aaa] hover:bg-[#2a2a2a]'
-                  }`}
-                >
-                  {view}
-                </button>
-              ))}
+          </div>
+          <div className="flex items-center bg-[#0c0c0c] px-3 py-2">
+            <div className="inline-flex items-center rounded-lg bg-[#1a1a1a] p-1 gap-px">
+              {(['allocated', 'in depth'] as const).map(view => {
+                const isActive = view === 'in depth' ? chartView === 'in-depth' : chartView === 'allocated'
+                return (
+                  <button
+                    key={view}
+                    onClick={() => setChartView(view === 'in depth' ? 'in-depth' : 'allocated')}
+                    className={`inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-[11px] tracking-[-0.03em] font-normal capitalize transition-all cursor-pointer ${
+                      isActive
+                        ? 'bg-[#111] text-white shadow-sm'
+                        : 'text-[#888] hover:text-white'
+                    }`}
+                  >
+                    {view}
+                  </button>
+                )
+              })}
             </div>
           </div>
 
           {chartView === 'allocated' ? (
             <>
-              {/* Bar chart */}
+              {/* Bar chart — shadcn/ui pattern */}
               <div className="mt-[3px] bg-[#0c0c0c] px-2 pt-3 pb-1">
-                <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-2 px-1">
-                  {allocatedData.map(({ name, color }) => (
-                    <div key={name} className="flex items-center gap-1.5">
-                      <div className="shrink-0 rounded-[2px]" style={{ width: 10, height: 10, backgroundColor: color }} />
-                      <span className="text-[10px] tracking-[-0.03em] text-[#aaa]">{name}</span>
-                    </div>
-                  ))}
-                </div>
-                <ResponsiveContainer width="100%" height={150}>
-                  <BarChart data={allocatedData} margin={{ top: 4, right: 4, left: -20, bottom: 4 }}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="currentColor" opacity={0.08} />
+                <ChartContainer config={barChartConfig} className="aspect-video">
+                  <BarChart accessibilityLayer data={barChartData}>
+                    <CartesianGrid vertical={false} />
                     <XAxis
-                      dataKey="name"
-                      axisLine={false}
+                      dataKey="category"
                       tickLine={false}
-                      interval={0}
-                      tick={({ x, y, payload }: { x: string | number; y: string | number; payload: { value: string } }) => {
-                        const label = payload.value.length > 11 ? payload.value.slice(0, 11) + '…' : payload.value
-                        return (
-                          <g transform={`translate(${Number(x)},${Number(y)})`}>
-                            <text x={0} y={0} dy={12} textAnchor="middle" fill="#888" fontSize={9}>
-                              {label}
-                            </text>
-                          </g>
+                      tickMargin={10}
+                      axisLine={false}
+                      tickFormatter={(value) =>
+                        (barChartConfig[value as keyof typeof barChartConfig]?.label as string) ?? value
+                      }
+                    />
+                    <ChartTooltip
+                      cursor={false}
+                      content={<ChartTooltipContent hideLabel />}
+                    />
+                    <Bar
+                      dataKey="value"
+                      strokeWidth={2}
+                      radius={8}
+                      shape={({ index, ...props }: BarShapeProps) =>
+                        index === barActiveIndex ? (
+                          <Rectangle
+                            {...props}
+                            fillOpacity={0.8}
+                            stroke={props.payload.fill}
+                            strokeDasharray={4}
+                            strokeDashoffset={4}
+                          />
+                        ) : (
+                          <Rectangle {...props} />
                         )
-                      }}
+                      }
                     />
-                    <YAxis tick={{ fontSize: 10, fill: '#888' }} axisLine={false} tickLine={false} />
-                    <Tooltip
-                      contentStyle={TOOLTIP_STYLE_LIGHT}
-                      cursor={{ fill: 'rgba(0,0,0,0.06)' }}
-                      labelStyle={{ color: '#333', fontWeight: 600 }}
-                      itemStyle={{ color: '#333' }}
-                    />
-                    <Bar dataKey="value" radius={[3, 3, 0, 0]} barSize={28}>
-                      {allocatedData.map((entry, idx) => (
-                        <Cell key={idx} fill={entry.color} />
-                      ))}
-                    </Bar>
                   </BarChart>
-                </ResponsiveContainer>
+                </ChartContainer>
               </div>
               {/* Allocated breakdown table */}
               <div className="flex flex-col gap-[3px] mt-[3px]">
@@ -373,7 +414,7 @@ function WarehouseInspector({ warehouse: w, onClose, showMap = true }: Props) {
                     return (
                       <div key={name} className="bg-[#0c0c0c] h-7 flex items-stretch px-[5px] shrink-0">
                         <div className="flex flex-1 items-center px-2 gap-2 min-w-0">
-                          <div className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: color }} />
+                          <div className="w-[9px] h-[9px] rounded-[3px] shrink-0" style={{ backgroundColor: color }} />
                           <span className="text-[13px] tracking-[-0.03em] text-white truncate">{name}</span>
                         </div>
                         <div className="flex w-[80px] shrink-0 items-center justify-center px-2">
@@ -398,29 +439,52 @@ function WarehouseInspector({ warehouse: w, onClose, showMap = true }: Props) {
                   <span className="text-[11px] tracking-[-0.02em] text-[#aaa]">Allocated</span>
                 </div>
                 <div className="bg-[#0c0c0c] px-2 pt-2 pb-1">
-                  <ResponsiveContainer width="100%" height={140}>
+                  <ChartContainer config={allocDonutConfig} className="mx-auto aspect-square max-h-[180px]">
                     <PieChart>
+                      <ChartTooltip
+                        cursor={false}
+                        content={<ChartTooltipContent hideLabel nameKey="category" />}
+                      />
                       <Pie
-                        data={allocatedDonutData.length > 0 ? allocatedDonutData : EMPTY_DONUT_DATA}
-                        cx="50%"
-                        cy="50%"
-                        innerRadius={36}
-                        outerRadius={56}
+                        data={allocDonutChartData}
                         dataKey="value"
+                        nameKey="category"
+                        innerRadius={50}
+                        outerRadius={65}
                         strokeWidth={0}
-                        isAnimationActive={false}
                       >
-                        {(allocatedDonutData.length > 0 ? allocatedDonutData : EMPTY_DONUT_DATA).map((entry, idx) => (
-                          <Cell key={idx} fill={entry.color} />
-                        ))}
-                      </Pie>
-                      {allocatedDonutData.length > 0 && (
-                        <Tooltip
-                          contentStyle={TOOLTIP_STYLE_DARK}
+                        <Label
+                          content={({ viewBox }) => {
+                            if (viewBox && "cx" in viewBox && "cy" in viewBox) {
+                              return (
+                                <text
+                                  x={viewBox.cx}
+                                  y={viewBox.cy}
+                                  textAnchor="middle"
+                                  dominantBaseline="middle"
+                                >
+                                  <tspan
+                                    x={viewBox.cx}
+                                    y={viewBox.cy}
+                                    className="fill-white text-2xl font-bold tracking-[-0.03em]"
+                                  >
+                                    {allocDonutTotal.toLocaleString()}
+                                  </tspan>
+                                  <tspan
+                                    x={viewBox.cx}
+                                    y={(viewBox.cy || 0) + 20}
+                                    className="fill-[#888] text-[10px]"
+                                  >
+                                    Allocated
+                                  </tspan>
+                                </text>
+                              )
+                            }
+                          }}
                         />
-                      )}
+                      </Pie>
                     </PieChart>
-                  </ResponsiveContainer>
+                  </ChartContainer>
                 </div>
                 <div className="flex flex-col gap-[3px] mt-[3px]">
                   <div className="flex h-8 items-stretch bg-[#111111] shrink-0">
@@ -440,7 +504,7 @@ function WarehouseInspector({ warehouse: w, onClose, showMap = true }: Props) {
                       return (
                         <div key={name} className="bg-[#0c0c0c] h-7 flex items-stretch px-[5px] shrink-0">
                           <div className="flex flex-1 items-center px-2 gap-2 min-w-0">
-                            <div className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: color }} />
+                            <div className="w-[9px] h-[9px] rounded-[3px] shrink-0" style={{ backgroundColor: color }} />
                             <span className="text-[13px] tracking-[-0.03em] text-white truncate">{name}</span>
                           </div>
                           <div className="flex w-[80px] shrink-0 items-center justify-center px-2">
@@ -464,27 +528,52 @@ function WarehouseInspector({ warehouse: w, onClose, showMap = true }: Props) {
                 {transitData.length > 0 ? (
                   <>
                     <div className="bg-[#0c0c0c] px-2 pt-2 pb-1">
-                      <ResponsiveContainer width="100%" height={140}>
+                      <ChartContainer config={transitDonutConfig} className="mx-auto aspect-square max-h-[180px]">
                         <PieChart>
-                          <Pie
-                            data={transitData}
-                            cx="50%"
-                            cy="50%"
-                            innerRadius={36}
-                            outerRadius={56}
-                            dataKey="value"
-                            strokeWidth={0}
-                            isAnimationActive={false}
-                          >
-                            {transitData.map((entry, idx) => (
-                              <Cell key={idx} fill={entry.color} />
-                            ))}
-                          </Pie>
-                          <Tooltip
-                            contentStyle={TOOLTIP_STYLE_DARK}
+                          <ChartTooltip
+                            cursor={false}
+                            content={<ChartTooltipContent hideLabel nameKey="category" />}
                           />
+                          <Pie
+                            data={transitDonutChartData}
+                            dataKey="value"
+                            nameKey="category"
+                            innerRadius={50}
+                            outerRadius={65}
+                            strokeWidth={0}
+                          >
+                            <Label
+                              content={({ viewBox }) => {
+                                if (viewBox && "cx" in viewBox && "cy" in viewBox) {
+                                  return (
+                                    <text
+                                      x={viewBox.cx}
+                                      y={viewBox.cy}
+                                      textAnchor="middle"
+                                      dominantBaseline="middle"
+                                    >
+                                      <tspan
+                                        x={viewBox.cx}
+                                        y={viewBox.cy}
+                                        className="fill-white text-2xl font-bold tracking-[-0.03em]"
+                                      >
+                                        {transitDonutTotal.toLocaleString()}
+                                      </tspan>
+                                      <tspan
+                                        x={viewBox.cx}
+                                        y={(viewBox.cy || 0) + 20}
+                                        className="fill-[#888] text-[10px]"
+                                      >
+                                        In Transit
+                                      </tspan>
+                                    </text>
+                                  )
+                                }
+                              }}
+                            />
+                          </Pie>
                         </PieChart>
-                      </ResponsiveContainer>
+                      </ChartContainer>
                     </div>
                     <div className="flex flex-col gap-[3px] mt-[3px]">
                       <div className="flex h-8 items-stretch bg-[#111111] shrink-0">
@@ -504,7 +593,7 @@ function WarehouseInspector({ warehouse: w, onClose, showMap = true }: Props) {
                           return (
                             <div key={name} className="bg-[#0c0c0c] h-7 flex items-stretch px-[5px] shrink-0">
                               <div className="flex flex-1 items-center px-2 gap-2 min-w-0">
-                                <div className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: color }} />
+                                <div className="w-[9px] h-[9px] rounded-[3px] shrink-0" style={{ backgroundColor: color }} />
                                 <span className="text-[13px] tracking-[-0.03em] text-white truncate">{name}</span>
                               </div>
                               <div className="flex w-[80px] shrink-0 items-center justify-center px-2">
@@ -536,3 +625,4 @@ function WarehouseInspector({ warehouse: w, onClose, showMap = true }: Props) {
 }
 
 export default memo(WarehouseInspector)
+
