@@ -86,11 +86,16 @@ export default function InventoryPage() {
         {/* Rows */}
         <div className="flex-1 overflow-y-auto scrollbar-hide px-5 pb-5">
           {loading ? (
-            <div className="flex items-center justify-center py-12">
-              <span className="text-[13px] tracking-[-0.03em] text-[#999999] animate-pulse">Loading processes…</span>
+            <div className="flex flex-col gap-[4px] pt-[4px]">
+              {Array.from({ length: 8 }).map((_, i) => (
+                <div key={i} className="flex items-center justify-between px-4 h-8 bg-[#111111]">
+                  <div className="sk h-3" style={{ width: `${100 + (i % 4) * 25}px` }} />
+                  <div className="sk h-3 w-14" />
+                </div>
+              ))}
             </div>
           ) : (
-          <div className="flex flex-col gap-[4px] pt-[4px]">
+          <div className="flex flex-col gap-[4px] pt-[4px] fade-in">
             {nodes.map((node) => (
               <Link
                 key={node.id}
