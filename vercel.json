@@ -4,11 +4,5 @@
     "src/app/api/**": {
       "maxDuration": 10
     }
-  },
-  "crons": [
-    {
-      "path": "/api/ping",
-      "schedule": "*/4 * * * *"
-    }
-  ]
+  }
 }
