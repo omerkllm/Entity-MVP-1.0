@@ -1,3 +1,5 @@
+import { memo, useMemo } from 'react'
+
 export type ObjectForInspector = {
   objectId: string
   objectCategory: string
@@ -14,9 +16,32 @@ type Props = {
   onClose: () => void
 }
 
-export default function ObjectInspector({ object: o, onClose }: Props) {
+function ObjectInspector({ object: o, onClose }: Props) {
   const healthNum = parseFloat(o.objectHealth)
   const healthPos = Math.abs(healthNum) >= 30
+
+  const details = useMemo(() => [
+    { label: 'Object ID',       value: o.objectId,       colorClass: '' },
+    { label: 'Object Category', value: o.objectCategory, colorClass: '' },
+    { label: 'Quantity',        value: String(o.quantity),colorClass: '' },
+    { label: 'Unit',            value: o.unit,           colorClass: '' },
+    { label: 'Arrival Time',    value: o.arrivalTime,    colorClass: '' },
+    {
+      label: 'Transit Status',
+      value: o.transitStatus,
+      colorClass: o.transitStatus === 'In Transit'
+        ? 'text-[#60a5fa]'
+        : 'text-[#d0d0d0]',
+    },
+    {
+      label: 'Object Health',
+      value: o.objectHealth,
+      colorClass: healthPos
+        ? 'text-[#86F398]'
+        : 'text-[#F38686]',
+    },
+    { label: 'Warehouse ID',   value: o.warehouseId,    colorClass: '' },
+  ], [o, healthPos])
 
   return (
     <>
@@ -54,28 +79,7 @@ export default function ObjectInspector({ object: o, onClose }: Props) {
           </div>
 
           <div className="flex flex-col gap-[3px] mt-[3px]">
-            {[
-              { label: 'Object ID',       value: o.objectId,       colorClass: '' },
-              { label: 'Object Category', value: o.objectCategory, colorClass: '' },
-              { label: 'Quantity',        value: String(o.quantity),colorClass: '' },
-              { label: 'Unit',            value: o.unit,           colorClass: '' },
-              { label: 'Arrival Time',    value: o.arrivalTime,    colorClass: '' },
-              {
-                label: 'Transit Status',
-                value: o.transitStatus,
-                colorClass: o.transitStatus === 'In Transit'
-                  ? 'text-[#60a5fa]'
-                  : 'text-[#d0d0d0]',
-              },
-              {
-                label: 'Object Health',
-                value: o.objectHealth,
-                colorClass: healthPos
-                  ? 'text-[#86F398]'
-                  : 'text-[#F38686]',
-              },
-              { label: 'Warehouse ID',   value: o.warehouseId,    colorClass: '' },
-            ].map(({ label, value, colorClass }) => (
+            {details.map(({ label, value, colorClass }) => (
               <div key={label} className="bg-[#0c0c0c] h-7 flex items-center px-[5px] shrink-0">
                 <div className="flex items-center justify-between px-2 rounded-[5px] h-full w-full min-w-0">
                   <span className="text-[13px] tracking-[-0.03em] text-[#d0d0d0] whitespace-nowrap shrink-0">{label}</span>
@@ -94,3 +98,4 @@ export default function ObjectInspector({ object: o, onClose }: Props) {
   )
 }
 
+export default memo(ObjectInspector)

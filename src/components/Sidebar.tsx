@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import api from '@/lib/api'
 import { usePathname, useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 // Pages each role is allowed to see
 const ROLE_ROUTES: Record<string, string[]> = {
@@ -82,17 +82,17 @@ export default function Sidebar() {
   useEffect(() => {
     const r = readRoleCookie()
     if (r && r !== role) setRole(r)
-  })
+  }, [role])
 
-  function canAccess(prefix: string) {
+  const canAccess = useCallback((prefix: string) => {
     if (!role) return false
     return (ROLE_ROUTES[role] ?? []).some(p => p === prefix || p.startsWith(prefix))
-  }
+  }, [role])
 
-  async function handleLogout() {
+  const handleLogout = useCallback(async () => {
     await api.post('/api/auth/logout')
     router.push('/login')
-  }
+  }, [router])
 
   return (
     <aside className="w-[44px] shrink-0 flex flex-col border-r border-[#1e1e1e] bg-[#080808]">

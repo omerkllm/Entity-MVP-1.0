@@ -1,5 +1,6 @@
 'use client'
 
+import { memo } from 'react'
 import type { SupplyChainNode } from '@/lib/data/types'
 import type { FlowPieceData } from './flow-pieces'
 import { FRAME_W, FRAME_H, FLOW_COLOR_ACTIVE, FLOW_COLOR_DISRUPTED } from './constants'
@@ -12,7 +13,7 @@ interface FlowPieceProps {
   onClick: (node: SupplyChainNode) => void
 }
 
-export default function FlowPiece({ piece, node, isHovered, onHover, onClick }: FlowPieceProps) {
+function FlowPiece({ piece, node, isHovered, onHover, onClick }: FlowPieceProps) {
   const fill = node.status !== 'Active' ? FLOW_COLOR_DISRUPTED : FLOW_COLOR_ACTIVE
 
   return (
@@ -52,3 +53,5 @@ export default function FlowPiece({ piece, node, isHovered, onHover, onClick }: 
     </button>
   )
 }
+
+export default memo(FlowPiece)

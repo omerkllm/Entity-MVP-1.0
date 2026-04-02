@@ -28,6 +28,13 @@ export default function DecisionMakingPage() {
   const [rawBusinesses, setRawBusinesses] = useState<DBBusiness[]>([])
   const [loading, setLoading] = useState(true)
   const mapRef = useRef<DmpMapHandle>(null)
+  const tabBarRef = useRef<HTMLDivElement>(null)
+
+  const handleTabBarWheel = useCallback((e: React.WheelEvent<HTMLDivElement>) => {
+    if (!tabBarRef.current) return
+    e.preventDefault()
+    tabBarRef.current.scrollLeft += e.deltaY + e.deltaX
+  }, [])
 
   // ── Filter state ────────────────────────────────────────────────
   // Entity: radio-style — only one active at a time (default: show-all)
@@ -75,21 +82,48 @@ export default function DecisionMakingPage() {
     return Array.from(cats).sort()
   }, [rawBusinesses])
 
-  const toggleCategory = (cat: string) => {
+  const toggleCategory = useCallback((cat: string) => {
     setCategoryFilters(prev => {
       const next = new Set(prev)
       if (next.has(cat)) next.delete(cat); else next.add(cat)
       return next
     })
-  }
+  }, [])
 
-  const clearAllFilters = () => {
+  // Pre-compute filter counts in a single pass
+  const linkCounts = useMemo(() => {
+    let linked = 0, notLinked = 0, supplier = 0, customer = 0
+    for (const b of rawBusinesses) {
+      if (b.linkType) {
+        linked++
+        if (b.linkType === 'Supplier') supplier++
+        else if (b.linkType === 'Customer') customer++
+      } else {
+        notLinked++
+      }
+    }
+    return { linked, notLinked, supplier, customer }
+  }, [rawBusinesses])
+
+  const warehouseCatCounts = useMemo(() => {
+    const counts = new Map<string, number>()
+    for (const w of warehouses) counts.set(w.objectCategory, (counts.get(w.objectCategory) ?? 0) + 1)
+    return counts
+  }, [warehouses])
+
+  const businessCatCounts = useMemo(() => {
+    const counts = new Map<string, number>()
+    for (const b of rawBusinesses) counts.set(b.objectCategory, (counts.get(b.objectCategory) ?? 0) + 1)
+    return counts
+  }, [rawBusinesses])
+
+  const clearAllFilters = useCallback(() => {
     setEntityFilter('show-all')
     setLinkFilter(null)
     setCategoryFilters(new Set())
     setExpandedSections(new Set())
     setCategorySearch('')
-  }
+  }, [])
 
   // ── Filtered data for the map ───────────────────────────────────
   const filteredWarehouses = useMemo(() => {
@@ -114,10 +148,23 @@ export default function DecisionMakingPage() {
     return list
   }, [businesses, entityFilter, linkFilter, categoryFilters])
 
+  // O(1) lookup maps for pin/tab clicks instead of repeated .find()
+  const warehouseMap = useMemo(() => {
+    const m = new Map<string, DBWarehouse>()
+    for (const w of warehouses) m.set(w.warehouseId, w)
+    return m
+  }, [warehouses])
+
+  const businessMap = useMemo(() => {
+    const m = new Map<string, DBBusiness>()
+    for (const b of rawBusinesses) m.set(b.businessId, b)
+    return m
+  }, [rawBusinesses])
+
   // ── Pin click → open / update warehouse or business tab ──────
   const handlePinClick = useCallback((type: 'warehouse' | 'business', id: string) => {
     if (type === 'warehouse') {
-      const w = warehouses.find(wh => wh.warehouseId === id)
+      const w = warehouseMap.get(id)
       const label = w ? w.warehouseName : id
       setTabs(prev => {
         const idx = prev.findIndex(t => t.type === 'warehouse')
@@ -133,7 +180,7 @@ export default function DecisionMakingPage() {
       const coords = w?.coordinates
       if (coords) mapRef.current?.zoomTo(coords)
     } else if (type === 'business') {
-      const b = rawBusinesses.find(biz => biz.businessId === id)
+      const b = businessMap.get(id)
       const label = b ? `${b.objectCategory} (${b.region})` : id
       setTabs(prev => {
         const idx = prev.findIndex(t => t.type === 'business')
@@ -149,7 +196,7 @@ export default function DecisionMakingPage() {
       const coords = b?.coordinates
       if (coords) mapRef.current?.zoomTo(coords)
     }
-  }, [warehouses, rawBusinesses])
+  }, [warehouseMap, businessMap])
 
   const closeTab = useCallback((tabId: string) => {
     setTabs(prev => prev.filter(t => t.id !== tabId))
@@ -160,13 +207,13 @@ export default function DecisionMakingPage() {
   const handleTabClick = useCallback((tab: InspectorTab) => {
     setActiveTabId(tab.id)
     if (tab.type === 'warehouse') {
-      const w = warehouses.find(wh => wh.warehouseId === tab.warehouseId)
+      const w = warehouseMap.get(tab.warehouseId)
       if (w?.coordinates) mapRef.current?.zoomTo(w.coordinates)
     } else if (tab.type === 'business') {
-      const b = rawBusinesses.find(biz => biz.businessId === tab.businessId)
+      const b = businessMap.get(tab.businessId)
       if (b?.coordinates) mapRef.current?.zoomTo(b.coordinates)
     }
-  }, [warehouses, rawBusinesses])
+  }, [warehouseMap, businessMap])
 
   return (
     <div className="flex h-screen overflow-hidden bg-[#0a0a0a]">
@@ -253,12 +300,12 @@ export default function DecisionMakingPage() {
                     {(expandedSections.has('link') ? DMP_FILTERS.linkFilters : DMP_FILTERS.linkFilters.slice(0, 3)).map((f) => {
                       const isActive = linkFilter === f.key
                       const count = f.key === 'linked-only'
-                        ? rawBusinesses.filter(b => b.linkType).length
+                        ? linkCounts.linked
                         : f.key === 'not-linked'
-                          ? rawBusinesses.filter(b => !b.linkType).length
+                          ? linkCounts.notLinked
                           : f.key === 'supplier-only'
-                            ? rawBusinesses.filter(b => b.linkType === 'Supplier').length
-                            : rawBusinesses.filter(b => b.linkType === 'Customer').length
+                            ? linkCounts.supplier
+                            : linkCounts.customer
                       return (
                         <div
                           key={f.key}
@@ -321,7 +368,7 @@ export default function DecisionMakingPage() {
                     <div className="flex flex-col gap-[5px]">
                       {visible.map((cat) => {
                         const isActive = categoryFilters.has(cat)
-                        const count = warehouses.filter(w => w.objectCategory === cat).length
+                        const count = warehouseCatCounts.get(cat) ?? 0
                         return (
                           <div
                             key={cat}
@@ -376,7 +423,7 @@ export default function DecisionMakingPage() {
                     <div className="flex flex-col gap-[5px]">
                       {visible.map((cat) => {
                         const isActive = categoryFilters.has(cat)
-                        const count = rawBusinesses.filter(b => b.objectCategory === cat).length
+                        const count = businessCatCounts.get(cat) ?? 0
                         return (
                           <div
                             key={cat}
@@ -452,7 +499,7 @@ export default function DecisionMakingPage() {
           {/* RIGHT: Tabbed Inspector Panel */}
           <ResizablePanel edge="left" defaultWidth={320} minWidth={280} maxWidth={500} className="hidden lg:flex border-l border-[#262626]">
             {/* Tab bar */}
-            <div className="h-[38px] shrink-0 flex items-center border-b border-[#262626] overflow-x-auto scrollbar-hide">
+            <div ref={tabBarRef} onWheel={handleTabBarWheel} className="h-[38px] shrink-0 flex items-center border-b border-[#262626] overflow-x-auto scrollbar-hide">
               {tabs.map((tab, _idx) => {
                 const isActive = tab.id === activeTabId
                 const label = tab.type === 'agent'
@@ -506,7 +553,7 @@ export default function DecisionMakingPage() {
               }
 
               if (activeTab.type === 'warehouse') {
-                const w = warehouses.find(wh => wh.warehouseId === activeTab.warehouseId)
+                const w = warehouseMap.get(activeTab.warehouseId)
                 if (!w) return null
                 return (
                   <WarehouseInspector
@@ -531,7 +578,7 @@ export default function DecisionMakingPage() {
               }
 
               if (activeTab.type === 'business') {
-                const b = rawBusinesses.find(biz => biz.businessId === activeTab.businessId)
+                const b = businessMap.get(activeTab.businessId)
                 if (!b) return null
                 return (
                   <BusinessInspector
@@ -544,7 +591,6 @@ export default function DecisionMakingPage() {
                       linkType: b.linkType,
                       linkedWarehouseIds: b.linkedWarehouseIds,
                     }}
-                    showMap={false}
                     onWarehouseClick={(whId) => handlePinClick('warehouse', whId)}
                     onClose={() => closeTab(activeTab.id)}
                   />

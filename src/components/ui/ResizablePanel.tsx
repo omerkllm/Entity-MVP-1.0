@@ -65,6 +65,11 @@ export default function ResizablePanel({
     return () => {
       window.removeEventListener('mousemove', onMouseMove)
       window.removeEventListener('mouseup', onMouseUp)
+      if (dragging.current) {
+        dragging.current = false
+        document.body.style.cursor = ''
+        document.body.style.userSelect = ''
+      }
     }
   }, [edge, minWidth, maxWidth])
 

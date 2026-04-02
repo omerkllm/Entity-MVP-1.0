@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useMemo, useEffect } from 'react'
+import { useState, useMemo, useEffect, memo } from 'react'
 import api from '@/lib/api'
 import Sidebar from '@/components/Sidebar'
 import SupplyChainFlow from '@/components/SupplyChainFlow'
@@ -54,8 +54,15 @@ export default function SupplyChainDashboardPage() {
       .finally(() => setLoading(false))
   }, [])
 
-  const activeNodes = useMemo(() => nodes.filter(n => n.status === 'Active'), [nodes])
-  const disruptedNodes = useMemo(() => nodes.filter(n => n.status !== 'Active'), [nodes])
+  const { activeNodes, disruptedNodes } = useMemo(() => {
+    const active: SupplyChainNode[] = []
+    const disrupted: SupplyChainNode[] = []
+    for (const n of nodes) {
+      if (n.status === 'Active') active.push(n)
+      else disrupted.push(n)
+    }
+    return { activeNodes: active, disruptedNodes: disrupted }
+  }, [nodes])
   const disruptionCount = disruptedNodes.length
 
   // Transit stock distribution per warehouse for selected node
@@ -277,7 +284,7 @@ export default function SupplyChainDashboardPage() {
 }
 
 // -- Sub-components ---------------------------------------------------------
-function StatCard({ bg, value, label, valueClass }: { bg: string; value: string; label: string; valueClass?: string }) {
+const StatCard = memo(function StatCard({ bg, value, label, valueClass }: { bg: string; value: string; label: string; valueClass?: string }) {
   return (
     <div className={`flex-1 flex flex-col items-center justify-center ${bg} py-6 px-3`}>
       <span className={`text-[48px] tracking-[-0.04em] font-normal leading-none ${valueClass ?? 'text-white'}`}>
@@ -288,17 +295,17 @@ function StatCard({ bg, value, label, valueClass }: { bg: string; value: string;
       </span>
     </div>
   )
-}
+})
 
-function SectionTitle({ children }: { children: React.ReactNode }) {
+const SectionTitle = memo(function SectionTitle({ children }: { children: React.ReactNode }) {
   return (
     <div className="bg-[#0a0a0a] px-4 py-2.5">
       <span className="text-[15px] tracking-[-0.04em] text-white">{children}</span>
     </div>
   )
-}
+})
 
-function NodeDropdown({ nodes, value, onChange }: { nodes: SupplyChainNode[]; value: string; onChange: (v: string) => void }) {
+const NodeDropdown = memo(function NodeDropdown({ nodes, value, onChange }: { nodes: SupplyChainNode[]; value: string; onChange: (v: string) => void }) {
   return (
     <select
       value={value}
@@ -310,4 +317,4 @@ function NodeDropdown({ nodes, value, onChange }: { nodes: SupplyChainNode[]; va
       ))}
     </select>
   )
-}
+})

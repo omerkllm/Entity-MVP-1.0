@@ -465,7 +465,7 @@ function WarehousingContent() {
             </div>
 
             {/* Scrollable table area */}
-            <div className="flex-1 overflow-x-auto overflow-y-hidden scrollbar-hide flex flex-col min-h-0">
+            <div className="flex-1 overflow-x-auto overflow-y-hidden scrollbar-thin flex flex-col min-h-0">
               <div className="flex flex-col h-full" style={{ minWidth: 'max-content' }}>
                 {drilledWarehouse ? (
                   <>
@@ -478,7 +478,7 @@ function WarehousingContent() {
                       ))}
                     </div>
                     {/* OBJECT TABLE ROWS */}
-                    <div className="flex-1 overflow-y-auto scrollbar-hide">
+                    <div className="flex-1 overflow-y-auto scrollbar-thin">
                       {filteredObjects.map((o, i) => {
                         const healthPos = isHealthPositive(o.objectHealth)
                         return (
@@ -525,7 +525,7 @@ function WarehousingContent() {
                       ))}
                     </div>
                     {/* WAREHOUSE TABLE ROWS */}
-                    <div className="flex-1 overflow-y-auto scrollbar-hide">
+                    <div className="flex-1 overflow-y-auto scrollbar-thin">
                       {pageRecords.map((w, i) => {
                         const capPct = computeCapacityPercent(w.usedCapacity, w.totalCapacity)
                         const pos = isCapacityHealthy(capPct)

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
 import type { AIAgentConfig } from '@/lib/data/types'
 
 /* ─── Icon paths (public/icons/ai/) ─────────────────────────────── */
@@ -24,7 +24,6 @@ export default function AIChatPanel({ config }: AIChatPanelProps) {
   const [inputValue, setInputValue] = useState('')
   const [messages] = useState<import('@/lib/data/types').AgentMessage[]>([])
   const textareaRef = useRef<HTMLTextAreaElement>(null)
-  const chatEndRef = useRef<HTMLDivElement>(null)
 
   /* ── Auto-resize textarea ────────────────────────────────────── */
   useEffect(() => {
@@ -40,6 +39,10 @@ export default function AIChatPanel({ config }: AIChatPanelProps) {
       el.style.overflowY = 'hidden'
     }
   }, [inputValue])
+
+  const handleInputChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setInputValue(e.target.value)
+  }, [])
 
   const hasMessages = messages.length > 0
 
@@ -130,7 +133,7 @@ export default function AIChatPanel({ config }: AIChatPanelProps) {
                 )}
               </div>
             ))}
-            <div ref={chatEndRef} />
+            <div />
           </div>
         )}
       </div>
@@ -145,7 +148,7 @@ export default function AIChatPanel({ config }: AIChatPanelProps) {
               ref={textareaRef}
               rows={1}
               value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
+              onChange={handleInputChange}
               placeholder={config.inputPlaceholder}
               className="w-full bg-transparent text-[12px] tracking-[-0.02em] text-[#999] outline-none placeholder:text-[#555] resize-none leading-[20px] scrollbar-hide"
               spellCheck={false}

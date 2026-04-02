@@ -49,27 +49,46 @@ export function computeToggleCount<T extends Record<string, unknown>>(
   targetValue: string,
   rangeCheck?: (record: T) => boolean,
 ): number {
-  // Create hypothetical filter state with target toggled
-  const hypo: Record<string, Set<string>> = {}
-  for (const k of Object.keys(allFilters)) {
-    hypo[k] = new Set(allFilters[k])
-  }
-  const s = hypo[targetKey]
-  if (s.has(targetValue)) {
-    s.delete(targetValue)
-  } else {
-    s.add(targetValue)
-  }
+  // Determine hypothetical state for the target filter without cloning
+  const currentSet = allFilters[targetKey]
+  const isCurrentlyActive = currentSet?.has(targetValue) ?? false
+  // After toggle: if currently active → remove it; if not → add it
+  // We simulate this inline rather than cloning all Sets
 
-  return records.filter(record => {
+  let count = 0
+  for (const record of records) {
+    let pass = true
     for (const cat of filterCategories) {
-      const active = hypo[cat.key]
-      if (active.size === 0) continue
-      if (!active.has(String(record[cat.key as keyof T]))) return false
+      const active = allFilters[cat.key]
+      const val = String(record[cat.key as keyof T])
+
+      if (cat.key === targetKey) {
+        // Simulate toggled set
+        if (isCurrentlyActive) {
+          // Would remove targetValue — effective set is active minus targetValue
+          const effectiveSize = active.size - 1
+          if (effectiveSize > 0 && !(active.has(val) && val !== targetValue)) {
+            pass = false; break
+          }
+        } else {
+          // Would add targetValue — effective set is active plus targetValue
+          if (active.size === 0) {
+            // Adding first value: only targetValue passes
+            if (val !== targetValue) { pass = false; break }
+          } else {
+            if (!active.has(val) && val !== targetValue) { pass = false; break }
+          }
+        }
+      } else {
+        if (active.size > 0 && !active.has(val)) {
+          pass = false; break
+        }
+      }
     }
-    if (rangeCheck && !rangeCheck(record)) return false
-    return true
-  }).length
+    if (pass && rangeCheck && !rangeCheck(record)) pass = false
+    if (pass) count++
+  }
+  return count
 }
 
 /**

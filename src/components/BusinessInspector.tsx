@@ -1,3 +1,5 @@
+import { memo, useMemo } from 'react'
+
 export type BusinessForInspector = {
   businessId: string
   objectCategory: string
@@ -10,17 +12,25 @@ export type BusinessForInspector = {
 type Props = {
   business: BusinessForInspector
   onClose: () => void
-  showMap?: boolean
   onWarehouseClick?: (warehouseId: string) => void
 }
 
-export default function BusinessInspector({ business: b, onClose, showMap: _showMap = true, onWarehouseClick }: Props) {
+function BusinessInspector({ business: b, onClose, onWarehouseClick }: Props) {
   const linkTypeColor =
     b.linkType === 'Supplier'
       ? 'text-[#86F398]'
       : b.linkType === 'Customer'
       ? 'text-[#7aaaff]'
       : ''
+
+  const details = useMemo(() => [
+    { label: 'Business ID',     value: b.businessId,                    colorClass: '' },
+    { label: 'Object Category', value: b.objectCategory,                colorClass: '' },
+    { label: 'Region',          value: b.region,                        colorClass: '' },
+    { label: 'Coordinates',     value: b.coordinates,                   colorClass: '' },
+    { label: 'Link Type',       value: b.linkType ?? '—',               colorClass: linkTypeColor },
+    { label: 'Linked Warehouses', value: `${b.linkedWarehouseIds.length}`, colorClass: '' },
+  ], [b, linkTypeColor])
 
   return (
     <>
@@ -59,14 +69,7 @@ export default function BusinessInspector({ business: b, onClose, showMap: _show
           </div>
 
           <div className="flex flex-col gap-[3px] mt-[3px]">
-            {[
-              { label: 'Business ID',     value: b.businessId,                    colorClass: '' },
-              { label: 'Object Category', value: b.objectCategory,                colorClass: '' },
-              { label: 'Region',          value: b.region,                        colorClass: '' },
-              { label: 'Coordinates',     value: b.coordinates,                   colorClass: '' },
-              { label: 'Link Type',       value: b.linkType ?? '—',               colorClass: linkTypeColor },
-              { label: 'Linked Warehouses', value: `${b.linkedWarehouseIds.length}`, colorClass: '' },
-            ].map(({ label, value, colorClass }) => (
+            {details.map(({ label, value, colorClass }) => (
               <div key={label} className="bg-[#0c0c0c] h-7 flex items-center px-[5px] shrink-0">
                 <div className="flex items-center justify-between px-2 rounded-[5px] h-full w-full min-w-0">
                   <span className="text-[13px] tracking-[-0.03em] text-[#d0d0d0] whitespace-nowrap shrink-0">{label}</span>
@@ -112,3 +115,5 @@ export default function BusinessInspector({ business: b, onClose, showMap: _show
     </>
   )
 }
+
+export default memo(BusinessInspector)
