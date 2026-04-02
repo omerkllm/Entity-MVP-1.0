@@ -7,7 +7,7 @@ import { verifyAccessToken } from '@/lib/auth/jwt'
 const COOKIE_ACCESS = 'entity-token'
 
 // ─── Static constants (allocated once at module load) ───────────────
-const PUBLIC_PATHS = ['/login', '/api/auth/login', '/api/auth/refresh']
+const PUBLIC_PATHS = ['/login', '/api/auth/login', '/api/auth/refresh', '/api/auth/mfa']
 
 const ROLE_PAGE_ACCESS: Record<string, string[]> = {
   WO:  ['/inventory'],
@@ -30,7 +30,7 @@ const ROLE_DEFAULTS: Record<string, string> = {
   WO:  '/inventory/warehousing',
 }
 
-export async function proxy(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
 
   // Allow public paths and static assets

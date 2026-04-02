@@ -20,7 +20,9 @@ function LoginContent() {
     try {
       const { data } = await axios.post('/api/auth/login', { username, password })
       const from = searchParams.get('from')
-      if (from) {
+      // Validate 'from' is a safe relative path to prevent open-redirect attacks.
+      // Must start with '/' and must NOT start with '//' (protocol-relative URL).
+      if (from && from.startsWith('/') && !from.startsWith('//')) {
         router.push(from)
       } else {
         const roleDefaults: Record<string, string> = {
