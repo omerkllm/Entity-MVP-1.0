@@ -96,11 +96,47 @@ export default function SupplyChainDashboardPage() {
 
         {/* MAIN SCROLLABLE AREA */}
         {loading ? (
-          <div className="flex flex-1 items-center justify-center">
-            <span className="text-[13px] tracking-[-0.03em] text-[#999999] animate-pulse">Loading dashboard…</span>
+          <div className="flex flex-1 min-h-0 overflow-hidden">
+            {/* Left panel skeleton */}
+            <div className="flex flex-col flex-[6] min-w-0 p-5 gap-5">
+              {/* Stat cards */}
+              <div className="flex gap-2">
+                {[1,2,3,4].map(i => (
+                  <div key={i} className="flex-1 bg-[#111111] p-5 flex flex-col gap-3">
+                    <div className="sk h-7 w-12" />
+                    <div className="sk h-3 w-28" />
+                  </div>
+                ))}
+              </div>
+              {/* Activity list skeleton */}
+              <div className="bg-[#111111] p-5 flex flex-col gap-4">
+                <div className="sk h-4 w-28" />
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <div key={i} className="flex items-center justify-between bg-[#181818] px-4 py-3">
+                    <div className="sk h-3" style={{ width: `${55 + (i % 3) * 15}%` }} />
+                    <div className="sk h-3 w-16 ml-4 shrink-0" />
+                  </div>
+                ))}
+              </div>
+            </div>
+            {/* Right panel skeleton */}
+            <div className="hidden lg:flex flex-col flex-[3.5] min-w-[300px] border-l border-[#262626] p-5 gap-5">
+              <div className="bg-[#111111] p-5 flex flex-col gap-4">
+                <div className="sk h-4 w-32" />
+                <div className="sk h-28 w-full" />
+              </div>
+              <div className="bg-[#111111] p-5 flex flex-col gap-4">
+                <div className="sk h-4 w-36" />
+                <div className="sk h-44 w-full" />
+              </div>
+              <div className="bg-[#111111] p-5 flex flex-col gap-4">
+                <div className="sk h-4 w-28" />
+                <div className="sk h-44 w-full" />
+              </div>
+            </div>
           </div>
         ) : (
-        <div className="flex flex-1 min-h-0 overflow-hidden">
+        <div className="flex flex-1 min-h-0 overflow-hidden fade-in">
 
           {/* LEFT PANEL */}
           <div className="flex flex-col flex-[6] min-w-0 overflow-y-auto scrollbar-hide p-5 gap-5">

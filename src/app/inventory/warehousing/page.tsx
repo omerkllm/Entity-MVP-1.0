@@ -240,11 +240,56 @@ function WarehousingContent() {
         </div>
 
         {loading ? (
-          <div className="flex flex-1 items-center justify-center">
-            <span className="text-[13px] tracking-[-0.03em] text-[#999999] animate-pulse">Loading warehouses…</span>
+          <div className="flex flex-1 min-h-0 overflow-hidden">
+            {/* Filter panel skeleton */}
+            <div className="hidden md:flex flex-col w-[200px] border-r border-[#262626] shrink-0 p-4 gap-4">
+              <div className="sk h-4 w-24" />
+              {[1,2,3,4].map(i => (
+                <div key={i} className="flex flex-col gap-2">
+                  <div className="sk h-3 w-28" />
+                  <div className="sk h-3 w-20" />
+                  <div className="sk h-3 w-16" />
+                </div>
+              ))}
+            </div>
+            {/* Table skeleton */}
+            <div className="flex flex-[7] flex-col min-w-0">
+              <div className="h-[38px] shrink-0 border-b border-[#262626] flex items-center px-4">
+                <div className="sk h-3 w-48" />
+              </div>
+              <div className="flex h-9 shrink-0 items-center border-b border-[#262626] gap-4 px-4">
+                {WAREHOUSE_COLUMNS.map(col => (
+                  <div key={col.label} className="flex-1" style={{ minWidth: col.minW }}>
+                    <div className="sk h-3 w-20" />
+                  </div>
+                ))}
+              </div>
+              <div className="flex-1 overflow-hidden">
+                {Array.from({ length: 14 }).map((_, i) => (
+                  <div key={i} className={`flex h-7 items-center gap-4 px-4 border-b border-[#151515] ${i % 2 ? 'bg-[#0e0e0e]' : 'bg-[#0a0a0a]'}`}>
+                    {WAREHOUSE_COLUMNS.map((col, j) => (
+                      <div key={j} className="flex-1" style={{ minWidth: col.minW }}>
+                        <div className="sk h-3" style={{ width: `${50 + ((i + j) % 4) * 12}%` }} />
+                      </div>
+                    ))}
+                  </div>
+                ))}
+              </div>
+            </div>
+            {/* Inspector skeleton */}
+            <div className="hidden lg:flex flex-col w-[290px] border-l border-[#262626] shrink-0 p-4 gap-4">
+              <div className="sk h-4 w-24" />
+              <div className="sk h-32 w-full" />
+              {[1,2,3,4,5].map(i => (
+                <div key={i} className="flex justify-between">
+                  <div className="sk h-3 w-20" />
+                  <div className="sk h-3 w-16" />
+                </div>
+              ))}
+            </div>
           </div>
         ) : (
-        <div className="flex flex-1 min-h-0 overflow-hidden bg-[#0a0a0a]">
+        <div className="flex flex-1 min-h-0 overflow-hidden bg-[#0a0a0a] fade-in">
 
           {/* ── MOBILE FILTER OVERLAY ──────────────────────────────── */}
           {filterOpen && (
