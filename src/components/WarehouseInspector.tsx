@@ -183,8 +183,8 @@ function WarehouseInspector({ warehouse: w, onClose, showMap = true }: Props) {
       container: el,
       style: styleUrl,
       center: lngLat,
-      zoom: 15,
-      interactive: false,
+      zoom: 13.5,
+      interactive: true,
       attributionControl: false,
     })
 
