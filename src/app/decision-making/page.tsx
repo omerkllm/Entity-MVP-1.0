@@ -26,7 +26,6 @@ export default function DecisionMakingPage() {
   const [warehouses, setWarehouses] = useState<DBWarehouse[]>([])
   const [businesses, setBusinesses] = useState<BusinessPin[]>([])
   const [rawBusinesses, setRawBusinesses] = useState<DBBusiness[]>([])
-  const [mounted, setMounted] = useState(false)
   const [loading, setLoading] = useState(true)
   const mapRef = useRef<DmpMapHandle>(null)
 
@@ -45,8 +44,6 @@ export default function DecisionMakingPage() {
   // ── Tabs state ──────────────────────────────────────────────────
   const [tabs, setTabs] = useState<InspectorTab[]>([AGENT_TAB])
   const [activeTabId, setActiveTabId] = useState<string>(AGENT_TAB.id)
-
-  useEffect(() => { setMounted(true) }, [])
 
   useEffect(() => {
     api.get('/api/dmp-data').then(({ data }) => {
@@ -184,53 +181,8 @@ export default function DecisionMakingPage() {
           <span className="text-[13px] tracking-[-0.03em] text-[#86F398] font-normal">{`{DMP}`}</span>
         </div>
 
-        {/* THREE-COLUMN LAYOUT */}
-        {loading ? (
-          <div className="flex flex-1 min-h-0 overflow-hidden">
-            {/* Filter sidebar skeleton */}
-            <div className="hidden md:flex flex-col w-[220px] border-r border-[#262626] shrink-0">
-              <div className="h-[38px] shrink-0 flex items-center px-4 border-b border-[#262626]">
-                <div className="sk h-3 w-24" />
-              </div>
-              <div className="flex-1 p-3 flex flex-col gap-4">
-                {[1,2,3].map(s => (
-                  <div key={s} className="flex flex-col gap-2">
-                    <div className="sk h-3 w-20" />
-                    {[1,2,3].map(r => (
-                      <div key={r} className="sk h-6 w-full" />
-                    ))}
-                  </div>
-                ))}
-              </div>
-            </div>
-            {/* Map area skeleton */}
-            <div className="flex flex-[5] flex-col min-w-0">
-              <div className="h-[38px] shrink-0 flex items-center px-4 border-b border-[#262626]">
-                <div className="sk h-3 w-28" />
-              </div>
-              <div className="flex-1 relative bg-[#0a0a0a]">
-                <div className="absolute inset-4 sk rounded-lg" />
-                {/* Fake map grid lines */}
-                <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: 'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)', backgroundSize: '60px 60px' }} />
-              </div>
-            </div>
-            {/* Inspector skeleton */}
-            <div className="hidden lg:flex flex-col w-[290px] border-l border-[#262626] shrink-0">
-              <div className="h-[38px] shrink-0 flex items-center px-4 border-b border-[#262626] gap-2">
-                {[1,2,3].map(t => <div key={t} className="sk h-6 w-16" />)}
-              </div>
-              <div className="flex-1 p-4 flex flex-col gap-3">
-                {Array.from({ length: 8 }).map((_, i) => (
-                  <div key={i} className="flex justify-between">
-                    <div className="sk h-3 w-20" />
-                    <div className="sk h-3 w-14" />
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        ) : (
-        <div className="flex flex-1 min-h-0 overflow-hidden fade-in">
+        {/* THREE-COLUMN LAYOUT — always mounted so the map canvas never flickers */}
+        <div className="flex flex-1 min-h-0 overflow-hidden relative">
 
           {/* LEFT: Quick Actions / Filters */}
           <ResizablePanel edge="right" defaultWidth={220} minWidth={180} maxWidth={400} className="hidden md:flex border-r border-[#262626]">
@@ -488,14 +440,12 @@ export default function DecisionMakingPage() {
 
             {/* Map — defer until client mount to avoid SSR/hydration mismatch */}
             <div className="flex-1 relative overflow-hidden">
-              {mounted && (
-                <DmpMap
-                  ref={mapRef}
-                  warehouses={filteredWarehouses}
-                  businesses={filteredBusinesses}
-                  onPinClick={handlePinClick}
-                />
-              )}
+              <DmpMap
+                ref={mapRef}
+                warehouses={filteredWarehouses}
+                businesses={filteredBusinesses}
+                onPinClick={handlePinClick}
+              />
             </div>
           </div>
 
@@ -605,8 +555,50 @@ export default function DecisionMakingPage() {
             })()}
           </ResizablePanel>
 
+          {/* Loading skeleton overlay — covers layout until data arrives */}
+          {loading && (
+            <div className="absolute inset-0 z-20 flex bg-[#0a0a0a]">
+              <div className="hidden md:flex flex-col w-[220px] border-r border-[#262626] shrink-0">
+                <div className="h-[38px] shrink-0 flex items-center px-4 border-b border-[#262626]">
+                  <div className="sk h-3 w-24" />
+                </div>
+                <div className="flex-1 p-3 flex flex-col gap-4">
+                  {[1,2,3].map(s => (
+                    <div key={s} className="flex flex-col gap-2">
+                      <div className="sk h-3 w-20" />
+                      {[1,2,3].map(r => (
+                        <div key={r} className="sk h-6 w-full" />
+                      ))}
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="flex flex-[5] flex-col min-w-0">
+                <div className="h-[38px] shrink-0 flex items-center px-4 border-b border-[#262626]">
+                  <div className="sk h-3 w-28" />
+                </div>
+                <div className="flex-1 relative bg-[#0a0a0a]">
+                  <div className="absolute inset-4 sk rounded-lg" />
+                  <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: 'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)', backgroundSize: '60px 60px' }} />
+                </div>
+              </div>
+              <div className="hidden lg:flex flex-col w-[290px] border-l border-[#262626] shrink-0">
+                <div className="h-[38px] shrink-0 flex items-center px-4 border-b border-[#262626] gap-2">
+                  {[1,2,3].map(t => <div key={t} className="sk h-6 w-16" />)}
+                </div>
+                <div className="flex-1 p-4 flex flex-col gap-3">
+                  {Array.from({ length: 8 }).map((_, i) => (
+                    <div key={i} className="flex justify-between">
+                      <div className="sk h-3 w-20" />
+                      <div className="sk h-3 w-14" />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+
         </div>
-        )}
       </div>
     </div>
   )
