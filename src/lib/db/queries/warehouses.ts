@@ -8,13 +8,13 @@ const COLS = `
     w.title,
     w.region,
     w.coordinates,
-    w.object_category    AS "objectCategory",
+    COALESCE(dom.dominant_category, w.object_category) AS "objectCategory",
     w.operational_hours  AS hours,
-    w.status,
+    CASE WHEN COALESCE(agg.total_qty, 0) > 0 THEN 'Open' ELSE 'Closed' END AS status,
     w.total_capacity     AS "totalCapacity",
     COALESCE(agg.total_qty, 0)     AS "usedCapacity",
     COALESCE(agg.transit_qty, 0)   AS "transitQty",
-    w.business_link_type AS "businessLinkType",
+    CASE w.business_link_type WHEN 'Supplier' THEN 'Customer' WHEN 'Customer' THEN 'Supplier' ELSE w.business_link_type END AS "businessLinkType",
     c.process_id         AS "processId",
     w.title || ' { ' || w.warehouse_id || ' }' AS "warehouseName",
     ''                   AS address
@@ -32,6 +32,18 @@ const FROM = `
     FROM object
     GROUP BY warehouse_id
   ) agg ON agg.warehouse_id = w.warehouse_id
+  LEFT JOIN (
+    SELECT DISTINCT ON (warehouse_id)
+      warehouse_id,
+      object_category AS dominant_category
+    FROM (
+      SELECT warehouse_id, object_category, SUM(quantity) AS cat_qty
+      FROM object
+      WHERE transit_status != 'In Transit'
+      GROUP BY warehouse_id, object_category
+    ) cat_agg
+    ORDER BY warehouse_id, cat_qty DESC
+  ) dom ON dom.warehouse_id = w.warehouse_id
 `
 
 export async function getAllWarehouses(

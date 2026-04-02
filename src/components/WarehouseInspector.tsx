@@ -27,55 +27,61 @@ type Props = {
 
 export default function WarehouseInspector({ warehouse: w, onClose, showMap = true }: Props) {
   const [objects, setObjects] = useState<ObjectRecord[]>([])
+  const [chartView, setChartView] = useState<'allocated' | 'transit'>('allocated')
   useEffect(() => {
     api.get(`/api/objects?warehouseId=${w.warehouseId}`)
       .then(res => setObjects(res.data.data ?? []))
       .catch(() => setObjects([]))
   }, [w.warehouseId])
 
-  const capacityData = useMemo(() => {
-    // 1. In-transit: total quantity of objects with transitStatus === 'In Transit'
-    const inTransitQty = objects
-      .filter(o => o.transitStatus === 'In Transit')
-      .reduce((s, o) => s + o.quantity, 0)
-
-    // 2. Non-transit objects grouped by category
+  const { allocatedData, transitData } = useMemo(() => {
+    // Non-transit objects grouped by category
     const nonTransit = objects.filter(o => o.transitStatus !== 'In Transit')
     const catTotals = new Map<string, number>()
     for (const o of nonTransit) {
       catTotals.set(o.objectCategory, (catTotals.get(o.objectCategory) ?? 0) + o.quantity)
     }
-
-    // Major = category with highest total quantity among non-transit
     let majorName = 'Major'
     let majorQty = 0
     for (const [cat, qty] of catTotals) {
       if (qty > majorQty) { majorName = cat; majorQty = qty }
     }
-
-    // 3. Other = remaining non-transit quantity
     const otherQty = nonTransit.reduce((s, o) => s + o.quantity, 0) - majorQty
 
-    // 4. Free space = totalCapacity - (inTransit + major + other)
-    const usedTotal = inTransitQty + majorQty + otherQty
-    const freeQty = w.totalCapacity - usedTotal
-    const exceeded = freeQty < 0
+    // Transit objects grouped by category, sorted by quantity desc
+    const transitObjects = objects.filter(o => o.transitStatus === 'In Transit')
+    const transitCatTotals = new Map<string, number>()
+    for (const o of transitObjects) {
+      transitCatTotals.set(o.objectCategory, (transitCatTotals.get(o.objectCategory) ?? 0) + o.quantity)
+    }
+    const transitTotalQty = transitObjects.reduce((s, o) => s + o.quantity, 0)
 
+    // Free space based on all used
+    const freeQty = w.totalCapacity - (majorQty + otherQty + transitTotalQty)
+    const exceeded = freeQty < 0
     let freeColor: string
     if (exceeded) {
-      freeColor = '#eab308' // yellow — exceeded
+      freeColor = '#eab308'
     } else {
       const freePct = w.totalCapacity > 0 ? (freeQty / w.totalCapacity) * 100 : 100
-      freeColor = freePct < 25 ? '#dc2626' : '#16a34a' // red if <25%, green otherwise
+      freeColor = freePct < 25 ? '#dc2626' : '#16a34a'
     }
 
-    return [
+    const TRANSIT_COLORS = ['#a855f7', '#c084fc', '#d8b4fe', '#7e22ce', '#9333ea']
+    const allocatedData = [
       { name: majorName, value: majorQty, color: '#3b82f6' },
       { name: 'Other', value: otherQty, color: '#60a5fa' },
-      { name: 'In Transit', value: inTransitQty, color: '#a855f7' },
+      { name: 'In Transit', value: transitTotalQty, color: '#a855f7' },
       { name: exceeded ? 'Exceeded' : 'Free', value: Math.abs(freeQty), color: freeColor },
     ]
+    const transitData = Array.from(transitCatTotals.entries())
+      .sort((a, b) => b[1] - a[1])
+      .map(([name, value], idx) => ({ name, value, color: TRANSIT_COLORS[idx % TRANSIT_COLORS.length] }))
+
+    return { allocatedData, transitData }
   }, [objects, w.totalCapacity])
+
+  const activeData = chartView === 'allocated' ? allocatedData : transitData
 
   // Derive used capacity live from objects (falls back to stored value while loading)
   const liveUsedCapacity = objects.length > 0
@@ -276,22 +282,52 @@ export default function WarehouseInspector({ warehouse: w, onClose, showMap = tr
 
         {/* Capacity Chart */}
         <div className="flex flex-col shrink-0">
-          <div className="flex h-8 items-center bg-[#111111] pl-4 shrink-0">
+          <div className="flex h-8 items-center justify-between bg-[#111111] pl-4 pr-2 shrink-0">
             <span className="text-[13px] tracking-[-0.03em] text-white">Warehouse Capacity</span>
+            <div className="flex items-center gap-[3px]">
+              {(['allocated', 'transit'] as const).map(view => (
+                <button
+                  key={view}
+                  onClick={() => setChartView(view)}
+                  className={`h-5 px-2 rounded-[3px] text-[10px] tracking-[-0.02em] capitalize transition-colors cursor-pointer ${
+                    chartView === view
+                      ? 'bg-white text-black'
+                      : 'bg-[#1e1e1e] text-[#aaa] hover:bg-[#2a2a2a]'
+                  }`}
+                >
+                  {view}
+                </button>
+              ))}
+            </div>
           </div>
           <div className="mt-[3px] bg-[#0c0c0c] px-2 pt-3 pb-1">
             <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-2 px-1">
-              {capacityData.map(({ name, color }) => (
+              {activeData.map(({ name, color }) => (
                 <div key={name} className="flex items-center gap-1.5">
                   <div className="shrink-0 rounded-[2px]" style={{ width: 10, height: 10, backgroundColor: color }} />
                   <span className="text-[10px] tracking-[-0.03em] text-[#aaa]">{name}</span>
                 </div>
               ))}
             </div>
-            <ResponsiveContainer width="100%" height={130}>
-              <BarChart data={capacityData} margin={{ top: 4, right: 4, left: -20, bottom: 0 }}>
+            <ResponsiveContainer width="100%" height={150}>
+              <BarChart data={activeData} margin={{ top: 4, right: 4, left: -20, bottom: 4 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="currentColor" opacity={0.08} />
-                <XAxis dataKey="name" tick={{ fontSize: 10, fill: '#888' }} axisLine={false} tickLine={false} />
+                <XAxis
+                  dataKey="name"
+                  axisLine={false}
+                  tickLine={false}
+                  interval={0}
+                  tick={({ x, y, payload }: { x: string | number; y: string | number; payload: { value: string } }) => {
+                    const label = payload.value.length > 11 ? payload.value.slice(0, 11) + '…' : payload.value
+                    return (
+                      <g transform={`translate(${Number(x)},${Number(y)})`}>
+                        <text x={0} y={0} dy={12} textAnchor="middle" fill="#888" fontSize={9}>
+                          {label}
+                        </text>
+                      </g>
+                    )
+                  }}
+                />
                 <YAxis tick={{ fontSize: 10, fill: '#888' }} axisLine={false} tickLine={false} />
                 <Tooltip
                   contentStyle={{ background: '#fff', border: '1px solid #e0e0e0', borderRadius: 6, fontSize: 11, color: '#222', boxShadow: '0 2px 8px rgba(0,0,0,0.15)' }}
@@ -300,7 +336,7 @@ export default function WarehouseInspector({ warehouse: w, onClose, showMap = tr
                   itemStyle={{ color: '#333' }}
                 />
                 <Bar dataKey="value" radius={[3, 3, 0, 0]} barSize={28}>
-                  {capacityData.map((entry, idx) => (
+                  {activeData.map((entry, idx) => (
                     <Cell key={idx} fill={entry.color} />
                   ))}
                 </Bar>
@@ -323,7 +359,7 @@ export default function WarehouseInspector({ warehouse: w, onClose, showMap = tr
             </div>
           </div>
           <div className="flex flex-col gap-[3px] mt-[3px]">
-            {capacityData.map(({ name, value, color }) => {
+            {activeData.map(({ name, value, color }) => {
               const pct = w.totalCapacity > 0 ? ((value / w.totalCapacity) * 100).toFixed(1) : '0'
               return (
                 <div key={name} className="bg-[#0c0c0c] h-7 flex items-stretch px-[5px] shrink-0">
