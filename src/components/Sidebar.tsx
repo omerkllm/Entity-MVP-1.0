@@ -1,17 +1,10 @@
 'use client'
 
 import Link from 'next/link'
-import api from '@/lib/api'
+import { postLogout } from '@/lib/api/endpoints'
 import { usePathname, useRouter } from 'next/navigation'
 import { useCallback, useEffect, useState } from 'react'
-
-// Pages each role is allowed to see
-const ROLE_ROUTES: Record<string, string[]> = {
-  SA:  ['/supply-chain-dashboard', '/inventory', '/decision-making'],
-  SCA: ['/supply-chain-dashboard'],
-  SC:  ['/decision-making', '/inventory'],
-  WO:  ['/inventory'],
-}
+import { canAccessPage } from '@/lib/auth/access'
 
 function NavIcon({ src, alt, href, active, onClick }: { src: string; alt: string; href: string; active?: boolean; onClick?: () => void }) {
   if (onClick) {
@@ -86,11 +79,11 @@ export default function Sidebar() {
 
   const canAccess = useCallback((prefix: string) => {
     if (!role) return false
-    return (ROLE_ROUTES[role] ?? []).some(p => p === prefix || p.startsWith(prefix))
+    return canAccessPage(role, prefix)
   }, [role])
 
   const handleLogout = useCallback(async () => {
-    await api.post('/api/auth/logout')
+    await postLogout()
     router.push('/login')
   }, [router])
 

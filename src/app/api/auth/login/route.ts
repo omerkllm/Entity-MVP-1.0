@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import { z } from 'zod'
-import { pool } from '@/lib/db/client'
+import { query } from '@/lib/db/client'
 import { verifyPassword } from '@/lib/auth/hash'
 import { signAccessToken, signRefreshToken, signMfaToken } from '@/lib/auth/jwt'
 import { setAuthCookies } from '@/lib/auth/cookies'
@@ -72,7 +72,7 @@ export async function POST(request: NextRequest) {
   }
   const { username, password } = parsed.data
 
-  const { rows } = await pool.query<UserRow>(
+  const { rows } = await query<UserRow>(
     `SELECT user_id, username, email, role, password_hash, mfa_secret,
             is_active, failed_attempts, locked_until
      FROM users WHERE username = $1 LIMIT 1`,
@@ -96,7 +96,7 @@ export async function POST(request: NextRequest) {
     if (user?.is_active && !valid) {
       const newAttempts = user.failed_attempts + 1
       const lock = newAttempts >= 5
-      await pool.query(
+      await query(
         `UPDATE users SET failed_attempts=$1, locked_until=$2 WHERE user_id=$3`,
         [newAttempts, lock ? new Date(Date.now() + 15 * 60 * 1000) : null, user.user_id]
       )
@@ -105,7 +105,7 @@ export async function POST(request: NextRequest) {
   }
 
   // Clear failed attempts on successful authentication
-  await pool.query(
+  await query(
     'UPDATE users SET failed_attempts=0, locked_until=NULL WHERE user_id=$1',
     [user.user_id]
   )

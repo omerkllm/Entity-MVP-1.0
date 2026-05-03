@@ -8,15 +8,15 @@ import { getAllActivity } from '@/lib/db/queries/activity'
 import { getAllWarehouses } from '@/lib/db/queries/warehouses'
 import { getDashboardStats } from '@/lib/db/queries/dashboard'
 import { getSession } from '@/lib/auth/session'
+import { canAccessApi } from '@/lib/auth/access'
 import { apiError, apiSuccess } from '@/lib/api-response'
 
-const ALLOWED_ROLES = new Set(['SCA', 'SA'])
 const MAX_PAG = { page: 1, limit: 200, offset: 0 }
 
 export async function GET() {
   const session = await getSession()
   if (!session) return apiError('Unauthorized', 401)
-  if (!ALLOWED_ROLES.has(session.role)) return apiError('Forbidden', 403)
+  if (!canAccessApi(session.role, '/api/scd-data')) return apiError('Forbidden', 403)
 
   try {
     const [processes, activity, warehouses, stats] = await Promise.all([

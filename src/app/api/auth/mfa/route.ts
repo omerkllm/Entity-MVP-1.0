@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
 import { authenticator } from 'otplib'
-import { pool } from '@/lib/db/client'
+import { query } from '@/lib/db/client'
 import { signAccessToken, signRefreshToken, verifyMfaToken } from '@/lib/auth/jwt'
 import { setAuthCookies } from '@/lib/auth/cookies'
 import { apiError, apiNoCache } from '@/lib/api-response'
@@ -38,7 +38,7 @@ export async function POST(request: Request) {
   }
 
   // Look up user — must still be active
-  const { rows } = await pool.query<MfaUserRow>(
+  const { rows } = await query<MfaUserRow>(
     'SELECT user_id, email, role, is_active, mfa_secret FROM users WHERE user_id = $1 LIMIT 1',
     [userId],
   )
@@ -59,7 +59,7 @@ export async function POST(request: Request) {
     signAccessToken(tokenPayload),
     signRefreshToken(tokenPayload),
   ])
-  await setAuthCookies(accessToken, refreshToken)
+  await setAuthCookies(accessToken, refreshToken, user.role)
 
   return apiNoCache({ role: user.role })
 }

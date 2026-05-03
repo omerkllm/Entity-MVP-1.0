@@ -13,6 +13,10 @@ export type TokenPayload = JWTPayload & {
   role: string
 }
 
+export type MfaTokenPayload = JWTPayload & {
+  userId: string
+}
+
 function secret(key: 'JWT_SECRET' | 'JWT_REFRESH_SECRET') {
   const val = process.env[key]
   if (!val) throw new Error(`${key} is not set`)
@@ -50,7 +54,8 @@ export async function verifyRefreshToken(token: string): Promise<TokenPayload> {
 // ─── MFA tokens (short-lived, userId-only payload) ──────────────────
 
 export async function signMfaToken(userId: string): Promise<string> {
-  return new SignJWT({ userId })
+  const payload: Omit<MfaTokenPayload, keyof JWTPayload> = { userId }
+  return new SignJWT(payload as JWTPayload)
     .setProtectedHeader({ alg: ALG })
     .setIssuedAt()
     .setExpirationTime(MFA_TOKEN_EXPIRY)
@@ -59,6 +64,7 @@ export async function signMfaToken(userId: string): Promise<string> {
 
 export async function verifyMfaToken(token: string): Promise<string> {
   const { payload } = await jwtVerify(token, secret('JWT_SECRET'))
-  if (typeof payload.userId !== 'string') throw new Error('Invalid MFA token payload')
-  return payload.userId
+  const mfa = payload as MfaTokenPayload
+  if (typeof mfa.userId !== 'string') throw new Error('Invalid MFA token payload')
+  return mfa.userId
 }

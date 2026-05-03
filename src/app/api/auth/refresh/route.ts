@@ -2,7 +2,7 @@ import { cookies } from 'next/headers'
 import { verifyRefreshToken, signAccessToken } from '@/lib/auth/jwt'
 import { COOKIE_REFRESH, refreshAccessCookie } from '@/lib/auth/cookies'
 import { apiError, apiNoCache } from '@/lib/api-response'
-import { pool } from '@/lib/db/client'
+import { query } from '@/lib/db/client'
 
 export async function POST() {
   const store = await cookies()
@@ -17,7 +17,7 @@ export async function POST() {
     const payload = await verifyRefreshToken(refreshToken)
 
     // Verify the user is still active before issuing a new access token
-    const { rows } = await pool.query<{ is_active: boolean }>(
+    const { rows } = await query<{ is_active: boolean }>(
       'SELECT is_active FROM users WHERE user_id = $1',
       [payload.userId]
     )

@@ -23,21 +23,23 @@ function roleCookieOpts() {
   return { httpOnly: false, secure: IS_PROD, sameSite: 'lax' as const, path: '/', maxAge: REFRESH_MAX_AGE_S }
 }
 
-export async function setAuthCookies(accessToken: string, refreshToken: string, role?: string) {
+/** Client-readable cookie so Sidebar can show nav icons synchronously. */
+function setRoleCookie(store: Awaited<ReturnType<typeof cookies>>, role: string) {
+  store.set(COOKIE_ROLE, role, roleCookieOpts())
+}
+
+export async function setAuthCookies(accessToken: string, refreshToken: string, role: string) {
   const store = await cookies()
   store.set(COOKIE_ACCESS, accessToken, accessCookieOpts())
   store.set(COOKIE_REFRESH, refreshToken, refreshCookieOpts())
-  if (role) {
-    // Client-readable cookie so Sidebar can show nav icons synchronously
-    store.set(COOKIE_ROLE, role, roleCookieOpts())
-  }
+  setRoleCookie(store, role)
 }
 
 /** Sets only the access-token and role cookies (used by the refresh flow). */
 export async function refreshAccessCookie(accessToken: string, role: string) {
   const store = await cookies()
   store.set(COOKIE_ACCESS, accessToken, accessCookieOpts())
-  store.set(COOKIE_ROLE, role, roleCookieOpts())
+  setRoleCookie(store, role)
 }
 
 export async function clearAuthCookies() {

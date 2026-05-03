@@ -1,13 +1,12 @@
 import { getDashboardStats } from '@/lib/db/queries/dashboard'
 import { getSession } from '@/lib/auth/session'
+import { canAccessApi } from '@/lib/auth/access'
 import { apiError, apiSuccess } from '@/lib/api-response'
-
-const ALLOWED_ROLES = new Set(['SCA', 'SA'])
 
 export async function GET() {
   const session = await getSession()
   if (!session) return apiError('Unauthorized', 401)
-  if (!ALLOWED_ROLES.has(session.role)) return apiError('Forbidden', 403)
+  if (!canAccessApi(session.role, '/api/dashboard')) return apiError('Forbidden', 403)
 
   try {
     const stats = await getDashboardStats()
