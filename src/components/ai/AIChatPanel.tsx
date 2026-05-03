@@ -13,8 +13,12 @@ const PADDING_PX        = 24
 const MAX_INPUT_HEIGHT  = MAX_VISIBLE_LINES * LINE_HEIGHT_PX + PADDING_PX
 
 /* ─── Props ─────────────────────────────────────────────────────── */
+// ISP: only the three fields actually consumed are required, so callers don't
+// have to construct (or fetch) the full AIAgentConfig just to render the panel.
+export type AIChatPanelConfig = Pick<AIAgentConfig, 'agentName' | 'greeting' | 'inputPlaceholder'>
+
 export interface AIChatPanelProps {
-  config: AIAgentConfig
+  config: AIChatPanelConfig
 }
 
 /* ═══════════════════════════════════════════════════════════════════

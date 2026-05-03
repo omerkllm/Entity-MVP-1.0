@@ -3,6 +3,7 @@
 import { useState, Suspense } from 'react'
 import axios, { AxiosError } from 'axios'
 import { useRouter, useSearchParams } from 'next/navigation'
+import { defaultRouteFor } from '@/lib/auth/access'
 
 function LoginContent() {
   const [username, setUsername] = useState('')
@@ -25,13 +26,7 @@ function LoginContent() {
       if (from && from.startsWith('/') && !from.startsWith('//')) {
         router.push(from)
       } else {
-        const roleDefaults: Record<string, string> = {
-          SA:  '/supply-chain-dashboard',
-          SCA: '/supply-chain-dashboard',
-          SC:  '/decision-making',
-          WO:  '/inventory/warehousing',
-        }
-        router.push(roleDefaults[data.role] ?? '/supply-chain-dashboard')
+        router.push(defaultRouteFor(data.role))
       }
     } catch (err) {
       if (err instanceof AxiosError && err.response?.data?.error) {

@@ -7,6 +7,16 @@ import type { DBWarehouse } from '@/lib/data/types'
 import type { BusinessPin, DmpMapProps } from './types'
 import { parseLngLat, buildBufferedZone, curvedLine, computeBearing } from './geo'
 
+/* ── Theme ────────────────────────────────────────────────────────── */
+// Single source of truth for link-type colours used by both the line layer,
+// the arrow-tip icons, and the icon image registration.
+export const LINK_TYPE_COLORS = {
+  supplier: '#818cf8',
+  customer: '#f472b6',
+} as const
+
+const FALLBACK_LINK_COLOR = LINK_TYPE_COLORS.supplier
+
 /* ── Helpers ──────────────────────────────────────────────────────── */
 
 function escapeHtml(s: string): string {
@@ -47,8 +57,8 @@ export function applyEnglishLabels(map: maplibregl.Map) {
 
 export function addArrowImages(map: maplibregl.Map) {
   if (!map.hasImage('arrow-supplier')) {
-    map.addImage('arrow-supplier', createArrowImage('#818cf8', 32))
-    map.addImage('arrow-customer', createArrowImage('#f472b6', 32))
+    map.addImage('arrow-supplier', createArrowImage(LINK_TYPE_COLORS.supplier, 32))
+    map.addImage('arrow-customer', createArrowImage(LINK_TYPE_COLORS.customer, 32))
   }
 }
 
@@ -79,7 +89,7 @@ export function renderStaticLayers(map: maplibregl.Map) {
   map.addLayer({
     id: 'arrows-line', type: 'line', source: 'arrows',
     paint: {
-      'line-color': ['match', ['get', 'linkType'], 'supplier', '#818cf8', 'customer', '#f472b6', '#818cf8'],
+      'line-color': ['match', ['get', 'linkType'], 'supplier', LINK_TYPE_COLORS.supplier, 'customer', LINK_TYPE_COLORS.customer, FALLBACK_LINK_COLOR],
       'line-width': ['interpolate', ['linear'], ['zoom'], 3, 1, 6, 1.5, 10, 2.5, 14, 4],
       'line-opacity': 0.8,
     },

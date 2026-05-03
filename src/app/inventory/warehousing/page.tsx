@@ -1,7 +1,6 @@
 ﻿'use client'
 
 import { useState, useMemo, useCallback, useEffect, Suspense } from 'react'
-import api from '@/lib/api'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import Sidebar from '@/components/Sidebar'
@@ -12,6 +11,7 @@ import { CheckboxFilterSections, RangeFilter, DeleteFiltersButton } from '@/comp
 import { computeCapacityPercent, isCapacityHealthy, isHealthPositive } from '@/lib/data/helpers'
 import type { DBWarehouse, ObjectRecord } from '@/lib/data/types'
 import { deriveFilterOptions, computeToggleCount, toggleFilterValue, clearAllFilters as clearFilters, createEmptyFilters } from '@/utils/filters'
+import { useWarehousingData } from './use-warehousing-data'
 
 // ─── Filter category definitions ────────────────────────────────────
 const WAREHOUSE_FILTER_CATS = [
@@ -62,14 +62,18 @@ function WarehousingContent() {
   const searchParams = useSearchParams()
   const processId = searchParams.get('process')
 
-  const [processName, setProcessName] = useState('All')
-  const [warehouses, setWarehouses] = useState<DBWarehouse[]>([])
-  const [objects, setObjects] = useState<ObjectRecord[]>([])
-  const [loading, setLoading] = useState(true)
+  const { data, loading } = useWarehousingData()
+  const warehouses: DBWarehouse[] = useMemo(() => data?.warehouses.data ?? [], [data])
+  const objects: ObjectRecord[]   = useMemo(() => data?.objects.data ?? [], [data])
+
+  const processName = useMemo(() => {
+    if (!data || !processId) return 'All'
+    return data.processes.data.find(p => p.id === processId)?.name ?? 'All'
+  }, [data, processId])
+
   const [filterOpen, setFilterOpen] = useState(false)
 
   // ── Warehouse-level state ───────────────────────────────────────
-  // Declared before the fetch effect that pre-selects the first row on load.
   const [selectedIdx, setSelectedIdx] = useState<number | null>(null)
   const [page, setPage] = useState(0)
   const [filters, setFilters] = useState(() => createEmptyFilters(WAREHOUSE_FILTER_CATS))
@@ -80,20 +84,11 @@ function WarehousingContent() {
   // ── Object-level state (drilled-in view) ────────────────────────
   const [drilledWarehouseIdx, setDrilledWarehouseIdx] = useState<number | null>(null)
 
+  // Pre-select the first warehouse once data has loaded, and re-pre-select
+  // whenever processId changes (after the reset effect below clears state).
   useEffect(() => {
-    setLoading(true)
-    api.get('/api/warehousing-data').then(({ data }) => {
-      setWarehouses(data.warehouses.data)
-      setObjects(data.objects?.data ?? [])
-      if (processId) {
-        const found = data.processes.data.find((p: { id: string }) => p.id === processId)
-        setProcessName(found?.name ?? 'All')
-      }
-      // Pre-select first record so the inspector is visible on load
-      if (data.warehouses.data.length > 0) setSelectedIdx(0)
-    }).catch(err => console.error('[WarehousingPage] data fetch error:', err))
-      .finally(() => setLoading(false))
-  }, [processId])
+    if (warehouses.length > 0) setSelectedIdx(0)
+  }, [warehouses, processId])
 
   // Warehouses for the selected supply-chain process
   const processWarehouses = useMemo(() => {

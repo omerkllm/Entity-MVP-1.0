@@ -1,34 +1,13 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import { verifyAccessToken } from '@/lib/auth/jwt'
+import { canAccessApi, canAccessPage, defaultRouteFor } from '@/lib/auth/access'
 
 // Inline rather than importing from @/lib/auth/cookies to avoid pulling in
 // `next/headers` (server-only) into the Edge proxy runtime.
 const COOKIE_ACCESS = 'entity-token'
 
-// ─── Static constants (allocated once at module load) ───────────────
 const PUBLIC_PATHS = ['/login', '/api/auth/login', '/api/auth/refresh', '/api/auth/mfa']
-
-const ROLE_PAGE_ACCESS: Record<string, string[]> = {
-  WO:  ['/inventory'],
-  SC:  ['/decision-making', '/inventory'],
-  SCA: ['/supply-chain-dashboard'],
-  SA:  ['/supply-chain-dashboard', '/inventory', '/decision-making'],
-}
-
-const ROLE_API_ACCESS: Record<string, string[]> = {
-  WO:  ['/api/warehouses', '/api/objects', '/api/activity', '/api/processes', '/api/categories', '/api/warehousing-data'],
-  SC:  ['/api/warehouses', '/api/objects', '/api/activity', '/api/businesses', '/api/processes', '/api/categories', '/api/dmp-data', '/api/warehousing-data'],
-  SCA: ['/api/warehouses', '/api/objects', '/api/activity', '/api/businesses', '/api/processes', '/api/categories', '/api/dashboard', '/api/scd-data', '/api/warehousing-data'],
-  SA:  ['/api/'],  // full access
-}
-
-const ROLE_DEFAULTS: Record<string, string> = {
-  SA:  '/supply-chain-dashboard',
-  SCA: '/supply-chain-dashboard',
-  SC:  '/decision-making',
-  WO:  '/inventory/warehousing',
-}
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
@@ -64,8 +43,7 @@ export async function middleware(request: NextRequest) {
         return NextResponse.next()
       }
 
-      const apiAllowed = ROLE_API_ACCESS[role]
-      if (!apiAllowed || !apiAllowed.some(prefix => pathname.startsWith(prefix))) {
+      if (!canAccessApi(role, pathname)) {
         return NextResponse.json({ error: 'Forbidden', code: 'FORBIDDEN' }, { status: 403 })
       }
 
@@ -73,15 +51,8 @@ export async function middleware(request: NextRequest) {
     }
 
     // ── Page routes: role-based path restrictions ────────────────────────────
-    const allowed = ROLE_PAGE_ACCESS[role]
-
-    if (!allowed) {
-      const loginUrl = new URL('/login', request.url)
-      return NextResponse.redirect(loginUrl)
-    }
-
-    if (!allowed.some(prefix => pathname.startsWith(prefix))) {
-      return NextResponse.redirect(new URL(ROLE_DEFAULTS[role] ?? '/login', request.url))
+    if (!canAccessPage(role, pathname)) {
+      return NextResponse.redirect(new URL(defaultRouteFor(role), request.url))
     }
 
     return NextResponse.next()

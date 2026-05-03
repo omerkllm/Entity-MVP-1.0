@@ -1,17 +1,17 @@
 'use client'
 
-import { useState, useEffect, useCallback, useMemo, useRef } from 'react'
+import { useState, useCallback, useMemo, useRef } from 'react'
 import dynamic from 'next/dynamic'
 import Sidebar from '@/components/Sidebar'
 import WarehouseInspector from '@/components/WarehouseInspector'
 import BusinessInspector from '@/components/BusinessInspector'
 import { AIChatPanel } from '@/components/ai'
 import ResizablePanel from '@/components/ui/ResizablePanel'
-import api from '@/lib/api'
 import DMP_FILTERS from '@/data/dmp-filters.json'
 import AI_AGENT from '@/data/ai-agent-simulations.json'
 import type { DBWarehouse, DBBusiness } from '@/lib/data/types'
-import type { BusinessPin, DmpMapHandle } from '@/components/DmpMap'
+import type { DmpMapHandle } from '@/components/DmpMap'
+import { useDmpData } from './use-dmp-data'
 
 const DmpMap = dynamic(() => import('@/components/DmpMap'), { ssr: false })
 
@@ -23,10 +23,7 @@ type InspectorTab =
 const AGENT_TAB: InspectorTab = { id: '__agent__', type: 'agent' }
 
 export default function DecisionMakingPage() {
-  const [warehouses, setWarehouses] = useState<DBWarehouse[]>([])
-  const [businesses, setBusinesses] = useState<BusinessPin[]>([])
-  const [rawBusinesses, setRawBusinesses] = useState<DBBusiness[]>([])
-  const [loading, setLoading] = useState(true)
+  const { warehouses, rawBusinesses, businesses, loading } = useDmpData()
   const mapRef = useRef<DmpMapHandle>(null)
   const tabBarRef = useRef<HTMLDivElement>(null)
 
@@ -51,23 +48,6 @@ export default function DecisionMakingPage() {
   // ── Tabs state ──────────────────────────────────────────────────
   const [tabs, setTabs] = useState<InspectorTab[]>([AGENT_TAB])
   const [activeTabId, setActiveTabId] = useState<string>(AGENT_TAB.id)
-
-  useEffect(() => {
-    api.get('/api/dmp-data').then(({ data }) => {
-      setWarehouses(data.warehouses.data)
-      setRawBusinesses(data.businesses.data)
-      const pins: BusinessPin[] = data.businesses.data.map((b: DBBusiness) => ({
-        id: b.businessId,
-        name: `${b.objectCategory} (${b.region})`,
-        coordinates: b.coordinates,
-        objectCategory: b.objectCategory,
-        linkType: b.linkType ? (b.linkType.toLowerCase() as 'supplier' | 'customer') : null,
-        linkedWarehouseIds: b.linkedWarehouseIds,
-      }))
-      setBusinesses(pins)
-    }).catch(err => console.error('[DMP] data fetch error:', err))
-      .finally(() => setLoading(false))
-  }, [])
 
   // ── Derive all unique object categories from data ───────────────
   const warehouseCategories = useMemo(() => {

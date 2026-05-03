@@ -1,58 +1,46 @@
 'use client'
 
 import { useState, useMemo, useEffect, memo } from 'react'
-import api from '@/lib/api'
 import Sidebar from '@/components/Sidebar'
 import SupplyChainFlow from '@/components/SupplyChainFlow'
 import { computeCapacityPercent } from '@/lib/data/helpers'
 import type { DBWarehouse, SupplyChainNode } from '@/lib/data/types'
 import { padTwo } from '@/utils/format'
 import { formatWarehouseName } from '@/utils/format'
+import { useScdData } from './use-scd-data'
 
 // -- Colors -----------------------------------------------------------------
 const TRANSIT_COLORS = ['#aeffbd', '#7ef794', '#4fd768', '#2fb84a', '#1a9633']
 
 // ---------------------------------------------------------------------------
 export default function SupplyChainDashboardPage() {
-  const [nodes, setNodes] = useState<SupplyChainNode[]>([])
-  const [recentActivity, setRecentActivity] = useState<{ text: string; time: string }[]>([])
-  const [warehouses, setWarehouses] = useState<DBWarehouse[]>([])
-  const [avgHealth, setAvgHealth] = useState(0)
-  const [warehouseTotal, setWarehouseTotal] = useState(0)
-  const [nodeTotal, setNodeTotal] = useState(0)
-  const [loading, setLoading] = useState(true)
+  const { data, loading } = useScdData()
+
+  const nodes: SupplyChainNode[] = useMemo(() => data?.processes.data ?? [], [data])
+  const warehouses: DBWarehouse[] = useMemo(() => data?.warehouses.data ?? [], [data])
+  const nodeTotal      = data?.processes.total ?? 0
+  const warehouseTotal = data?.warehouses.total ?? 0
+  const avgHealth      = Math.round(data?.dashboard.avg_health ?? 0)
+
+  const recentActivity = useMemo(() => {
+    if (!data) return [] as { text: string; time: string }[]
+    const nodeMap = new Map(data.processes.data.map(n => [n.id, n.name]))
+    return data.activity.data.map(a => ({
+      text: nodeMap.has(a.nodeId) ? `${nodeMap.get(a.nodeId)} ${a.eventType}` : a.eventType,
+      time: a.time,
+    }))
+  }, [data])
 
   const [transitProcessId, setTransitProcessId] = useState('')
   const [capacityProcessId, setCapacityProcessId] = useState('')
 
+  // Default dropdown selections on first load — functional updater preserves any user selection.
   useEffect(() => {
-    api.get('/api/scd-data').then(({ data }) => {
-      const proc = data.processes
-      const activity = data.activity
-      const wh = data.warehouses
-      const dash = data.dashboard
-
-      setNodes(proc.data)
-      setNodeTotal(proc.total)
-      // Map activity entries: resolve node name from processes
-      const nodeMap = new Map(proc.data.map((n: SupplyChainNode) => [n.id, n.name]))
-      setRecentActivity(activity.data.map((a: { nodeId: string; eventType: string; time: string }) => ({
-        text: nodeMap.has(a.nodeId) ? `${nodeMap.get(a.nodeId)} ${a.eventType}` : a.eventType,
-        time: a.time,
-      })))
-      setWarehouses(wh.data)
-      setWarehouseTotal(wh.total)
-      // avgHealth from dashboard — computed from ALL objects in DB via SQL
-      setAvgHealth(Math.round(dash.avg_health ?? 0))
-      // Set default dropdown selections on first load (functional updater preserves any user selection)
-      if (proc.data.length > 0) {
-        const defaultId = proc.data[6]?.id ?? proc.data[0]?.id ?? ''
-        setTransitProcessId(prev => prev || defaultId)
-        setCapacityProcessId(prev => prev || defaultId)
-      }
-    }).catch(err => console.error('[SCD] data fetch error:', err))
-      .finally(() => setLoading(false))
-  }, [])
+    if (nodes.length === 0) return
+    const defaultId = nodes[6]?.id ?? nodes[0]?.id ?? ''
+    setTransitProcessId(prev => prev || defaultId)
+    setCapacityProcessId(prev => prev || defaultId)
+  }, [nodes])
 
   const { activeNodes, disruptedNodes } = useMemo(() => {
     const active: SupplyChainNode[] = []

@@ -1,7 +1,7 @@
 ﻿'use client'
 
 import { useState, useEffect } from 'react'
-import api from '@/lib/api'
+import { fetchProcesses } from '@/lib/api/endpoints'
 import Link from 'next/link'
 import Sidebar from '@/components/Sidebar'
 import SupplyChainFlow from '@/components/SupplyChainFlow'
@@ -12,8 +12,8 @@ export default function InventoryPage() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    api.get('/api/processes')
-      .then(r => setNodes(r.data.data))
+    fetchProcesses()
+      .then(r => setNodes(r.data))
       .catch(err => console.error('[InventoryPage] fetch error:', err))
       .finally(() => setLoading(false))
   }, [])
