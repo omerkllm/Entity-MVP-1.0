@@ -17,10 +17,27 @@ export type MfaTokenPayload = JWTPayload & {
   userId: string
 }
 
-function secret(key: 'JWT_SECRET' | 'JWT_REFRESH_SECRET') {
+/**
+ * Singleton cache for encoded JWT secrets.
+ *
+ * Without this, `new TextEncoder().encode(...)` ran on every sign + verify call
+ * — i.e. every authenticated API request. The secret never changes within a
+ * process, so we encode each key exactly once and serve all subsequent calls
+ * from the in-memory cache. Module scope makes the Map a per-process singleton
+ * automatically; no class needed.
+ */
+const secretCache = new Map<string, Uint8Array>()
+
+function secret(key: 'JWT_SECRET' | 'JWT_REFRESH_SECRET'): Uint8Array {
+  const cached = secretCache.get(key)
+  if (cached) return cached
+
   const val = process.env[key]
   if (!val) throw new Error(`${key} is not set`)
-  return new TextEncoder().encode(val)
+
+  const encoded = new TextEncoder().encode(val)
+  secretCache.set(key, encoded)
+  return encoded
 }
 
 // ─── Access / Refresh tokens ────────────────────────────────────────

@@ -7,26 +7,20 @@
 import { getAllWarehouses } from '@/lib/db/queries/warehouses'
 import { getAllProcesses } from '@/lib/db/queries/processes'
 import { getAllObjects } from '@/lib/db/queries/objects'
-import { getSession } from '@/lib/auth/session'
-import { apiError, apiSuccess } from '@/lib/api-response'
+import { apiSuccess } from '@/lib/api-response'
+import { withAuthRoute } from '@/lib/api/route-handler'
 
 const MAX_PAG = { page: 1, limit: 200, offset: 0 }
 const OBJ_PAG = { page: 1, limit: 500, offset: 0 }
 
-export async function GET() {
-  const session = await getSession()
-  if (!session) return apiError('Unauthorized', 401)
-
-  try {
+export const GET = withAuthRoute(
+  { apiPath: '/api/warehousing-data', errorMessage: 'Failed to fetch warehousing data' },
+  async () => {
     const [warehouses, processes, objects] = await Promise.all([
       getAllWarehouses(MAX_PAG),
       getAllProcesses(MAX_PAG),
       getAllObjects(OBJ_PAG),
     ])
-
     return apiSuccess({ warehouses, processes, objects })
-  } catch (err) {
-    console.error('[API] GET /api/warehousing-data failed:', err)
-    return apiError('Failed to fetch warehousing data', 500)
-  }
-}
+  },
+)

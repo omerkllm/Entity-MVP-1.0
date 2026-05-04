@@ -6,6 +6,7 @@ import maplibregl from 'maplibre-gl'
 import type { DBWarehouse } from '@/lib/data/types'
 import type { BusinessPin, DmpMapProps } from './types'
 import { parseLngLat, buildBufferedZone, curvedLine, computeBearing } from './geo'
+import { createPinMarker } from './pin-factory'
 
 /* ── Theme ────────────────────────────────────────────────────────── */
 // Single source of truth for link-type colours used by both the line layer,
@@ -176,26 +177,29 @@ export function updatePins(
 
   // Warehouse markers
   for (const { w, lngLat } of warehousePoints) {
-    const el = document.createElement('div')
-    el.className = 'dmp-pin dmp-pin-warehouse'
-    el.innerHTML = '<img src="/icons/warehouse.svg" alt="" />'
-    el.title = w.title
-    el.addEventListener('click', e => { e.stopPropagation(); onPinClick?.('warehouse', w.warehouseId) })
-    const popup = new maplibregl.Popup({ offset: 18, closeButton: false, maxWidth: '200px' })
-      .setHTML(`<div style="line-height:1.5"><div style="font-weight:600">${escapeHtml(w.title)}</div><div style="opacity:.7">${escapeHtml(w.warehouseId)} - ${escapeHtml(w.region)}</div><div style="opacity:.7">${escapeHtml(w.status)} - ${escapeHtml(w.objectCategory)}</div></div>`)
-    markersRef.current.push(new maplibregl.Marker({ element: el, anchor: 'center' }).setLngLat(lngLat).setPopup(popup).addTo(map))
+    const popupHtml = `<div style="line-height:1.5"><div style="font-weight:600">${escapeHtml(w.title)}</div><div style="opacity:.7">${escapeHtml(w.warehouseId)} - ${escapeHtml(w.region)}</div><div style="opacity:.7">${escapeHtml(w.status)} - ${escapeHtml(w.objectCategory)}</div></div>`
+    const marker = createPinMarker({
+      kind: 'warehouse',
+      lngLat,
+      title: w.title,
+      popupHtml,
+      onClick: () => onPinClick?.('warehouse', w.warehouseId),
+    }).addTo(map)
+    markersRef.current.push(marker)
   }
 
   // Business markers
   for (const { b, lngLat } of businessPoints) {
     const isLinked = b.linkedWarehouseIds.length > 0
-    const el = document.createElement('div')
-    el.className = `dmp-pin ${isLinked ? 'dmp-pin-supplier' : 'dmp-pin-external'}`
-    el.innerHTML = '<img src="/icons/business.svg" alt="" />'
-    el.title = b.name
-    el.addEventListener('click', e => { e.stopPropagation(); onPinClick?.('business', b.id) })
-    const popup = new maplibregl.Popup({ offset: 18, closeButton: false, maxWidth: '200px' })
-      .setHTML(`<div style="line-height:1.5"><div style="font-weight:600">${escapeHtml(b.name)}</div><div style="opacity:.7">${b.linkType ? escapeHtml(b.linkType.charAt(0).toUpperCase() + b.linkType.slice(1)) : 'No link'}</div></div>`)
-    markersRef.current.push(new maplibregl.Marker({ element: el, anchor: 'center' }).setLngLat(lngLat).setPopup(popup).addTo(map))
+    const linkLabel = b.linkType ? escapeHtml(b.linkType.charAt(0).toUpperCase() + b.linkType.slice(1)) : 'No link'
+    const popupHtml = `<div style="line-height:1.5"><div style="font-weight:600">${escapeHtml(b.name)}</div><div style="opacity:.7">${linkLabel}</div></div>`
+    const marker = createPinMarker({
+      kind: isLinked ? 'business-linked' : 'business-external',
+      lngLat,
+      title: b.name,
+      popupHtml,
+      onClick: () => onPinClick?.('business', b.id),
+    }).addTo(map)
+    markersRef.current.push(marker)
   }
 }
