@@ -2,8 +2,9 @@
 
 import { useEffect, useMemo, useState } from 'react'
 import { fetchDmpData } from '@/lib/api/endpoints'
+import { dbBusinessToPin } from '@/lib/adapters/business'
 import type { DBBusiness, DBWarehouse } from '@/lib/data/types'
-import type { BusinessPin } from '@/components/DmpMap'
+import type { BusinessPin } from '@/components/map/types'
 
 /**
  * Owns the single network call for the /decision-making page.
@@ -27,14 +28,7 @@ export function useDmpData() {
   }, [])
 
   const businesses: BusinessPin[] = useMemo(
-    () => rawBusinesses.map(b => ({
-      id: b.businessId,
-      name: `${b.objectCategory} (${b.region})`,
-      coordinates: b.coordinates,
-      objectCategory: b.objectCategory,
-      linkType: b.linkType ? (b.linkType.toLowerCase() as 'supplier' | 'customer') : null,
-      linkedWarehouseIds: b.linkedWarehouseIds,
-    })),
+    () => rawBusinesses.map(dbBusinessToPin),
     [rawBusinesses],
   )
 
